@@ -1,0 +1,37 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+import { EditorComponent } from './editor/component/editor.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule } from './app-routing.moule';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/component/login.component';
+import { httpInterceptorProviders } from './auth/auth-interceptor.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+const appRoutes: Routes = [
+  {path: 'editor', component : EditorComponent},
+  {path: '', component : LoginComponent}
+  ]
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    EditorComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    RouterModule.forRoot(
+      appRoutes,
+      {enableTracing : true}
+    ),
+  ],
+  providers: [httpInterceptorProviders],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

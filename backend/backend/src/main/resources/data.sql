@@ -1,0 +1,1 @@
+INSERT INTO user (`discriminator`, `id`, `email`, `name`, `password`, `surname`, `username`) VALUES ('U', '1', 'ngrujcic@gmail.com', 'Nikola', '$2a$10$gfmnyiTlf8MDmwG7oqKJG.W8rrag8jt6dNW.31ukgr0.quwGujUuO', 'Grujcic', 'ngrujcic');

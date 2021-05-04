@@ -1,0 +1,38 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+        <div class="container p-2">
+            <div class="row ml-1 mr-1">
+                <div class="col-md-4 py-5 bg-info text-white">
+                    <h2>Login</h2>
+                </div>
+                <div class="col-md-8 py-5 border">
+                    <h2>Login form</h2>
+                    <form  #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+                        <div class="form-group">
+                            <label for="input_email_2">Username</label>
+                            <input type="text" class="form-control" name="input_email_2" placeholder="Enter username" [(ngModel)]="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_password_2">Password</label>
+                            <input type="password" class="form-control" name="input_password_2" placeholder="Enter Password" [(ngModel)]="password">
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

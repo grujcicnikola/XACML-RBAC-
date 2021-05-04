@@ -1,0 +1,34 @@
+spring:
+   application:
+    name: backend 
+   datasource:
+    url: jdbc:mysql://localhost:3306/backend?useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: sifra
+    driverClassName : com.mysql.jdbc.Driver
+    initialization-mode: always
+   jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform : org.hibernate.dialect.MySQL5Dialect 
+    
+server:
+  port: 8080
+  #ssl:
+    #enabled: true
+    #key-store: ${KEY_STORE_CLASSPATH}
+    #key-store-password: ${KEY_STORE_PASSWORD}
+    #key-alias: scs
+    #trust-store: ${KEY_STORE_CLASSPATH_TRUST}
+    #trust-store-password: ${KEY_STORE_TRUST_PASSWORD}         
+    
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: ["health", "info", "refresh"]
+#security:
+  #require-ssl: true
+app:
+   jwtSecret: sifra
+   jwtExpiration: 86400
