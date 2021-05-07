@@ -9,17 +9,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/component/login.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
-  {path: '', component : LoginComponent}
+  {path: '', component : LoginComponent},
+  {path: 'register', component : RegisterComponent}
   ]
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

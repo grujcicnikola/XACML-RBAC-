@@ -17,7 +17,7 @@ public class BackendApplication {
 //		System.setProperty("KEY_STORE_ALIAS", "scs");
 		
 		SpringApplication.run(BackendApplication.class, args);
-		System.out.println("hej");
+		System.out.println("Backend started");
 	}
 
 }
