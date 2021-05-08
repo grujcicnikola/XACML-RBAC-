@@ -2,6 +2,8 @@ package com.example.backend.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +55,7 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ResponseEntity<?> authenticateUser(@RequestBody LoginInfoDTO loginInfo) {
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginInfoDTO loginInfo) {
 		Optional<User> user = userService.findUserByUsername(loginInfo.getUsername());
 
 		if (user.isEmpty()) {
@@ -74,7 +77,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public ResponseEntity<?> register(@RequestBody UserDTO userDto) {
+	public ResponseEntity<?> register(@Valid @RequestBody UserDTO userDto) {
 		Optional<User> user = userService.findUserByUsername(userDto.getUsername());
 
 		if (user.isPresent()) {
