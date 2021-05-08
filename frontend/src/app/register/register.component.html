@@ -1,35 +1,61 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <body>
-<div class="container">
-  <section id="content">
-    <form (ngSubmit)="onSubmit()" >
-      <h1>Register Form</h1>
-      <div>
-        <input type="text" placeholder="Username" required="" id="username" name="username" [(ngModel)]="user.username"/>
-      </div>
-      <div>
-        <input type="text" placeholder="Name" required="" id="name" name="name" [(ngModel)]="user.name"/>
-      </div>
-      <div>
-        <input type="text" placeholder="Surname" required="" id="surname" name="surname" [(ngModel)]="user.surname"/>
-      </div>
-      <div>
-        <input type="text" placeholder="Email" required="" id="email" name="email" [(ngModel)]="user.email"/>
-      </div>
-      <div>
-        <input type="password" placeholder="Password" required="" id="password" name="password" [(ngModel)]="user.password" />
-      </div>
-      <div>
-        <input type="password" placeholder="Repeat password" required="" id="repeated_passoword" name="repeated_passoword" [(ngModel)]="user.repeated_passoword" />
-      </div>
-      <div>
-        <input type="submit" value="Register" />
-        <a href="https://localhost:4200">Login</a>
-      </div>
-    </form><!-- form -->
-  </section><!-- content -->
-</div><!-- container -->
+  <div class="container">
+    <section id="content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h1>Register Form</h1>
+        <div>
+          <div class="alert-message" *ngIf="f.username.invalid && f.username.dirty || f.username.touched">
+            <div *ngIf="f.username.errors?.minlength">Username must have at least 3 characters!</div>
+          </div>
+          <input type="text" formControlName="username" placeholder="Username" required="" id="username" name="username"
+            [(ngModel)]="user.username" />
+        </div>
+        <div>
+          <div class="alert-message" *ngIf="f.name.invalid && f.name.dirty || f.name.touched">
+            <div *ngIf="f.name.errors?.minlength">Name must have at least 3 characters!</div>
+          </div>
+          <input type="text" formControlName="name" placeholder="Name" required="" id="name" name="name"
+            [(ngModel)]="user.name" />
+        </div>
+        <div>
+          <div class="alert-message" *ngIf="f.surname.invalid && f.surname.dirty || f.surname.touched">
+            <div *ngIf="f.surname.errors?.minlength">Surname must have at least 3 characters!</div>
+          </div>
+          <input type="text" formControlName="surname" placeholder="Surname" required="" id="surname" name="surname"
+            [(ngModel)]="user.surname" />
+        </div>
+        <div>
+          <div class="alert-message" *ngIf="f.email.invalid && f.email.dirty || f.email.touched">
+            <div *ngIf="f.email.errors?.email">Email must be a valid email address!</div>
+          </div>
+          <input type="text" formControlName="email" placeholder="Email" required="" id="email" name="email"
+            [(ngModel)]="user.email" />
+        </div>
+        <div>
+          <div class="alert-message" *ngIf="f.password.invalid && f.password.dirty || f.password.touched">
+            <div *ngIf="f.password.errors?.minLength">Password must contain at least eight characters!</div>
+            <div *ngIf="f.password.errors?.sameAsUsername">Password must be different from Username!</div>
+            <div *ngIf="f.password.errors?.noNumber">Password must contain at least one number (0-9)!</div>
+            <div *ngIf="f.password.errors?.noLowercase">Password must contain at least one lowercase letter (a-z)!</div>
+            <div *ngIf="f.password.errors?.noUppercase">Password must contain at least one uppercase letter (A-Z)!</div>
+          </div>
+          <input type="password" formControlName="password" placeholder="Password" required="" id="password"
+            name="password" [(ngModel)]="user.password" />
+        </div>
+        <div>
+          <div class="alert-message"
+            *ngIf="f.repeated_passoword.invalid && f.repeated_passoword.dirty || f.repeated_passoword.touched">
+            <div *ngIf="f.repeated_passoword.errors?.mustMatch">Passwords must match!</div>
+          </div>
+          <input type="password" formControlName="repeated_passoword" placeholder="Repeat password" required=""
+            id="repeated_passoword" name="repeated_passoword" [(ngModel)]="user.repeated_passoword" />
+        </div>
+        <div>
+          <input type="submit" [disabled]="!form.valid" value="Register" />
+          <a href="https://localhost:4200">Login</a>
+        </div>
+      </form><!-- form -->
+    </section><!-- content -->
+  </div><!-- container -->
 </body>
+

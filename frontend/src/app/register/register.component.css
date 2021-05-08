@@ -246,3 +246,25 @@ form:after {
   background-position: 0 -135px;
   color: #00aeef;
 }
+
+#content form input[type="submit"]:disabled {
+  background-color: rgb(254,231,154);
+  cursor: auto;
+}
+
+#content form input.ng-dirty.ng-invalid {
+  -webkit-box-shadow: 0 0 2px #ed1c24 inset;
+  -moz-box-shadow: 0 0 2px #ed1c24 inset;
+  -ms-box-shadow: 0 0 2px #ed1c24 inset;
+  -o-box-shadow: 0 0 2px #ed1c24 inset;
+  box-shadow: 0 0 2px #ed1c24 inset;
+  background-color: #fff;
+  border: 1px solid #ed1c24;
+  outline: none;
+}
+
+/* The alert message box */
+.alert-message {
+  color: #f44336; /* Red */
+  font-size: 90%;
+}

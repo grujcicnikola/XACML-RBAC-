@@ -17,7 +17,7 @@ public class TestController {
 	@RequestMapping(value = "/test", method=RequestMethod.GET)
 	public ResponseEntity<?> addBuyerInfo()
 	{
-		System.out.println("pogodio");
+		System.out.println("test");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
