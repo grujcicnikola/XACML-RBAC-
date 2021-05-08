@@ -50,13 +50,12 @@ public class UserController {
 	private JwtProvider jwtProvider;
 	@Autowired
 	private UserRepository userRep;
-
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginInfoDTO loginInfo) {
-
+		System.out.print(loginInfo.getUsername()+" "+loginInfo.getPassword());
 		Optional<User> user = userService.findUserByUsername(loginInfo.getUsername());
 
 		if (user.isEmpty()) {
@@ -76,9 +75,24 @@ public class UserController {
 		}
 
 	}
+	
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public ResponseEntity<?> register(@RequestBody UserDTO userDto) {
+		Optional<User> user = userService.findUserByUsername(userDto.getUsername());
 
-	@RequestMapping(value = "getUser/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> getUserByUserName(@PathVariable("id") String username) {
+		if (user.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} else {
+			User newUser = new User(userDto);
+			this.userService.register(newUser);
+			return new ResponseEntity<>(userDto, HttpStatus.OK);
+		}
+		
+	}
+
+
+	@RequestMapping(value = "getUserByUsername/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDTO> getUserByUserName(@PathVariable("username") String username) {
 
 		Optional<User> user = userService.findUserByUsername(username);
 
@@ -88,6 +102,12 @@ public class UserController {
 			return new ResponseEntity<>(new UserDTO(user.get()), HttpStatus.OK);
 		}
 
+	}
+
+	@RequestMapping(value = "/logout/{username}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDTO> logout(@PathVariable("username") String username) {
+		Optional<User> user = userService.findUserByUsername(username);
+		return new ResponseEntity<>(new UserDTO(user.get()), HttpStatus.OK);
 	}
 
 }

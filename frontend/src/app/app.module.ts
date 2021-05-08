@@ -6,7 +6,7 @@ import { EditorComponent } from './editor/component/editor.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.moule';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/component/login.component';
+import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';

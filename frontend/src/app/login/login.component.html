@@ -1,0 +1,23 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<body>
+<div class="container">
+  <section id="content">
+    <form (ngSubmit)="onSubmit()" >
+      <h1>Login Form</h1>
+      <div>
+        <input type="text" placeholder="Username" required="" id="username" name="username" [(ngModel)]="username"/>
+      </div>
+      <div>
+        <input type="password" placeholder="Password" required="" id="password" name="password" [(ngModel)]="password" />
+      </div>
+      <div>
+        <input type="submit" value="Log in" />
+        <a href="https://localhost:4200/register">Register</a>
+      </div>
+    </form><!-- form -->
+  </section><!-- content -->
+</div><!-- container -->
+</body>

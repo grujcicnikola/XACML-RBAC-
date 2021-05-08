@@ -10,8 +10,8 @@ body {
   margin: 0 auto;
   padding: 0;
   position: relative;
-  top: 20px;
-  bottom: 20px;
+  top: 100px;
+  bottom: 100px;
 }
 
 h1{ font-size:28px;}
@@ -57,7 +57,7 @@ form:after {
   text-align: center;
   text-shadow: 0 1px 0 #fff;
   width: 400px;
-  height: 600px;
+  height: 400px;
 }
 #content h1 {
   color: #7E7E7E;
@@ -162,10 +162,6 @@ form:after {
   outline: none;
 }
 #username { background-position: 10px 10px !important }
-#name { background-position: 10px 10px !important }
-#surname { background-position: 10px 10px !important }
-#email { background-position: 10px 10px !important }
-#repeated_passoword { background-position: 10px -53px !important }
 #password { background-position: 10px -53px !important }
 #content form input[type="submit"] {
   background: rgb(254,231,154);

@@ -35,7 +35,7 @@ public class UserDTO {
 	
 	private String password;
 	
-	private String password2;
+	private String repeated_passoword;
 	
 	public UserDTO(User user) {
 		this.id = user.getId();
@@ -43,9 +43,7 @@ public class UserDTO {
 		this.surname = user.getSurname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.password2 = user.getPassword();
 		this.username = user.getUsername();
 	}
-	
-	
+		
 }
