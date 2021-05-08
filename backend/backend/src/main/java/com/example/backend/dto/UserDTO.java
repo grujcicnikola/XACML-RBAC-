@@ -28,7 +28,7 @@ public class UserDTO {
 	private Long id;
 	
 	@NotBlank
-	@Size(min = 3, max = 8)
+	@Size(min = 3, max = 20)
 	private String name;
 	
 	@NotBlank

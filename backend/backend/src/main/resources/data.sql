@@ -1,1 +1,1 @@
-INSERT INTO user (`discriminator`, `id`, `email`, `name`, `password`, `surname`, `username`) VALUES ('U', '1', 'ngrujcic@gmail.com', 'Nikola', '$10$UgzvnZZAVhJ8g.W0uUQsCOgIc6Mp0rRO05waJpCAwdCFh2L6FHhAK', 'Grujcic', 'ngrujcic');
+INSERT INTO user (`discriminator`, `id`, `email`, `name`, `password`, `surname`, `username`) VALUES ('U', '1', 'ngrujcic@gmail.com', 'Nikola', '$2a$10$mSwPX.bur0VMoSjuQmfYy.tfNw6mSXvC99O2wfTqdEy30CB7apY5O', 'Grujcic', 'ngrujcic');
