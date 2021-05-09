@@ -28,28 +28,28 @@ public class UserDTO {
 	private Long id;
 	
 	@NotBlank
-	@Size(min = 3, max = 20)
+	@Size(min = 3, max = 50)
 	private String name;
 	
 	@NotBlank
-	@Size(min = 3, max = 20)
+	@Size(min = 3, max = 50)
 	private String surname;
 
 	@NotBlank
-	@Size(min = 3, max = 20)
+	@Size(min = 3, max = 50)
 	private String username;
 	
 	@NotBlank
 	@Email
-	@Size(min = 3, max = 20)
+	@Size(min = 3, max = 50)
 	private String email;
 	
 	@NotBlank
-	@Size(min = 8, max = 20)
+	@Size(min = 8, max = 50)
 	private String password;
 	
 	@NotBlank
-	@Size(min = 8, max = 20)
+	@Size(min = 8, max = 50)
 	private String repeated_passoword;
 	
 	public UserDTO(User user) {
