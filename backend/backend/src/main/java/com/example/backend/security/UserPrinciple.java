@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.backend.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//klasa sa informaijama o korisniku, koja ce se kasnije prebacivati u objekte za autentifikaciju
+//Informaije o korisniku koji ce se kasnije prebacivati u objekte za autentifikaciju
 public class UserPrinciple implements UserDetails {
 
 	private Long id;

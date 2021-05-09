@@ -13,7 +13,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 
-//hendlovanje exception-a prilikom zahteva koji ne prodju autorizaciju
+//bacanje 401 ukoliko neautorizovani korisnik pokusa da pristupi zasticenom resursu
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
@@ -22,10 +22,7 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
 		 logger.error("Unauthorized error. Message - {}", authException.getMessage());
-		 
 	     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
 	}
 

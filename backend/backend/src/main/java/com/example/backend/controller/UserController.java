@@ -66,7 +66,8 @@ public class UserController {
 					new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword()));
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-
+			//kreiranje tokena prilikom login-a, koji ce se kasnije prosledjivati u svakom zahtevu
+			//sa fronta pomocu http interceptor-a
 			String jwt = jwtProvider.generateJwtToken(authentication);
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
