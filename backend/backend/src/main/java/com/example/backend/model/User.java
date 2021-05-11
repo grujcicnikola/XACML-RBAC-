@@ -36,11 +36,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-    name="discriminator",
-    discriminatorType=DiscriminatorType.STRING
-)
-@DiscriminatorValue(value="U")
 public class User {
 	
 	@Id
