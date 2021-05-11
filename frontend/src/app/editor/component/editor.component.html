@@ -42,12 +42,13 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li><a *ngIf="someoneLogged == true" href=""><span
-                                    class="glyphicon glyphicon-download-alt"></span>Download</a></li>
+                                    class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                         <li><a *ngIf="someoneLogged != true" href=""><span class="glyphicon glyphicon-log-in"></span>
                                 Login</a></li>
                         <li><a *ngIf="someoneLogged != true" href="register"><span
                                     class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a *ngIf="someoneLogged == true" href="" (click)="logout()"> Logout</a></li>
+                        <li><a *ngIf="someoneLogged == true" href="" (click)="logout()"><span
+                                    class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,3 +56,4 @@
     </div>
 </div>
 
+<app-tree-view></app-tree-view>

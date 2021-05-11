@@ -1,0 +1,9 @@
+<kendo-treeview [nodes]="data" textField="text" kendoTreeViewExpandable kendoTreeViewHierarchyBinding
+    childrenField="items" (selectionChange)="doSomething($event)">
+
+    <ng-template kendoTreeViewNodeTemplate let-dataItem>
+        <span [ngClass]="iconClass(dataItem)"></span>
+        {{dataItem.text}}
+    </ng-template>
+
+</kendo-treeview>
