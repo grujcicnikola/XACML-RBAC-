@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EditorService } from '../service/editor.service';
+import { EditorService } from '../../service/editorService/editor.service';
 import { ActivatedRoute } from '@angular/router';
 import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { UserService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/model/User';
+import { PolicyService } from 'src/app/service/policyService/policy.service';
+import { TaskDataService } from 'src/app/service/taskDataService/task-data.service';
+import { TaskModel } from 'src/app/model/TaskModel';
 
 @Component({
   selector: 'app-editor',
@@ -11,21 +14,24 @@ import { User } from 'src/app/model/User';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  
-  someoneLogged : boolean = false;
-  email : string = "";
-  loggedUser : User;
+
+  someoneLogged: boolean = false;
+  email: string = "";
+  loggedUser: User;
+  tasks: TaskModel[];
 
 
-  constructor(private router: ActivatedRoute, private service: EditorService, private tokenStorage: TokenStorageService, private userService: UserService) { 
-    service.test();
+  constructor(private router: ActivatedRoute, private service: EditorService,
+    private tokenStorage: TokenStorageService, private userService: UserService,
+    private policyService: PolicyService, private taskDataService: TaskDataService) {
+
     this.service.test().subscribe(data => {
-        console.log(data);
-     });
+      console.log(data);
+    });
 
-     if (this.tokenStorage.getToken()) {
+    if (this.tokenStorage.getToken()) {
       this.someoneLogged = true;
-      
+
       let jwt = this.tokenStorage.getToken();
       console.log("Tokeen: " + jwt);
       let jwtData = jwt.split('.')[1];
@@ -38,25 +44,28 @@ export class EditorComponent implements OnInit {
       //console.log('decodedJwtData: ' + decodedJwtData);
       console.log('User: ' + this.email);
 
-      this.userService.getUserByUsername(this.email).subscribe(data =>{
-        this.loggedUser = data as User; 
+      this.userService.getUserByUsername(this.email).subscribe(data => {
+        this.loggedUser = data as User;
         console.log(this.loggedUser);
+      });
+      this.policyService.getPolicySet().subscribe(data => {
+        this.tasks = this.taskDataService.transformDtoToTreeModel(data);
       });
     }
   }
 
   ngOnInit() {
-    
+
   }
 
-  logout(){
+  logout() {
     this.tokenStorage.signOut();
-    this.userService.logout(this.email).subscribe(data =>{
-      window.location.href="https://localhost:4200";
-    }); 
+    this.userService.logout(this.email).subscribe(data => {
+      window.location.href = "https://localhost:4200";
+    });
   }
 
-  myFunction()
-{
-  console.log('klik 2')
-}}
+  myFunction() {
+    console.log('klik 2')
+  }
+}

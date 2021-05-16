@@ -11,4 +11,6 @@ export class PolicySet {
     policySetIdReference: string;
     policyIdReference: string;
     policies: Policy[];
+    creator: string;
+    created: string;
 }

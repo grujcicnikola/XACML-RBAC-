@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EditSettingsModel, DataStateChangeEventArgs } from '@syncfusion/ej2-treegrid/src';
 import { Observable } from 'rxjs';
 import { TaskStoreService } from 'src/app/service/taskStoreService/task-store.service';
@@ -6,6 +6,7 @@ import { TaskDataService } from 'src/app/service/taskDataService/task-data.servi
 import { SaveEventArgs } from '@syncfusion/ej2-grids';
 import { TaskModel } from 'src/app/model/TaskModel';
 import { TypesEnum } from 'src/app/model/TypesEnum';
+import { PolicyService } from 'src/app/service/policyService/policy.service';
 
 @Component({
   selector: 'app-tree-grid',
@@ -17,14 +18,14 @@ export class TreeGridComponent implements OnInit {
   public editSettings: EditSettingsModel;
   public toolbar: String[];
 
-  public tasks: TaskModel[]=[];
+  @Input() tasks: TaskModel[]=[];
   public taskData: TaskModel;
   public mode: 'add' | 'edit';
   TypesEnum = TypesEnum;
 
 
   constructor(private taskService: TaskDataService) {
-    this.tasks = taskService.createDb();
+    //this.tasks = taskService.createDb();
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {

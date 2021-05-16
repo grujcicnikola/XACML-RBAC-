@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PolicySet } from 'src/app/model/PolicySet';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,8 @@ export class EditorService {
 
   url ="http://localhost:8080/test";
 
-  // test(){
-  //   console.log("get" + this.url);
-  //   return this.http.get(this.url + '/test');
-  // }
   test(): Observable<any>{
       return this.http.get('http://localhost:8080/test/test');
-
   }
   
 }

@@ -10,4 +10,6 @@ export class Policy {
     description: string;
     schemaLocator: string;	
     rules: Rule[];
+    creator: string;
+    created: string;
 }
