@@ -10,7 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
-import { TreeViewComponent } from './editor/component/tree-view/tree-view.component';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -18,9 +17,6 @@ import {
   EditService,
   ToolbarService
 } from '@syncfusion/ej2-angular-treegrid';
-import { TaskDataService } from './service/taskDataService/task-data.service';
-import { TreeViewObservablesComponent } from './editor/component/tree-view-observables/tree-view-observables.component';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TreeGridComponent } from './editor/component/tree-grid/tree-grid.component';
 import { DialogViewComponent } from './editor/component/dialog-view/dialog-view.component';
 
@@ -36,8 +32,6 @@ const appRoutes: Routes = [
     EditorComponent,
     LoginComponent,
     RegisterComponent,
-    TreeViewComponent,
-    TreeViewObservablesComponent,
     TreeGridComponent,
     DialogViewComponent
   ],
@@ -49,7 +43,6 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     TreeViewModule,
     TreeGridModule, 
-    //InMemoryWebApiModule.forRoot(TaskDataService),
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
