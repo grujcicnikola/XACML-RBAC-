@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDto {
 	
 	private Long id;
 	
@@ -52,7 +52,7 @@ public class UserDTO {
 	@Size(min = 8, max = 50)
 	private String repeated_passoword;
 	
-	public UserDTO(User user) {
+	public UserDto(User user) {
 		this.id = user.getId();
 		this.name = user.getName();
 		this.surname = user.getSurname();

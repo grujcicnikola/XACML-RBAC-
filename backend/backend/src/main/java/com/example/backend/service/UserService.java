@@ -2,7 +2,7 @@ package com.example.backend.service;
 
 import java.util.Optional;
 
-import com.example.backend.dto.UserDTO;
+import com.example.backend.dto.UserDto;
 import com.example.backend.model.User;
 
 public interface UserService {

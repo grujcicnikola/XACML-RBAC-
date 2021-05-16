@@ -56,4 +56,7 @@ export class EditorComponent implements OnInit {
     }); 
   }
 
-}
+  myFunction()
+{
+  console.log('klik 2')
+}}

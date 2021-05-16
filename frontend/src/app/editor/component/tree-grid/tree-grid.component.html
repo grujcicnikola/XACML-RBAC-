@@ -1,0 +1,19 @@
+<body>
+  <ejs-treegrid [dataSource]="tasks" hasChildMapping="isParent" parentIdMapping="ParentID" idMapping="id"
+    [editSettings]="editSettings" [toolbar]="toolbar" height="470" (actionBegin)="actionBegin($event)">
+    <e-columns>
+      <e-column field="id" headerText="Task ID" width="120" textAlign="Right" isPrimaryKey="true" type="number">
+      </e-column>
+      <e-column field="type" headerText="Type" width="225"></e-column>
+      <e-column field="creator" headerText="Creator" width="150" format="yMd" type="string"></e-column>
+      <e-column field="created" headerText="Created" width="150" format="yMd" type="datetime" editType="datepickeredit">
+      </e-column>
+
+    </e-columns>
+    <ng-template #editSettingsTemplate let-data>
+      <app-dialog-view [taskData]="taskData" [mode]="mode">
+      </app-dialog-view>
+    </ng-template>
+  </ejs-treegrid>
+  <button id="mmmm" (click)="myFunction()">Click me</button>
+</body>

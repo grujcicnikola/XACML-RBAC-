@@ -22,7 +22,7 @@ import org.hibernate.annotations.NaturalId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.backend.dto.UserDTO;
+import com.example.backend.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -57,7 +57,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;	
 	
-	public User(UserDTO user)
+	public User(UserDto user)
 	{
 		this.name = user.getName();
 		this.surname = user.getSurname();
