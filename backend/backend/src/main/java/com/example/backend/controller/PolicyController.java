@@ -25,8 +25,23 @@ import com.example.backend.model.User;
 public class PolicyController {
 	
 	@RequestMapping(value = "getPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> getUserByUserName() {
+	public ResponseEntity<PolicySetDto> getPolicySet() {
 		return new ResponseEntity<>(createPolicySetForTesting(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "policySet/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> policySet(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(createPolicySetForTesting(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "policy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicyDto> policy(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "rule/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<RuleDto> rule(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0).getRules().get(0), HttpStatus.OK);
 	}
 
 	

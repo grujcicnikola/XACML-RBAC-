@@ -1,6 +1,33 @@
 <body>
-  <ejs-treegrid [dataSource]="tasks" hasChildMapping="isParent" parentIdMapping="ParentID" idMapping="id"
-    [editSettings]="editSettings" [toolbar]="toolbar" height="470" (actionBegin)="actionBegin($event)">
+  <div id="_gridcontrol_toolbarItems" class="e-control e-toolbar e-lib e-keyboard" 
+    aria-haspopup="false" aria-orientation="horizontal" style="height: auto; width: auto;">
+    <div class="e-toolbar-items">
+      <div class="e-toolbar-item">
+        <button (click)="add()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" id="_gridcontrol_add"
+          style="width: auto;">
+          <span class="glyphicon glyphicon-plus"></span><span class="e-tbar-btn-text">Add</span>
+        </button>
+      </div>
+      <div class="e-toolbar-item">
+        <button (click)="edit()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" id="_gridcontrol_edit"
+           style="width: auto;">
+          <span class="glyphicon glyphicon-pencil">
+          </span>
+          <span class="e-tbar-btn-text">Edit</span>
+        </button>
+      </div>
+      <div class="e-toolbar-item">
+        <button (click)="delete()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" id="_gridcontrol_delete"
+          style="width: auto;">
+          <span class="glyphicon glyphicon-trash">
+          </span>
+          <span class="e-tbar-btn-text">Delete</span>
+        </button></div>
+    </div>
+  </div>
+
+  <ejs-treegrid #treegrid [dataSource]="tasks" hasChildMapping="isParent" parentIdMapping="ParentID" idMapping="id"
+    height="470" (actionBegin)="actionBegin($event)">
     <e-columns>
       <e-column field="id" headerText="Task ID" width="120" textAlign="Right" isPrimaryKey="true" type="number">
       </e-column>
@@ -15,5 +42,4 @@
       </app-dialog-view>
     </ng-template>
   </ejs-treegrid>
-  <button id="mmmm" (click)="myFunction()">Click me</button>
 </body>

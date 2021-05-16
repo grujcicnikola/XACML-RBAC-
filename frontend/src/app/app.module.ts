@@ -19,6 +19,7 @@ import {
 } from '@syncfusion/ej2-angular-treegrid';
 import { TreeGridComponent } from './editor/component/tree-grid/tree-grid.component';
 import { DialogViewComponent } from './editor/component/dialog-view/dialog-view.component';
+import { ChooseWhatToCreateComponent } from './editor/component/choose-what-to-create/choose-what-to-create.component';
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     TreeGridComponent,
-    DialogViewComponent
+    DialogViewComponent,
+    ChooseWhatToCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
       {enableTracing : true}
     ),
   ],
-  providers: [httpInterceptorProviders, EditService, ToolbarService],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

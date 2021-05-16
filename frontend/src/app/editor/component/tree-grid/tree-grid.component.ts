@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { EditSettingsModel, DataStateChangeEventArgs } from '@syncfusion/ej2-treegrid/src';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { EditSettingsModel, DataStateChangeEventArgs, TreeGrid } from '@syncfusion/ej2-treegrid/src';
 import { Observable } from 'rxjs';
 import { TaskStoreService } from 'src/app/service/taskStoreService/task-store.service';
 import { TaskDataService } from 'src/app/service/taskDataService/task-data.service';
@@ -7,6 +7,7 @@ import { SaveEventArgs } from '@syncfusion/ej2-grids';
 import { TaskModel } from 'src/app/model/TaskModel';
 import { TypesEnum } from 'src/app/model/TypesEnum';
 import { PolicyService } from 'src/app/service/policyService/policy.service';
+import { ModeEnum } from 'src/app/model/Mode';
 
 @Component({
   selector: 'app-tree-grid',
@@ -15,14 +16,13 @@ import { PolicyService } from 'src/app/service/policyService/policy.service';
 })
 export class TreeGridComponent implements OnInit {
 
-  public editSettings: EditSettingsModel;
-  public toolbar: String[];
-
-  @Input() tasks: TaskModel[]=[];
+  @Input() tasks: TaskModel[] = [];
   public taskData: TaskModel;
-  public mode: 'add' | 'edit';
+  public mode: ModeEnum;
   TypesEnum = TypesEnum;
 
+  @ViewChild('treegrid',{static: false}) 
+  public treegrid: TreeGrid; 
 
   constructor(private taskService: TaskDataService) {
     //this.tasks = taskService.createDb();
@@ -33,34 +33,41 @@ export class TreeGridComponent implements OnInit {
     //this.taskService.execute(state);
   }
   ngOnInit(): void {
-    this.editSettings = {
-      allowEditing: true,
-      allowAdding: true,
-      allowDeleting: true,
-      mode: "Dialog"
-    };
-    this.toolbar = ["Add", "Edit", "Delete", "Update", "Cancel"];
 
-    const state: any = { skip: 0, take: 10 };
-   // this.taskService.execute(state);
   }
 
-  actionBegin(args: SaveEventArgs): void{
-    if(args.requestType==="beginEdit" || args.requestType==="edit"){
+  actionBegin(args: SaveEventArgs): void {
+    console.log(args);
+    if (args.requestType === "beginEdit" || args.requestType === "edit") {
       this.taskData = Object.assign(args.rowData);
       console.log(this.taskData);
-      this.mode='edit';
+      this.mode = ModeEnum.Edit;
     }
-    if(args.requestType==="add"){
+    if (args.requestType === "add") {
       this.taskData = Object.assign(args.rowData);
       console.log(this.taskData);
-      this.mode='add'
+      this.mode = ModeEnum.Add;
+    }
+    if (args.requestType === "Delete") {
+      this.taskData = Object.assign(args.rowData);
+      console.log(this.taskData);
+      this.mode = ModeEnum.Delete;
     }
     console.log(args);
   }
 
-  myFunction(): void{
-    console.log("klik");
-    console.log(this.tasks);
+  add(){
+    console.log("ADD");
+    console.log(this.treegrid.getSelectedRecords());
+  }
+
+  edit(){
+    console.log("EDIT");
+    console.log(this.treegrid.getSelectedRecords());
+  }
+
+  delete(){
+    console.log("DELETE");
+    console.log(this.treegrid.getSelectedRecords());
   }
 }

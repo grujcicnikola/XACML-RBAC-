@@ -30,7 +30,7 @@ export class TaskStoreService extends Subject<DataStateChangeEventArgs> {
     return new Observable((observer) => {
     
       // observable execution
-      observer.next(this.taskDataService.createDb())
+      //observer.next(this.taskDataService.tasks())
       //observer.complete()
     });
     // .pipe(

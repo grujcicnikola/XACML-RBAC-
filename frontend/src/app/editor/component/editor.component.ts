@@ -19,6 +19,7 @@ export class EditorComponent implements OnInit {
   email: string = "";
   loggedUser: User;
   tasks: TaskModel[];
+  tabIndex: any;
 
 
   constructor(private router: ActivatedRoute, private service: EditorService,
@@ -48,7 +49,7 @@ export class EditorComponent implements OnInit {
         this.loggedUser = data as User;
         console.log(this.loggedUser);
       });
-      this.policyService.getPolicySet().subscribe(data => {
+      this.policyService.getInitalPolicySet().subscribe(data => {
         this.tasks = this.taskDataService.transformDtoToTreeModel(data);
       });
     }
@@ -67,5 +68,6 @@ export class EditorComponent implements OnInit {
 
   myFunction() {
     console.log('klik 2')
+    console.log(this.tabIndex);
   }
 }
