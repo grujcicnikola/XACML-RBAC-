@@ -100,34 +100,5 @@ public class PolicyController {
 		return policySetDto;
 		
 	}
-	
-	/*
-	 *const tasks: TaskModel[] = [
-      {
-        id: 1,
-        type: TypesEnum.PolicySet,
-        creator: 'ngrujcic',
-        created: new Date("02/23/2017"),
-        isParent: true,
-        ParentID: null,
-      },
-      {
-        id: 2,
-        type: TypesEnum.Policy,
-        creator: 'ngrujcic',
-        created: new Date("02/23/2017"),
-        isParent: true,
-        ParentID: 1
-      },
-      {
-        id: 3,
-        type: TypesEnum.Rule,
-        creator: 'ngrujcic',
-        created: new Date("02/23/2017"),
-        isParent: true,
-        ParentID: 2
-      },
-     
-    ];
-    return tasks; */
+
 }

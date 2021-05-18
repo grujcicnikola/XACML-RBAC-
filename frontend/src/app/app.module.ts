@@ -10,7 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
-import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   TreeGridModule,
@@ -20,6 +19,11 @@ import {
 import { TreeGridComponent } from './editor/component/tree-grid/tree-grid.component';
 import { DialogViewComponent } from './editor/component/dialog-view/dialog-view.component';
 import { ChooseWhatToCreateComponent } from './editor/component/choose-what-to-create/choose-what-to-create.component';
+import { StoreModule } from '@ngrx/store';
+import { PolicySetReducer, POLICY_SET_FEATURE_KEY } from './store/policySet.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { PolicySetEffects } from './store/policySet.effects';
+import { StoreDevtoolsModule} from '@ngrx/store-devtools'
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
@@ -43,13 +47,16 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    TreeViewModule,
     TreeGridModule, 
     HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature('policySetStateKey', PolicySetReducer),
+    EffectsModule.forRoot([PolicySetEffects]),
     RouterModule.forRoot(
       appRoutes,
       {enableTracing : true}
     ),
+    StoreDevtoolsModule.instrument({maxAge:10})
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

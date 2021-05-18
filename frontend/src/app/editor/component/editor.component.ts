@@ -7,6 +7,12 @@ import { User } from 'src/app/model/User';
 import { PolicyService } from 'src/app/service/policyService/policy.service';
 import { TaskDataService } from 'src/app/service/taskDataService/task-data.service';
 import { TaskModel } from 'src/app/model/TaskModel';
+import PolicySetState from 'src/app/store/policySet.state';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import * as PolicySetActions from 'src/app/store/policySet.action';
+import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
+import { PolicySet } from 'src/app/model/PolicySet';
 
 @Component({
   selector: 'app-editor',
@@ -20,11 +26,13 @@ export class EditorComponent implements OnInit {
   loggedUser: User;
   tasks: TaskModel[];
   tabIndex: any;
-
+  //policySet$: Observable<PolicySet>;
+  //ToDoSubscription: Subscription;
 
   constructor(private router: ActivatedRoute, private service: EditorService,
     private tokenStorage: TokenStorageService, private userService: UserService,
-    private policyService: PolicyService, private taskDataService: TaskDataService) {
+    private policyService: PolicyService, private taskDataService: TaskDataService, private store: Store<{ policySet: PolicySetState }>) {
+      
 
     this.service.test().subscribe(data => {
       console.log(data);
@@ -49,14 +57,12 @@ export class EditorComponent implements OnInit {
         this.loggedUser = data as User;
         console.log(this.loggedUser);
       });
-      this.policyService.getInitalPolicySet().subscribe(data => {
-        this.tasks = this.taskDataService.transformDtoToTreeModel(data);
-      });
     }
   }
 
   ngOnInit() {
-
+    // this.store.dispatch(PolicySetActions.BeginGetPolicySetAction());
+    // this.policySet$ = this.store.pipe(select(policySet_selector));
   }
 
   logout() {

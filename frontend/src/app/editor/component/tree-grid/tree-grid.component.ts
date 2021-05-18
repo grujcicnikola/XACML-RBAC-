@@ -8,33 +8,58 @@ import { TaskModel } from 'src/app/model/TaskModel';
 import { TypesEnum } from 'src/app/model/TypesEnum';
 import { PolicyService } from 'src/app/service/policyService/policy.service';
 import { ModeEnum } from 'src/app/model/Mode';
+import { PolicySet } from 'src/app/model/PolicySet';
+import { select,  Store } from '@ngrx/store';
+import PolicySetState from 'src/app/store/policySet.state';
+import * as PolicySetActions from 'src/app/store/policySet.action';
+import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
+
+
 
 @Component({
   selector: 'app-tree-grid',
   templateUrl: './tree-grid.component.html',
   styleUrls: ['./tree-grid.component.css']
+  
 })
 export class TreeGridComponent implements OnInit {
 
-  @Input() tasks: TaskModel[] = [];
+  //@Input() policySet: PolicySet;
   public taskData: TaskModel;
   public mode: ModeEnum;
   TypesEnum = TypesEnum;
+  tasks: TaskModel[] = [];
+  policySet$: Observable<PolicySet>;
 
   @ViewChild('treegrid',{static: false}) 
   public treegrid: TreeGrid; 
 
-  constructor(private taskService: TaskDataService) {
-    //this.tasks = taskService.createDb();
+  constructor(private taskDataService: TaskDataService, private policyService: PolicyService,
+    private store: Store<PolicySetState>) {
+    
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
     console.log("change")
-    //this.taskService.execute(state);
   }
   ngOnInit(): void {
+    // this.policyService.getInitalPolicySet().subscribe(data => {
+    //     this.tasks = this.taskDataService.transformDtoToTreeModel(data);
+    //   });
+    //this.store.dispatch(PolicySetActions.BeginGetPolicySetAction());
+    this.store.dispatch(PolicySetActions.BeginGetPolicySetAction());
+    this.policySet$ = this.store.pipe(select(policySet_selector));
+
+    this.policySet$.subscribe((data)=>{
+      if(data!=null)
+        this.tasks = this.taskDataService.transformDtoToTreeModel(data);
+      console.log("tasks")
+      console.log(this.tasks)
+    })
+    
 
   }
+
 
   actionBegin(args: SaveEventArgs): void {
     console.log(args);
@@ -69,5 +94,10 @@ export class TreeGridComponent implements OnInit {
   delete(){
     console.log("DELETE");
     console.log(this.treegrid.getSelectedRecords());
+  }
+
+  check(){
+    console.log("check");
+    console.log(this.policySet$);
   }
 }
