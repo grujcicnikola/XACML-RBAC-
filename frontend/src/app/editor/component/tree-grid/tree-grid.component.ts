@@ -13,6 +13,9 @@ import { select, Store } from '@ngrx/store';
 import PolicySetState from 'src/app/store/policySet.state';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ModalService } from '../modal.service';
 
 
 
@@ -28,12 +31,13 @@ export class TreeGridComponent implements OnInit, OnChanges  {
   public mode: ModeEnum;
   TypesEnum = TypesEnum;
   tasks: TaskModel[] = [];
+  bodyText = 'This text can be updated in modal 1'
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
 
   constructor(private taskDataService: TaskDataService, private policyService: PolicyService,
-    private store: Store<PolicySetState>) {
+    private store: Store<PolicySetState>, public dialog: MatDialog, private modalService: ModalService) {
 
   }
 
@@ -84,6 +88,22 @@ export class TreeGridComponent implements OnInit, OnChanges  {
   add() {
     console.log("ADD");
     console.log(this.treegrid.getSelectedRecords());
+    // const dialogRef = this.dialog.open(DialogComponent);
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.position = {
+      'top': '0',
+      left: '0'
+  };
+
+    this.dialog.open(DialogComponent, dialogConfig);
   }
 
   edit() {
@@ -100,4 +120,12 @@ export class TreeGridComponent implements OnInit, OnChanges  {
     console.log("check");
     console.log(this.policySet);
   }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+}
+
+closeModal(id: string) {
+    this.modalService.close(id);
+}
 }
