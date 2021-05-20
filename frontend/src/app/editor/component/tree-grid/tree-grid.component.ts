@@ -14,8 +14,7 @@ import PolicySetState from 'src/app/store/policySet.state';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { ModalService } from '../modal.service';
+import { ModalService } from '../modal/modal.service';
 
 
 
@@ -37,7 +36,7 @@ export class TreeGridComponent implements OnInit, OnChanges  {
   public treegrid: TreeGrid;
 
   constructor(private taskDataService: TaskDataService, private policyService: PolicyService,
-    private store: Store<PolicySetState>, public dialog: MatDialog, private modalService: ModalService) {
+    private store: Store<PolicySetState>, private modalService: ModalService) {
 
   }
 
@@ -88,22 +87,6 @@ export class TreeGridComponent implements OnInit, OnChanges  {
   add() {
     console.log("ADD");
     console.log(this.treegrid.getSelectedRecords());
-    // const dialogRef = this.dialog.open(DialogComponent);
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.position = {
-      'top': '0',
-      left: '0'
-  };
-
-    this.dialog.open(DialogComponent, dialogConfig);
   }
 
   edit() {

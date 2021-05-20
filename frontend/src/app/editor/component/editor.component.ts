@@ -13,8 +13,6 @@ import { select, Store } from '@ngrx/store';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
 import { PolicySet } from 'src/app/model/PolicySet';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -35,7 +33,7 @@ export class EditorComponent implements OnInit {
   constructor(private router: ActivatedRoute, private service: EditorService,
     private tokenStorage: TokenStorageService, private userService: UserService,
     private policyService: PolicyService, private taskDataService: TaskDataService, 
-    public dialog: MatDialog, private store: Store<{ policySet: PolicySetState }>) {
+    private store: Store<{ policySet: PolicySetState }>) {
       
 
     this.service.test().subscribe(data => {
@@ -79,30 +77,5 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  myFunction() {
-    console.log('klik 2')
-    console.log(this.tabIndex);
-  }
-
-  add() {
-    console.log("ADD");
-    
-    // const dialogRef = this.dialog.open(DialogComponent);
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.position = {
-      'top': '0',
-      left: '0'
-  };
-
-    this.dialog.open(DialogComponent);
-  }
 
 }
