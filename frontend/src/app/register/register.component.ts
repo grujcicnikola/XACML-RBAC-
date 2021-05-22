@@ -17,7 +17,6 @@ import { checkPassword } from '../utils/password.validator';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   private user = new User();
-  private loginInfo: LoginInfo;
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
     private formBuilder: FormBuilder) { }

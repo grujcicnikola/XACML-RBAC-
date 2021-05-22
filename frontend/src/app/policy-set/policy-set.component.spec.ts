@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogViewComponent } from './dialog-view.component';
+import { PolicySetComponent } from './policy-set.component';
 
-describe('DialogViewComponent', () => {
-  let component: DialogViewComponent;
-  let fixture: ComponentFixture<DialogViewComponent>;
+describe('PolicySetComponent', () => {
+  let component: PolicySetComponent;
+  let fixture: ComponentFixture<PolicySetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogViewComponent ]
+      declarations: [ PolicySetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogViewComponent);
+    fixture = TestBed.createComponent(PolicySetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

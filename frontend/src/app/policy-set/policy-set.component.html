@@ -1,0 +1,50 @@
+<body>
+    <div class="container">
+      <section id="content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <h1>Policy Set Form</h1>
+          <div>
+            <div class="alert-message" *ngIf="f.xsi.invalid && f.xsi.dirty || f.xsi.touched">
+              <div *ngIf="f.xsi.errors?.minlength">Xsi must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="xsi" placeholder="xsi" required="" id="xsi" name="xsi"
+              [(ngModel)]="policySet.xsi" />
+          </div>
+          <div>
+            <div class="alert-message" *ngIf="f.policySetId.invalid && f.policySetId.dirty || f.policySetId.touched">
+              <div *ngIf="f.policySetId.errors?.minlength">policySetId must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="policySetId" placeholder="policySetId" required="" id="policySetId" name="policySetId"
+              [(ngModel)]="policySet.policySetId" />
+          </div>
+          <div>
+            <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
+              <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="version" placeholder="version" required="" id="version" name="version"
+              [(ngModel)]="policySet.version" />
+          </div>
+          <div>
+            <input type="text" formControlName="policyCombiningAlgId" placeholder="policyCombiningAlgId" required="" id="policyCombiningAlgId" name="policyCombiningAlgId"
+              [(ngModel)]="policySet.policyCombiningAlgId" />
+          </div>
+          <div>
+            <input type="text" formControlName="description" placeholder="description" required="" id="description"
+              name="description" [(ngModel)]="policySet.description" />
+          </div>
+          <div>
+            <input type="text" formControlName="policySetIdReference" placeholder="policySetIdReference" required="" id="policySetIdReference"
+              name="policySetIdReference" [(ngModel)]="policySet.policySetIdReference" />
+          </div>
+          <div>
+            <input type="text" formControlName="policyIdReference" placeholder="policyIdReference" required="" id="policyIdReference"
+              name="policyIdReference" [(ngModel)]="policySet.policyIdReference" />
+          </div>
+          <div>
+            <input type="submit" [disabled]="!form.valid" value="Save" />
+            <a (click)="closeEvent.emit($event)">Close</a>
+          </div>
+        </form><!-- form -->
+      </section><!-- content -->
+    </div><!-- container -->
+  </body>

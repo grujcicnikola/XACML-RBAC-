@@ -1,16 +1,16 @@
 <body>
-  <div id="_gridcontrol_toolbarItems" class="e-control e-toolbar e-lib e-keyboard" 
-    aria-haspopup="false" aria-orientation="horizontal" style="height: auto; width: auto;">
+  <div id="_gridcontrol_toolbarItems" class="e-control e-toolbar e-lib e-keyboard" aria-haspopup="false"
+    aria-orientation="horizontal" style="height: auto; width: auto;">
     <div class="e-toolbar-items">
       <div class="e-toolbar-item">
-        <button mat-raised-button (click)="add()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" id="_gridcontrol_add"
-          style="width: auto;">
+        <button mat-raised-button (click)="add()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib"
+          id="_gridcontrol_add" style="width: auto;">
           <span class="glyphicon glyphicon-plus"></span><span class="e-tbar-btn-text">Add</span>
         </button>
       </div>
       <div class="e-toolbar-item">
         <button (click)="edit()" class="e-tbar-btn e-tbtn-txt e-control e-btn e-lib" id="_gridcontrol_edit"
-           style="width: auto;">
+          style="width: auto;">
           <span class="glyphicon glyphicon-pencil">
           </span>
           <span class="e-tbar-btn-text">Edit</span>
@@ -37,28 +37,24 @@
       </e-column>
 
     </e-columns>
-    <ng-template #editSettingsTemplate let-data>
-      <app-dialog-view [taskData]="taskData" [mode]="mode">
-      </app-dialog-view>
-    </ng-template>
   </ejs-treegrid>
 
-  
 
-        ﻿<div>
-          <h1>Home</h1>
-          <p>{{bodyText}}</p>
-          <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
-          <button (click)="openModal('custom-modal-2')">Open Modal 2</button>
-      </div>
-      
-      <jw-modal id="custom-modal-1">
-          <app-login></app-login>
-          <button (click)="closeModal('custom-modal-1');">Close</button>
-      </jw-modal>
-      
-      <jw-modal id="custom-modal-2">
-          <h1 style="height:1000px">A Tall Custom Modal!</h1>
-          <button (click)="closeModal('custom-modal-2');">Close</button>
-      </jw-modal>
+
+  ﻿<div>
+    <h1>Home</h1>
+    <p>{{bodyText}}</p>
+    <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
+    <button (click)="openModal('custom-modal-2')">Open Modal 2</button>
+  </div>
+
+  <jw-modal id="custom-modal-1">
+    <app-policy-set
+      (closeEvent)= "closeModal('custom-modal-1')"></app-policy-set>
+  </jw-modal>
+
+  <jw-modal id="custom-modal-2">
+    <h1 style="height:1000px">A Tall Custom Modal!</h1>
+    <button (click)="closeModal('custom-modal-2');">Close</button>
+  </jw-modal>
 </body>

@@ -11,7 +11,11 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform : org.hibernate.dialect.MySQL5Dialect 
-    
+   data:
+      mongodb:
+         host: localhost
+         port: 27017
+         database: mongo    
 server:
   port: 8080
   #ssl:

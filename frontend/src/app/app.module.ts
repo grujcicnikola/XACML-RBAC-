@@ -17,7 +17,6 @@ import {
   ToolbarService
 } from '@syncfusion/ej2-angular-treegrid';
 import { TreeGridComponent } from './editor/component/tree-grid/tree-grid.component';
-import { DialogViewComponent } from './editor/component/dialog-view/dialog-view.component';
 import { ChooseWhatToCreateComponent } from './editor/component/choose-what-to-create/choose-what-to-create.component';
 import { StoreModule } from '@ngrx/store';
 import { PolicySetReducer, POLICY_SET_FEATURE_KEY } from './store/policySet.reducer';
@@ -26,6 +25,9 @@ import { PolicySetEffects } from './store/policySet.effects';
 import { StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { ModalComponent } from './editor/component/modal/modal.component';
 import { CommonModule } from '@angular/common';
+import { PolicySetComponent } from './policy-set/policy-set.component';
+import { PolicyComponent } from './policy/policy.component';
+import { RuleComponent } from './rule/rule.component';
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
@@ -40,9 +42,11 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     TreeGridComponent,
-    DialogViewComponent,
     ChooseWhatToCreateComponent,
-    ModalComponent
+    ModalComponent,
+    PolicySetComponent,
+    PolicyComponent,
+    RuleComponent
   ],
   imports: [
     CommonModule,
