@@ -1,9 +1,14 @@
 package com.example.backend.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +24,16 @@ import com.example.backend.dto.PolicySetDto;
 import com.example.backend.dto.RuleDto;
 import com.example.backend.dto.UserDto;
 import com.example.backend.model.User;
+import com.example.backend.service.UserService;
+import com.example.backend.service.XMLMarshalService;
 
 @RestController
 @RequestMapping("policy")
 @CrossOrigin(origins = "https://localhost:4200")
 public class PolicyController {
+	
+	@Autowired
+	private XMLMarshalService xmlMarshalService;
 	
 	@RequestMapping(value = "getPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> getPolicySet() {
@@ -51,6 +61,26 @@ public class PolicyController {
 		return new ResponseEntity<>(policySetDto, HttpStatus.OK);
 	}
 
+	
+	@RequestMapping(value = "testMarshalingPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> testMarshalingPolicySet() {
+		PolicySetDto policySetDto = createPolicySetForTesting();
+		try {
+			String xml = xmlMarshalService.marshal(policySetDto);
+			PolicySetDto policySetDto2 = xmlMarshalService.unmarshal(xml);
+			String xml2 = xmlMarshalService.marshal(policySetDto2);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
 	
 	public PolicySetDto createPolicySetForTesting() {
 		RuleDto ruleDto = RuleDto.builder()

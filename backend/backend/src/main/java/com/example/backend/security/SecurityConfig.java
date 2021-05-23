@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and()
 				//url-ovi za koje nije potrebna autentifikacija
-				.csrf().disable().authorizeRequests().antMatchers("/user/**").permitAll()
+				.csrf().disable().authorizeRequests().antMatchers("/user/**").permitAll().antMatchers("/policy/**").permitAll()
 				// svaki zahtev mora biti autorizovan
 				.anyRequest().authenticated().and()
 				// neautorizovanim zahtevima baci 401
