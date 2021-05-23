@@ -1,1 +1,38 @@
-<p>rule works!</p>
+<body>
+    <div class="container">
+      <section id="content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <h1>Rule Form</h1>
+          <div>
+            <div class="alert-message" *ngIf="f.ruleId.invalid && f.ruleId.dirty || f.ruleId.touched">
+              <div *ngIf="f.ruleId.errors?.minlength">ruleId must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="ruleId" placeholder="ruleId" required="" id="ruleId" name="ruleId"
+              [(ngModel)]="rule.ruleId" />
+          </div>
+          <div>
+            <div class="alert-message" *ngIf="f.effect.invalid && f.effect.dirty || f.effect.touched">
+              <div *ngIf="f.effect.errors?.minlength">effect must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="effect" placeholder="effect" required="" id="effect" name="effect"
+              [(ngModel)]="rule.effect" />
+          </div>
+          <!-- <div>
+            <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
+              <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
+            </div>
+            <input type="text" formControlName="version" placeholder="version" required="" id="version" name="version"
+              [(ngModel)]="rule.version" />
+          </div> -->
+          <div>
+            <input type="text" formControlName="description" placeholder="description" required="" id="description"
+              name="description" [(ngModel)]="rule.description" />
+          </div>
+          <div>
+            <input type="submit" [disabled]="!form.valid" value="Save" />
+            <a (click)="closeEvent.emit($event)">Close</a>
+          </div>
+        </form><!-- form -->
+      </section><!-- content -->
+    </div><!-- container -->
+  </body>
