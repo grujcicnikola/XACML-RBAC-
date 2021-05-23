@@ -51,16 +51,19 @@
 
   <jw-modal id="custom-modal-1">
     <app-policy-set
+      [mode] = "mode"
       (closeEvent)= "closeModal('custom-modal-1')"></app-policy-set>
   </jw-modal>
 
   <jw-modal id="custom-modal-2">
       <app-policy
+      [mode] = "mode"
       (closeEvent)= "closeModal('custom-modal-2')"></app-policy>
   </jw-modal>
 
   <jw-modal id="custom-modal-3">
       <app-rule
+      [mode] = "mode"
       (closeEvent)= "closeModal('custom-modal-3')"></app-rule>
   </jw-modal>
 </body>

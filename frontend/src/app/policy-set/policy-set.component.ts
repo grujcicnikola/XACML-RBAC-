@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../model/User';
 import { LoginInfo } from '../auth/login';
@@ -8,17 +8,19 @@ import { checkPassword } from '../utils/password.validator';
 import { mustMatch } from '../utils/must-match.validator';
 import { PolicySet } from '../model/PolicySet';
 import { PolicyService } from '../service/policyService/policy.service';
+import { ModeEnum } from '../model/Mode';
 
 @Component({
   selector: 'app-policy-set',
   templateUrl: './policy-set.component.html',
   styleUrls: ['./policy-set.component.css']
 })
-export class PolicySetComponent implements OnInit {
+export class PolicySetComponent implements OnInit, OnChanges {
 
+  @Input() mode : ModeEnum;
+  @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
   private policySet = new PolicySet();
-  @Output() closeEvent = new EventEmitter<void>();
   //private loginInfo: LoginInfo;
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
@@ -35,18 +37,33 @@ export class PolicySetComponent implements OnInit {
     }
    
   ngOnInit() {
-    
+  
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if( this.mode === ModeEnum.Edit){
+      this.policyService.getPolicySet(1).subscribe(res =>
+        this.policySet = res)
+    }else{
+      this.policySet = new PolicySet();
+    }
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.policyService.createPolicySet(this.policySet).subscribe(res => {
-      this.closeEvent.emit();
-    }, err => {
 
-    });
+    if( this.mode === ModeEnum.Add){
+      this.policyService.createPolicySet(this.policySet).subscribe(res => {
+        this.closeEvent.emit();
+      }, err => {
+  
+      });
+    }else{
+      //put method
+    }
+  
   }
 
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PolicySet } from '../model/PolicySet';
 import { UserService } from '../service/userService/user.service';
 import { TokenStorageService } from '../auth/token-storage.service';
 import { Policy } from '../model/Policy';
+import { ModeEnum } from '../model/Mode';
+import { PolicyService } from '../service/policyService/policy.service';
 
 @Component({
   selector: 'app-policy',
@@ -12,13 +14,13 @@ import { Policy } from '../model/Policy';
 })
 export class PolicyComponent implements OnInit {
 
+  @Input() mode : ModeEnum;
+  @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
   private policy = new Policy();
-  @Output() closeEvent = new EventEmitter<void>();
-  //private loginInfo: LoginInfo;
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,  private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
         xsi: ['', [Validators.minLength(3), Validators.required]],
         policyId: ['', [Validators.minLength(3), Validators.required]],
@@ -31,6 +33,15 @@ export class PolicyComponent implements OnInit {
    
   ngOnInit() {
     
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if( this.mode === ModeEnum.Edit){
+      this.policyService.getPolicy(1).subscribe(res =>
+        this.policy = res)
+    }else{
+      this.policy = new Policy();
+    }
   }
 
   // convenience getter for easy access to form fields

@@ -85,27 +85,50 @@ export class TreeGridComponent implements OnInit, OnChanges {
   }
 
   add() {
-    console.log("ADD");
-    ///var selected : any;
+    // TODO change logic later, becaouse when policySet is selecte, this shouldd add Policy (or Target)
     var selected: any = this.treegrid.getSelectedRecords()[0];
-    console.log(selected.type);
-    switch (selected.type) {
-      case TypesEnum.Policy:
-        this.openModal('custom-modal-2');
-        break;
-      case TypesEnum.Rule:
-        this.openModal('custom-modal-3');
-        break;
-      default:
-        this.openModal('custom-modal-1');
-        break;
+    //console.log(selected.type);
+    if (selected) {
+      switch (selected.type) {
+        case TypesEnum.Policy:
+          this.openModal('custom-modal-2');
+          this.mode = ModeEnum.Add;
+          break;
+        case TypesEnum.Rule:
+          this.openModal('custom-modal-3');
+          this.mode = ModeEnum.Add;
+          break;
+        default:
+          this.openModal('custom-modal-1');
+          this.mode = ModeEnum.Add;
+          break;
+      }
+    } else {
+      //open policy set
+      this.openModal('custom-modal-1');
+      this.mode = ModeEnum.Add;
     }
-
   }
 
   edit() {
-    console.log("EDIT");
-    console.log(this.treegrid.getSelectedRecords());
+    var selected: any = this.treegrid.getSelectedRecords()[0];
+    //console.log(selected.type);
+    if (selected) {
+      switch (selected.type) {
+        case TypesEnum.Policy:
+          this.openModal('custom-modal-2');
+          this.mode = ModeEnum.Edit;
+          break;
+        case TypesEnum.Rule:
+          this.openModal('custom-modal-3');
+          this.mode = ModeEnum.Edit;
+          break;
+        default:
+          this.openModal('custom-modal-1');
+          this.mode = ModeEnum.Edit;
+          break;
+      }
+    }
   }
 
   delete() {
