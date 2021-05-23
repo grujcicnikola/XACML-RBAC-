@@ -24,7 +24,7 @@ import { ModalService } from '../modal/modal.service';
   styleUrls: ['./tree-grid.component.css']
 
 })
-export class TreeGridComponent implements OnInit, OnChanges  {
+export class TreeGridComponent implements OnInit, OnChanges {
   @Input() policySet: PolicySet;
   public taskData: TaskModel;
   public mode: ModeEnum;
@@ -86,7 +86,21 @@ export class TreeGridComponent implements OnInit, OnChanges  {
 
   add() {
     console.log("ADD");
-    console.log(this.treegrid.getSelectedRecords());
+    ///var selected : any;
+    var selected: any = this.treegrid.getSelectedRecords()[0];
+    console.log(selected.type);
+    switch (selected.type) {
+      case TypesEnum.Policy:
+        this.openModal('custom-modal-2');
+        break;
+      case TypesEnum.Rule:
+        this.openModal('custom-modal-3');
+        break;
+      default:
+        this.openModal('custom-modal-1');
+        break;
+    }
+
   }
 
   edit() {
@@ -106,9 +120,9 @@ export class TreeGridComponent implements OnInit, OnChanges  {
 
   openModal(id: string) {
     this.modalService.open(id);
-}
+  }
 
-closeModal(id: string) {
+  closeModal(id: string) {
     this.modalService.close(id);
-}
+  }
 }

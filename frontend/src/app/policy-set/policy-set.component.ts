@@ -7,6 +7,7 @@ import { TokenStorageService } from '../auth/token-storage.service';
 import { checkPassword } from '../utils/password.validator';
 import { mustMatch } from '../utils/must-match.validator';
 import { PolicySet } from '../model/PolicySet';
+import { PolicyService } from '../service/policyService/policy.service';
 
 @Component({
   selector: 'app-policy-set',
@@ -21,7 +22,7 @@ export class PolicySetComponent implements OnInit {
   //private loginInfo: LoginInfo;
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder, private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
         xsi: ['', [Validators.minLength(3), Validators.required]],
         policySetId: ['', [Validators.minLength(3), Validators.required]],
@@ -41,11 +42,11 @@ export class PolicySetComponent implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    // this.userService.register(this.user).subscribe(res => {
-    //   window.location.href = "https://localhost:4200";
-    // }, err => {
+    this.policyService.createPolicySet(this.policySet).subscribe(res => {
+      this.closeEvent.emit();
+    }, err => {
 
-    // });
+    });
   }
 
 }

@@ -30,4 +30,8 @@ export class PolicyService {
     return this.http.get<Rule>(this.url + '/rule/' + id);
   }
 
+  createPolicySet(policySet: PolicySet): Observable<PolicySet> {
+    return this.http.post<PolicySet>(this.url + '/policySet', policySet);
+  }
+
 }
