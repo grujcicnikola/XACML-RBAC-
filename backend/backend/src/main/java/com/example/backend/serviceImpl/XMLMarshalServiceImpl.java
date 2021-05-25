@@ -12,13 +12,21 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.dto.PolicySetDto;
+import com.example.backend.model.PolicySetDocument;
+import com.example.backend.repository.PolicySetDocumentRepository;
+import com.example.backend.repository.UserRepository;
 import com.example.backend.service.XMLMarshalService;
 
 @Service
 public class XMLMarshalServiceImpl implements XMLMarshalService {
+	
+	@Autowired
+	private PolicySetDocumentRepository policySetDocumentRepository;
+	
 	
 	@Override
 	public String marshal(PolicySetDto policySetDto) throws JAXBException, IOException {
@@ -52,6 +60,21 @@ public class XMLMarshalServiceImpl implements XMLMarshalService {
 		StringReader sr = new StringReader(xml);
 		PolicySetDto policySetDto = (PolicySetDto) unmarshaller.unmarshal(streamReader);
 		return policySetDto;
+	}
+
+	@Override
+	public PolicySetDocument savePolicySet(String xml) {
+		// TODO Auto-generated method stub
+		PolicySetDocument doc = new PolicySetDocument();
+		doc.setContent(xml);
+		return policySetDocumentRepository.save(doc);
+		
+	}
+
+	@Override
+	public PolicySetDocument getPolicySet(String id) {
+		// TODO Auto-generated method stub
+		return this.policySetDocumentRepository.findById(id).get();
 	}
 
 }

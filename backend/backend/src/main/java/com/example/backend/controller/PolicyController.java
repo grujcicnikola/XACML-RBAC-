@@ -23,6 +23,7 @@ import com.example.backend.dto.PolicyDto;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.dto.RuleDto;
 import com.example.backend.dto.UserDto;
+import com.example.backend.model.PolicySetDocument;
 import com.example.backend.model.User;
 import com.example.backend.service.UserService;
 import com.example.backend.service.XMLMarshalService;
@@ -69,6 +70,9 @@ public class PolicyController {
 			String xml = xmlMarshalService.marshal(policySetDto);
 			PolicySetDto policySetDto2 = xmlMarshalService.unmarshal(xml);
 			String xml2 = xmlMarshalService.marshal(policySetDto2);
+			PolicySetDocument policySetDocument= xmlMarshalService.savePolicySet(xml2);
+			PolicySetDocument policySetDocument1= xmlMarshalService.getPolicySet(policySetDocument.getId());
+			System.out.print(policySetDocument1.getId());
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
