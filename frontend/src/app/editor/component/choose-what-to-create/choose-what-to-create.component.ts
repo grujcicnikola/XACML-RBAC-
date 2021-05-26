@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TypesEnum } from 'src/app/model/TypesEnum';
 
 @Component({
@@ -9,6 +9,7 @@ import { TypesEnum } from 'src/app/model/TypesEnum';
 export class ChooseWhatToCreateComponent implements OnInit {
 
   @Input() currentType: TypesEnum;
+  @Output() closeEvent = new EventEmitter<void>();
   private types: TypesEnum[];
 
   constructor() { }
@@ -27,6 +28,10 @@ export class ChooseWhatToCreateComponent implements OnInit {
     }
     console.log(this.currentType);
     console.log(this.types);
+  }
+
+  onSubmit() {
+    window.location.href = "https://localhost:4200/editor"; 
   }
 
 }

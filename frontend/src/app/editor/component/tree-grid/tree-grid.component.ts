@@ -31,6 +31,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
   TypesEnum = TypesEnum;
   tasks: TaskModel[] = [];
   bodyText = 'This text can be updated in modal 1'
+  selectedItemId: number;
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
@@ -132,8 +133,15 @@ export class TreeGridComponent implements OnInit, OnChanges {
   }
 
   delete() {
-    console.log("DELETE");
-    console.log(this.treegrid.getSelectedRecords());
+    var selected: any = this.treegrid.getSelectedRecords()[0];
+    if(selected){
+      this.selectedItemId = selected.id;
+      this.openModal('custom-modal-4');
+    }
+  }
+
+  deleteItem() {
+    console.log(this.selectedItemId);
   }
 
   check() {

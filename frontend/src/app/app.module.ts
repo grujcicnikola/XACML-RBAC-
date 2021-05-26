@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { PolicySetComponent } from './policy-set/policy-set.component';
 import { PolicyComponent } from './policy/policy.component';
 import { RuleComponent } from './rule/rule.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     ModalComponent,
     PolicySetComponent,
     PolicyComponent,
-    RuleComponent
+    RuleComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
