@@ -27,7 +27,7 @@
   </div>
 
   <ejs-treegrid #treegrid [dataSource]="tasks" hasChildMapping="isParent" parentIdMapping="ParentID" idMapping="id"
-    height="470" (actionBegin)="actionBegin($event)">
+     height="470"><!-- (actionBegin)="actionBegin($event)"> -->
     <e-columns>
       <e-column field="id" headerText="Task ID" width="120" textAlign="Right" isPrimaryKey="true" type="number">
       </e-column>
@@ -39,37 +39,28 @@
     </e-columns>
   </ejs-treegrid>
 
-
-
-  <!-- ﻿<div>
-    <h1>Home</h1>
-    <p>{{bodyText}}</p>
-    <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
-    <button (click)="openModal('custom-modal-2')">Open Modal 2</button>
-    <button (click)="openModal('custom-modal-3')">Open Modal 3</button>
-  </div> -->
-
   <jw-modal id="custom-modal-1">
-    <app-policy-set
-      [mode] = "mode"
-      (closeEvent)= "closeModal('custom-modal-1')"></app-policy-set>
+    <app-policy-set [mode]="mode" (closeEvent)="closeModal('custom-modal-1')"></app-policy-set>
   </jw-modal>
 
   <jw-modal id="custom-modal-2">
-      <app-policy
-      [mode] = "mode"
-      (closeEvent)= "closeModal('custom-modal-2')"></app-policy>
+    <app-policy [mode]="mode" (closeEvent)="closeModal('custom-modal-2')"></app-policy>
   </jw-modal>
 
   <jw-modal id="custom-modal-3">
-      <app-rule
-      [mode] = "mode"
-      (closeEvent)= "closeModal('custom-modal-3')"></app-rule>
+    <app-rule [mode]="mode" (closeEvent)="closeModal('custom-modal-3')"></app-rule>
   </jw-modal>
 
   <jw-modal id="custom-modal-4">
-    <app-confirmation-dialog
-      [selectedItemId] = "selectedItemId"
-      (closeEvent)= "closeModal('custom-modal-4')"></app-confirmation-dialog>
-</jw-modal>
+    <app-confirmation-dialog [selectedItemId]="selectedItemId" (closeEvent)="closeModal('custom-modal-4')">
+    </app-confirmation-dialog>
+  </jw-modal>
+
+  <jw-modal id="custom-modal-5">
+    <app-choose-what-to-create 
+    [currentType]="currentType" 
+    (closeEvent)="closeModal('custom-modal-5')"
+    (selectedEvent) ="selectedEvent($event)">
+    </app-choose-what-to-create>
+  </jw-modal>
 </body>

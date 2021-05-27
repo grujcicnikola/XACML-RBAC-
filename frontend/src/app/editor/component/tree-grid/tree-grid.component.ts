@@ -32,6 +32,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
   tasks: TaskModel[] = [];
   bodyText = 'This text can be updated in modal 1'
   selectedItemId: number;
+  currentType: TypesEnum;
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
@@ -65,32 +66,59 @@ export class TreeGridComponent implements OnInit, OnChanges {
     }
   }
 
-  actionBegin(args: SaveEventArgs): void {
-    console.log(args);
-    if (args.requestType === "beginEdit" || args.requestType === "edit") {
-      this.taskData = Object.assign(args.rowData);
-      console.log(this.taskData);
-      this.mode = ModeEnum.Edit;
-    }
-    if (args.requestType === "add") {
-      this.taskData = Object.assign(args.rowData);
-      console.log(this.taskData);
-      this.mode = ModeEnum.Add;
-    }
-    if (args.requestType === "Delete") {
-      this.taskData = Object.assign(args.rowData);
-      console.log(this.taskData);
-      this.mode = ModeEnum.Delete;
-    }
-    console.log(args);
-  }
+
+  // actionBegin(args: SaveEventArgs): void {
+  //   console.log(args);
+  //   if (args.requestType === "beginEdit" || args.requestType === "edit") {
+  //     this.taskData = Object.assign(args.rowData);
+  //     console.log(this.taskData);
+  //     this.mode = ModeEnum.Edit;
+  //   }
+  //   if (args.requestType === "add") {
+  //     this.taskData = Object.assign(args.rowData);
+  //     console.log(this.taskData);
+  //     this.mode = ModeEnum.Add;
+  //   }
+  //   if (args.requestType === "Delete") {
+  //     this.taskData = Object.assign(args.rowData);
+  //     console.log(this.taskData);
+  //     this.mode = ModeEnum.Delete;
+  //   }
+  //   console.log(args);
+  // }
 
   add() {
-    // TODO change logic later, becaouse when policySet is selecte, this shouldd add Policy (or Target)
+    // TODO change logic later, because when policySet is selected, this shouldd add Policy (or Target)
     var selected: any = this.treegrid.getSelectedRecords()[0];
     //console.log(selected.type);
     if (selected) {
-      switch (selected.type) {
+      //switch (selected.type) {
+        // case TypesEnum.Policy:
+        //   this.openModal('custom-modal-2');
+        //   this.mode = ModeEnum.Add;
+        //   break;
+        // case TypesEnum.Rule:
+        //   this.openModal('custom-modal-3');
+        //   this.mode = ModeEnum.Add;
+        //   break;
+        // default:
+        //   this.openModal('custom-modal-1');
+        //   this.mode = ModeEnum.Add;
+        //   break;
+      //}
+      this.currentType = selected.type;
+      this.openModal('custom-modal-5');
+
+    } else {
+      //open policy set
+      this.openModal('custom-modal-1');
+      this.mode = ModeEnum.Add;
+    }
+  }
+
+  selectedEvent(event: TypesEnum){
+    if (event) {
+      switch (event) {
         case TypesEnum.Policy:
           this.openModal('custom-modal-2');
           this.mode = ModeEnum.Add;
@@ -99,16 +127,16 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-modal-3');
           this.mode = ModeEnum.Add;
           break;
+        case TypesEnum.Target:
+          
+          break;
         default:
           this.openModal('custom-modal-1');
           this.mode = ModeEnum.Add;
           break;
       }
-    } else {
-      //open policy set
-      this.openModal('custom-modal-1');
-      this.mode = ModeEnum.Add;
     }
+    //this.currentType = undefined;
   }
 
   edit() {

@@ -2,12 +2,21 @@
     <div class="container">
         <section id="content">
             <form (ngSubmit)="onSubmit()">
-                <h1>Are you sure you want to delete this?</h1>
+                <h1>What do you want to create?</h1>
                 <div>
-                    <input type="submit" value="Delete" />
+                    <select name="types" id="types"  class="form-control"
+                        [(ngModel)]="choosenType">
+                        <option *ngFor='let type of types' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
+                    <input type="submit" value="Create" />
                     <a (click)="closeEvent.emit($event)">Close</a>
                 </div>
             </form><!-- form -->
         </section><!-- content -->
     </div><!-- container -->
 </body>
+
+<!-- <label>Payment methods</label>
+                                <select name="paymentMethods" id="methods" multiple class="form-control" [(ngModel)]="choosenMethods">
+                                    <option *ngFor = 'let method of allPaymentMethods' value="{{method.name}}">{{method.name}}</option>
+                                </select> -->
