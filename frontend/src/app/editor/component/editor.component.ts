@@ -78,7 +78,7 @@ export class EditorComponent implements OnInit {
   logout() {
     this.tokenStorage.signOut();
     this.userService.logout(this.email).subscribe(data => {
-      window.location.href = "https://localhost:4200";
+      window.location.href = "http://localhost:4200";
     });
   }
 

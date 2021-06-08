@@ -50,7 +50,7 @@ export class ChooseWhatToCreateComponent implements OnInit, OnChanges, OnDestroy
   }
 
   onSubmit() {
-    //window.location.href = "https://localhost:4200/editor"; 
+    //window.location.href = "http://localhost:4200/editor"; 
     this.selectedEvent.emit(this.choosenType);
     this.closeEvent.emit();
     this.ngOnDestroy();

@@ -46,10 +46,6 @@ public class PolicyController {
 	
 	@Autowired
 	private XMLMarshalService xmlMarshalService;
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-	@Autowired
-	JwtProvider jwtProvider;
 	
 	@RequestMapping(value = "getPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> getPolicySet() {

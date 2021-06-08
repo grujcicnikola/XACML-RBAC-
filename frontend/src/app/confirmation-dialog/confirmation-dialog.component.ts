@@ -20,7 +20,7 @@ export class ConfirmationDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    window.location.href = "https://localhost:4200/editor"; 
+    window.location.href = "http://localhost:4200/editor"; 
   }
 
 
