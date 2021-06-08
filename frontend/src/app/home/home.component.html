@@ -42,6 +42,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li><a *ngIf="someoneLogged == true" href=""><span
+                                class="glyphicon glyphicon glyphicon-plus"></span> Create new</a></li>
+                        <li><a *ngIf="someoneLogged == true" href=""><span
                                     class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                         <li><a *ngIf="someoneLogged != true" href=""><span class="glyphicon glyphicon-log-in"></span>
                                 Login</a></li>
@@ -55,3 +57,14 @@
         </div>
     </div>
 </div>
+<h2>List of all created policies</h2>
+<p>Choose which one do you want to preview/open/download.</p>
+
+<div class="row">
+  <div class="column"  *ngFor="let policySet of policySets; let i = index">
+    <div class="card">
+      <h3>{{policySet.policyIdReference}}</h3>
+      <p>{{policySet.description}}</p>
+      <a id="hrefButton" (click)="open(policySet)" class="btn" >Edit</a>
+    </div>
+  </div>

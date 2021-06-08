@@ -5,6 +5,7 @@ import { EditorService } from '../service/editorService/editor.service';
 import { TokenStorageService } from '../auth/token-storage.service';
 import { UserService } from '../service/userService/user.service';
 import { PolicyService } from '../service/policyService/policy.service';
+import { PolicySet } from '../model/PolicySet';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   someoneLogged: boolean = false;
   email: string = "";
   loggedUser: User;
+  policySets: PolicySet[];
 
   constructor(private router: ActivatedRoute, private policyService: PolicyService,
     private tokenStorage: TokenStorageService, private userService: UserService) {
@@ -42,7 +44,8 @@ export class HomeComponent implements OnInit {
 
         this.policyService.getPolicySets().subscribe(
           data => {
-            console.log(data);
+            this.policySets = data;
+            console.log(this.policySets);
           }
           )
       }
@@ -51,4 +54,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  open(policySet: PolicySet){
+    console.log(policySet.id);
+  }
 }
