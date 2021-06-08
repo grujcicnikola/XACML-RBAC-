@@ -44,7 +44,7 @@ import com.example.backend.service.UserService;
 
 @RestController
 @RequestMapping("user")
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired

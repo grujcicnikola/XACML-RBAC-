@@ -45,7 +45,7 @@ export class RuleComponent implements OnInit {
 
   onSubmit() {
     // this.userService.register(this.user).subscribe(res => {
-    //   window.location.href = "https://localhost:4200";
+    //   window.location.href = "http://localhost:4200";
     // }, err => {
 
     // });

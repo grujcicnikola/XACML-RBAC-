@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("test")
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TestController {
 	
 	@RequestMapping(value = "/test", method=RequestMethod.GET)

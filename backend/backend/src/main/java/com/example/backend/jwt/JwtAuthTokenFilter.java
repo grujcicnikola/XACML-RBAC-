@@ -51,7 +51,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
-	private String getJwt(HttpServletRequest request) {
+	public String getJwt(HttpServletRequest request) {
 		//token se nalazi u okviru headera. 
 		//(polje Authorization:
 		//				Bearer: JWT)

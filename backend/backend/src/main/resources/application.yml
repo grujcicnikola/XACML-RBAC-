@@ -26,21 +26,7 @@ spring:
    
 server:
   port: 8080
-  #ssl:
-    #enabled: true
-    #key-store: ${KEY_STORE_CLASSPATH}
-    #key-store-password: ${KEY_STORE_PASSWORD}
-    #key-alias: scs
-    #trust-store: ${KEY_STORE_CLASSPATH_TRUST}
-    #trust-store-password: ${KEY_STORE_TRUST_PASSWORD}         
-    
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: ["health", "info", "refresh"]
-#security:
-  #require-ssl: true
+
 app:
    jwtSecret: sifra
    jwtExpiration: 86400
