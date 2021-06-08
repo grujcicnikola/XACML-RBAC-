@@ -33,6 +33,7 @@ import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
   {path: 'editor/:id', component : EditorComponent},
+  {path: 'editor', component : EditorComponent},
   {path: '', component : LoginComponent},
   {path: 'register', component : RegisterComponent},
   {path: 'home', component : HomeComponent}

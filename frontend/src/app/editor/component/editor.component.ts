@@ -61,8 +61,10 @@ export class EditorComponent implements OnInit {
         console.log(this.loggedUser);
       });
       this.id = this.router.snapshot.params.id;
-      this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: this.id}));
-      this.policySet$ = this.store.pipe(select(policySet_selector));
+      if(this.id){
+        this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: this.id}));
+        this.policySet$ = this.store.pipe(select(policySet_selector));
+      }
     }
   }
 
