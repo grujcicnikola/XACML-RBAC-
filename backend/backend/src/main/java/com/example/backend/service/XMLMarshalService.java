@@ -10,12 +10,8 @@ import com.example.backend.model.PolicySetDocument;
 
 public interface XMLMarshalService {
 	
-	String marshal(PolicySetDto policySetDto) throws JAXBException, IOException;
+	String marshal(PolicySetDto policySetDto);
 	
-	PolicySetDto unmarshal(String xml) throws JAXBException, IOException, XMLStreamException;
-	
-	PolicySetDocument savePolicySet(String xml);
-	
-	PolicySetDocument getPolicySet(String xml);
+	PolicySetDto unmarshal(String xml);
 
 }

@@ -40,11 +40,6 @@ export class EditorComponent implements OnInit {
       console.log(data);
     });
 
-    this.policyService.getPolicySets().subscribe(
-      data => {
-        console.log(data);
-      }
-      )
     if (this.tokenStorage.getToken()) {
       this.someoneLogged = true;
 

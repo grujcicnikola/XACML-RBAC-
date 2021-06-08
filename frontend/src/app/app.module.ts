@@ -29,11 +29,13 @@ import { PolicySetComponent } from './policy-set/policy-set.component';
 import { PolicyComponent } from './policy/policy.component';
 import { RuleComponent } from './rule/rule.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
   {path: 'editor', component : EditorComponent},
   {path: '', component : LoginComponent},
-  {path: 'register', component : RegisterComponent}
+  {path: 'register', component : RegisterComponent},
+  {path: 'home', component : HomeComponent}
   ]
 
 @NgModule({
@@ -48,7 +50,8 @@ const appRoutes: Routes = [
     PolicySetComponent,
     PolicyComponent,
     RuleComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

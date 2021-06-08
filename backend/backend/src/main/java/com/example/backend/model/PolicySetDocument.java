@@ -20,5 +20,7 @@ public class PolicySetDocument {
     private String id;
     
     private String content;
+    
+    private String creator;
 
 }
