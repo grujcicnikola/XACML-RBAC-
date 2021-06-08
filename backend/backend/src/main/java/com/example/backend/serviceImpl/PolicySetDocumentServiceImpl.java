@@ -1,12 +1,17 @@
 package com.example.backend.serviceImpl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,5 +78,15 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		policySetDto.setCreator(document.getCreator());
 		policySetDto.setId(document.getId());
 		return policySetDto;
+	}
+
+	@Override
+	public void downloadPolicySetDto(String id, HttpServletResponse httpServletResponse) throws IOException {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(id);
+		if(document.isPresent()) {
+			httpServletResponse.addHeader("Content-Disposition", "attachment; filename=" + document.get().getId()+".xml");
+			httpServletResponse.setContentType("text/xml");
+			httpServletResponse.getOutputStream().println(document.get().getContent());
+        }
 	}
 }

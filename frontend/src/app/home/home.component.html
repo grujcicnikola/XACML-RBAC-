@@ -66,5 +66,6 @@
       <h3>{{policySet.policyIdReference}}</h3>
       <p>{{policySet.description}}</p>
       <a id="hrefButton" href="editor/{{policySet.id}}" class="btn" >Edit</a>
+      <a id="hrefButton1" (click)="downloadPolicySet(policySet.id)" class="btn" >Download</a>
     </div>
   </div>

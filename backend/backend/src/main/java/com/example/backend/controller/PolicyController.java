@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
@@ -64,6 +65,12 @@ public class PolicyController {
 	@RequestMapping(value = "policySet/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> policySet(@PathVariable("id") String id) {
 		return new ResponseEntity<>(this.policySetDocumentService.getPolicySetDto(id), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "downloadPolicySet/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_XML_VALUE)
+	public void downloadPolicySet(@PathVariable("id") String id, HttpServletResponse httpServletResponse) throws IOException {
+		this.policySetDocumentService.downloadPolicySetDto(id,httpServletResponse);
+		httpServletResponse.getOutputStream().flush();
 	}
 	
 	@RequestMapping(value = "policy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

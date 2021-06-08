@@ -1,6 +1,9 @@
 package com.example.backend.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
@@ -14,5 +17,7 @@ public interface PolicySetDocumentService {
 	PolicySetDocument getPolicySet(String xml);
 	
 	PolicySetDto getPolicySetDto(String id);
+
+	void downloadPolicySetDto(String id, HttpServletResponse httpServletResponse) throws IOException;
 
 }

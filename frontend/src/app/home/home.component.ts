@@ -58,4 +58,30 @@ export class HomeComponent implements OnInit {
   open(policySet: PolicySet){
     console.log(policySet.id);
   }
+
+  // downloadPolicySet(id: string){
+  //   window.open(this.policyService.downloadPolicySetUrl(id), '_blank');
+  // }
+
+  downloadPolicySet(id: string){
+    this.policyService.downloadPolicySet(id).subscribe((data: Blob )=>{
+      var file = new Blob([data], { type: 'text/xml' })
+      var fileURL = window.URL.createObjectURL(file);
+
+      //window.open(fileURL); 
+      let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = fileURL;
+        a.download = "paper.xml";
+        a.target='_blank';
+        a.click();
+        window.URL.revokeObjectURL(fileURL);
+        a.remove();
+  
+
+    })
+  }
+
 }
+

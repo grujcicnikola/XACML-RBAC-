@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PolicySet } from 'src/app/model/PolicySet';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Rule } from 'src/app/model/Rule';
 import { Policy } from 'src/app/model/Policy';
 
@@ -31,12 +31,21 @@ export class PolicyService {
     return this.http.get<Policy>(this.url + '/policy/' + id);
   }
 
+  downloadPolicySet(id: String): Observable<Blob> {
+    const headers = new HttpHeaders({ responseType : 'blob'});
+    return this.http.get<Blob>(this.url + '/downloadPolicySet/' + id, {headers: headers, responseType: 'blob' as 'json'});
+  }
+
   getRule(id: Number): Observable<Rule> {
     return this.http.get<Rule>(this.url + '/rule/' + id);
   }
 
   createPolicySet(policySet: PolicySet): Observable<PolicySet> {
     return this.http.post<PolicySet>(this.url + '/policySet', policySet);
+  }
+
+  downloadPolicySetUrl(id: string): string {
+    return this.url + '/downloadPolicySet/' + id;
   }
 
 }
