@@ -16,7 +16,7 @@ import lombok.Setter;
 @XmlRootElement(name="Rule")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RuleDto {
-	private Long id;
+	private String id;
 	@XmlAttribute
 	private String ruleId;
 	@XmlAttribute

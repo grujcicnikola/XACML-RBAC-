@@ -1,7 +1,7 @@
 import { Rule } from "./Rule";
 
 export class Policy {
-    id : number;
+    id : string;
     xmlns : string;
     xsi : string;
     policyId: string;

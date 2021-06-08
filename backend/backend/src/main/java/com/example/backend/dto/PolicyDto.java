@@ -19,7 +19,7 @@ import lombok.Setter;
 @XmlRootElement(name="Policy")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PolicyDto {
-	private Long id;
+	private String id;
 	@XmlAttribute
 	private String xmlns;
 	@XmlAttribute

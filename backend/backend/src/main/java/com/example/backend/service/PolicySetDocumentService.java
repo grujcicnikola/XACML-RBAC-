@@ -12,5 +12,7 @@ public interface PolicySetDocumentService {
 	PolicySetDocument savePolicySet(String xml, String username);
 	
 	PolicySetDocument getPolicySet(String xml);
+	
+	PolicySetDto getPolicySetDto(String id);
 
 }

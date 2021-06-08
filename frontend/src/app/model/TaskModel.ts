@@ -1,10 +1,10 @@
 import { TypesEnum } from './TypesEnum';
 
 export interface TaskModel {
-    id?: Number;
+    id?: string;
     type: TypesEnum;
     creator?: string;
     created?: string;
     isParent: Boolean;
-    ParentID: Number;
+    ParentID: string;
   }

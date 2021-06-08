@@ -23,8 +23,7 @@ export class PolicyService {
     return this.http.get<PolicySet[]>(this.url + '/getPolicySets');
   }
 
-
-  getPolicySet(id: Number): Observable<PolicySet> {
+  getPolicySet(id: String): Observable<PolicySet> {
     return this.http.get<PolicySet>(this.url + '/policySet/' + id);
   }
 

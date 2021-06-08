@@ -1,5 +1,5 @@
 export class Rule {
-    id : number;
+    id : string;
     ruleId : string;
     effect : string;
     description: string;

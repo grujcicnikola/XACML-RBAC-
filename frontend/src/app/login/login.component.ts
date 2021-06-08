@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       this.tokenStorage.saveToken(res.token);
       this.tokenStorage.saveUsername(res.username);
       this.tokenStorage.saveAuthorities(res.authorities);
-      window.location.href = "http://localhost:4200/editor";
+      window.location.href = "http://localhost:4200/home";
     }, err => {
       this.incorrectData = true;
     }

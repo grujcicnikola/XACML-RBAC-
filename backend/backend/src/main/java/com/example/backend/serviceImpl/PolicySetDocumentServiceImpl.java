@@ -36,10 +36,8 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		if(user.isPresent()) {
 			List<PolicySetDocument> documents = this.policySetDocumentRepository.findByCreator(username);
 			documents.forEach(document -> {
-				PolicySetDto policySet;
-				policySet = xmlMarshalService.unmarshal(document.getContent());
-				policySet.setCreator(document.getCreator());
-				list.add(policySet);				
+				PolicySetDto policySetDto = policySetDtoConverter(document);
+				list.add(policySetDto);				
 			});
 			
 		}
@@ -58,5 +56,22 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	@Override
 	public PolicySetDocument getPolicySet(String id) {
 		return this.policySetDocumentRepository.findById(id).get();
+	}
+
+	@Override
+	public PolicySetDto getPolicySetDto(String id) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(id);
+		if(document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			return policySetDto;
+		}
+		return null;
+	}
+
+	private PolicySetDto policySetDtoConverter(PolicySetDocument document) {
+		PolicySetDto policySetDto = xmlMarshalService.unmarshal(document.getContent());
+		policySetDto.setCreator(document.getCreator());
+		policySetDto.setId(document.getId());
+		return policySetDto;
 	}
 }

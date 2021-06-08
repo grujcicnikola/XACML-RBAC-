@@ -15,7 +15,7 @@ export class PolicySetEffects {
     this.action$.pipe(
       ofType(PolicySetActions.BeginGetPolicySetAction),
       mergeMap(action =>
-        this.policySetService.getInitalPolicySet().pipe(
+        this.policySetService.getPolicySet(action.id).pipe(
           map((data: PolicySet) => {
               console.log("desilo");
             return PolicySetActions.SuccessGetPolicySetAction({ payload: data });

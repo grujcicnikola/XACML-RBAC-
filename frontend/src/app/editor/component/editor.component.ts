@@ -26,6 +26,7 @@ export class EditorComponent implements OnInit {
   loggedUser: User;
   tasks: TaskModel[];
   tabIndex: any;
+  id: string;
   policySet$: Observable<PolicySet>;
   //policySet$: Observable<PolicySet>;
   //ToDoSubscription: Subscription;
@@ -59,8 +60,8 @@ export class EditorComponent implements OnInit {
         this.loggedUser = data as User;
         console.log(this.loggedUser);
       });
-      
-      this.store.dispatch(PolicySetActions.BeginGetPolicySetAction());
+      this.id = this.router.snapshot.params.id;
+      this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: this.id}));
       this.policySet$ = this.store.pipe(select(policySet_selector));
     }
   }

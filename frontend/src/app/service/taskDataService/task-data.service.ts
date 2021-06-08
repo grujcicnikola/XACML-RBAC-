@@ -33,7 +33,7 @@ export class TaskDataService {
     });
   }
 
-  createTreeElement(element: any, type: TypesEnum, isParent: boolean, parentID: Number): TaskModel {
+  createTreeElement(element: any, type: TypesEnum, isParent: boolean, parentID: string): TaskModel {
     const task: TaskModel = {
       id: element.id,
       type: type,

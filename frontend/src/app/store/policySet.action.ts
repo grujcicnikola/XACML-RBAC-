@@ -8,7 +8,9 @@ export const CreatePolicySetAction = createAction(
   props<PolicySet>()
 );
 
-export const BeginGetPolicySetAction = createAction('[PolicySet] - Begin Get PolicySet');
+export const BeginGetPolicySetAction = createAction('[PolicySet] - Begin Get PolicySet',
+  props<{ id: string }>()
+);
 
 export const SuccessGetPolicySetAction = createAction(
   '[PolicySet] - Success Get PolicySet',

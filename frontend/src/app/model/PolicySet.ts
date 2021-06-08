@@ -1,7 +1,7 @@
 import { Policy } from "./Policy";
 
 export class PolicySet {
-    id : number;
+    id : string;
     xmlns : string;
     xsi : string;
     policySetId: string;

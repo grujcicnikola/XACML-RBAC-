@@ -62,8 +62,8 @@ public class PolicyController {
 	}
 	
 	@RequestMapping(value = "policySet/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> policySet(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(createPolicySetForTesting(), HttpStatus.OK);
+	public ResponseEntity<PolicySetDto> policySet(@PathVariable("id") String id) {
+		return new ResponseEntity<>(this.policySetDocumentService.getPolicySetDto(id), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "policy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,7 +99,7 @@ public class PolicyController {
 	
 	public PolicySetDto createPolicySetForTesting() {
 		RuleDto ruleDto = RuleDto.builder()
-				.id(1L)
+				.id("1")
 				.effect("efekat")
 				.ruleId("pravo id")
 				.description("opis")
@@ -107,7 +107,7 @@ public class PolicyController {
 				.creator("ngrujcic")
 				.build();
 		PolicyDto policyDto = PolicyDto.builder()
-				.id(2L)
+				.id("2")
 				.xmlns("xmlns")
 				.xsi("xsi")
 				.policyId("policyId")
@@ -121,7 +121,7 @@ public class PolicyController {
 				.creator("ngrujcic")
 				.build();
 		PolicyDto policyDto2 = PolicyDto.builder()
-				.id(4L)
+				.id("3")
 				.xmlns("xmlns")
 				.xsi("xsi")
 				.policyId("policyId")
@@ -135,7 +135,6 @@ public class PolicyController {
 				.creator("ngrujcic")
 				.build();
 		PolicySetDto policySetDto = PolicySetDto.builder()
-				.id(3L)
 				.xmlns("xmlns")
 				.xsi("xsi")
 				.policySetId("policySetId")

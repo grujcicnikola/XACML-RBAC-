@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class PolicySetDto {
-	private Long id;
+	private String id;
 	@XmlAttribute
 	private String xmlns;
 	@XmlAttribute

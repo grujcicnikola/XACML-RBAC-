@@ -42,7 +42,7 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
-      this.policyService.getPolicySet(1).subscribe(res =>
+      this.policyService.getPolicySet("1").subscribe(res =>
         this.policySet = res)
     }else{
       this.policySet = new PolicySet();
