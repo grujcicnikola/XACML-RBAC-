@@ -15,7 +15,7 @@ export class PolicyService {
   url = "http://localhost:8080/policy";
 
   getPolicy(id: string, idPolicySet: string): Observable<Policy> {
-    return this.http.get<Policy>(this.url + '/policy/' + id +'/' + idPolicySet);
+    return this.http.get<Policy>(this.url + '/policy/' + id + '/' + idPolicySet);
   }
 
   updatePolicy(policy: Policy, id: string): Observable<PolicySet> {
@@ -23,7 +23,11 @@ export class PolicyService {
   }
 
   addPolicy(policy: Policy, id: string): Observable<PolicySet> {
-    return this.http.post<PolicySet>(this.url + '/policy/'+id, policy);
+    return this.http.post<PolicySet>(this.url + '/policy/' + id, policy);
+  }
+
+  deletePolicy(id: string, policySetId: string) {
+    return this.http.delete<void>(this.url + '/policy/' + id + '/' + policySetId);
   }
 
   getRule(id: Number): Observable<Rule> {

@@ -75,4 +75,21 @@ public class PolicyServiceImpl implements PolicyService {
 		return null;
 	}
 
+
+	@Override
+	public void deletePolicy(String id, String idPolicySet) {
+		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(idPolicySet);
+		if(document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			for(int i=0; i< policySetDto.getPolicies().size(); i++) {
+				if(policySetDto.getPolicies().get(i).getPolicyId().contentEquals(id)) {
+					policySetDto.getPolicies().remove(i);
+					break;
+				}
+			}
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+		
+	}
+
 }

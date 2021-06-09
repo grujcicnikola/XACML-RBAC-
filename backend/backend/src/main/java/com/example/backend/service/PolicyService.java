@@ -11,4 +11,6 @@ public interface PolicyService {
 	
 	PolicySetDto updatePolicy(String id, PolicyDto policyDto, String username);
 
+	void deletePolicy(String id, String idPolicySet);
+
 }
