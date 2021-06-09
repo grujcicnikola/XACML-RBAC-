@@ -22,40 +22,40 @@ export class HomeComponent implements OnInit {
   constructor(private router: ActivatedRoute, private policyService: PolicyService,
     private tokenStorage: TokenStorageService, private userService: UserService) {
 
-      if (this.tokenStorage.getToken()) {
-        this.someoneLogged = true;
-  
-        let jwt = this.tokenStorage.getToken();
-        console.log("Tokeen: " + jwt);
-        let jwtData = jwt.split('.')[1];
-        let decodedJwtJsonData = window.atob(jwtData);
-        let decodedJwtData = JSON.parse(decodedJwtJsonData);
-        this.email = decodedJwtData.sub;
-  
-        //console.log('jwtData: ' + jwtData);
-        //console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
-        //console.log('decodedJwtData: ' + decodedJwtData);
-        console.log('User: ' + this.email);
-  
-        this.userService.getUserByUsername(this.email).subscribe(data => {
-          this.loggedUser = data as User;
-          console.log(this.loggedUser);
-        });
+    if (this.tokenStorage.getToken()) {
+      this.someoneLogged = true;
 
-        this.policyService.getPolicySets().subscribe(
-          data => {
-            this.policySets = data;
-            console.log(this.policySets);
-          }
-          )
-      }
-     }
+      let jwt = this.tokenStorage.getToken();
+      console.log("Tokeen: " + jwt);
+      let jwtData = jwt.split('.')[1];
+      let decodedJwtJsonData = window.atob(jwtData);
+      let decodedJwtData = JSON.parse(decodedJwtJsonData);
+      this.email = decodedJwtData.sub;
+
+      //console.log('jwtData: ' + jwtData);
+      //console.log('decodedJwtJsonData: ' + decodedJwtJsonData);
+      //console.log('decodedJwtData: ' + decodedJwtData);
+      console.log('User: ' + this.email);
+
+      this.userService.getUserByUsername(this.email).subscribe(data => {
+        this.loggedUser = data as User;
+        console.log(this.loggedUser);
+      });
+
+      this.policyService.getPolicySets().subscribe(
+        data => {
+          this.policySets = data;
+          console.log(this.policySets);
+        }
+      )
+    }
+  }
 
   ngOnInit() {
   }
 
 
-  open(policySet: PolicySet){
+  open(policySet: PolicySet) {
     console.log(policySet.id);
   }
 
@@ -63,23 +63,21 @@ export class HomeComponent implements OnInit {
   //   window.open(this.policyService.downloadPolicySetUrl(id), '_blank');
   // }
 
-  downloadPolicySet(id: string){
-    this.policyService.downloadPolicySet(id).subscribe((data: Blob )=>{
+  downloadPolicySet(id: string) {
+    this.policyService.downloadPolicySet(id).subscribe((data: Blob) => {
       var file = new Blob([data], { type: 'text/xml' })
       var fileURL = window.URL.createObjectURL(file);
 
       //window.open(fileURL); 
       let a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = fileURL;
-        a.download = "paper.xml";
-        a.target='_blank';
-        a.click();
-        window.URL.revokeObjectURL(fileURL);
-        a.remove();
-  
-
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = fileURL;
+      a.download = "policySet.xml";
+      a.target = '_blank';
+      a.click();
+      window.URL.revokeObjectURL(fileURL);
+      a.remove();
     })
   }
 

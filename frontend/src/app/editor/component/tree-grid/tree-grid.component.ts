@@ -102,7 +102,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
         //   this.mode = ModeEnum.Add;
         //   break;
         // default:
-        //   this.openModal('custom-modal-1');
+        //   this.openModal('custom-policy-set');
         //   this.mode = ModeEnum.Add;
         //   break;
       //}
@@ -111,7 +111,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
     } else {
       //open policy set
-      this.openModal('custom-modal-1');
+      this.openModal('custom-policy-set');
       this.mode = ModeEnum.Add;
     }
   }
@@ -131,7 +131,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           
           break;
         default:
-          this.openModal('custom-modal-1');
+          this.openModal('custom-policy-set');
           this.mode = ModeEnum.Add;
           break;
       }
@@ -153,7 +153,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.mode = ModeEnum.Edit;
           break;
         default:
-          this.openModal('custom-modal-1');
+          this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
           break;
       }
@@ -183,5 +183,9 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
   closeModal(id: string) {
     this.modalService.close(id);
+  }
+
+  savePolicySet(policySet: PolicySet){
+    this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: policySet.id}));
   }
 }

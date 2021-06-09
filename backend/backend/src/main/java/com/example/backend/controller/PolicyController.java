@@ -84,9 +84,13 @@ public class PolicyController {
 	}
 	
 	@RequestMapping(value = "policySet", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> policySet(@RequestBody PolicySetDto policySetDto) {
-		System.out.println("save policy set");
-		return new ResponseEntity<>(policySetDto, HttpStatus.OK);
+	public ResponseEntity<PolicySetDto> createPolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
+		return new ResponseEntity<>(this.policySetDocumentService.createPolicySet(policySetDto, principal.getName()), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "policySet", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> updatePolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
+		return new ResponseEntity<>(this.policySetDocumentService.updatePolicySet(policySetDto, principal.getName()), HttpStatus.OK);
 	}
 
 	

@@ -39,8 +39,8 @@
     </e-columns>
   </ejs-treegrid>
 
-  <jw-modal id="custom-modal-1">
-    <app-policy-set [mode]="mode" (closeEvent)="closeModal('custom-modal-1')"></app-policy-set>
+  <jw-modal id="custom-policy-set">
+    <app-policy-set [mode]="mode" [id]="policySet?.id"  (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy-set')"></app-policy-set>
   </jw-modal>
 
   <jw-modal id="custom-modal-2">

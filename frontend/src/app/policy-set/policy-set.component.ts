@@ -18,7 +18,9 @@ import { ModeEnum } from '../model/Mode';
 export class PolicySetComponent implements OnInit, OnChanges {
 
   @Input() mode : ModeEnum;
+  @Input() id : string;
   @Output() closeEvent = new EventEmitter<void>();
+  @Output() saveEvent = new EventEmitter<PolicySet>();
   form: FormGroup;
   private policySet = new PolicySet();
   //private loginInfo: LoginInfo;
@@ -41,9 +43,9 @@ export class PolicySetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if( this.mode === ModeEnum.Edit){
-      this.policyService.getPolicySet("1").subscribe(res =>
-        this.policySet = res)
+    if( this.mode === ModeEnum.Edit && this.id){
+      this.policyService.getPolicySet(this.id).subscribe(res =>
+       this.policySet = res)
     }else{
       this.policySet = new PolicySet();
     }
@@ -56,12 +58,18 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
     if( this.mode === ModeEnum.Add){
       this.policyService.createPolicySet(this.policySet).subscribe(res => {
+        this.saveEvent.emit(res);
         this.closeEvent.emit();
       }, err => {
   
       });
-    }else{
-      //put method
+    }else if ( this.mode === ModeEnum.Edit){
+      this.policyService.updatePolicySet(this.policySet).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
+  
+      });
     }
   
   }

@@ -20,4 +20,8 @@ public interface PolicySetDocumentService {
 
 	void downloadPolicySetDto(String id, HttpServletResponse httpServletResponse) throws IOException;
 
+	PolicySetDto createPolicySet(PolicySetDto policySetDto, String username);
+
+	PolicySetDto updatePolicySet(PolicySetDto policySetDto, String name);
+
 }

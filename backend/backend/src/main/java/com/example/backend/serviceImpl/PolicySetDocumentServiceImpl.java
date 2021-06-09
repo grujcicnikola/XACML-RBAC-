@@ -89,4 +89,21 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 			httpServletResponse.getOutputStream().println(document.get().getContent());
         }
 	}
+
+	@Override
+	public PolicySetDto createPolicySet(PolicySetDto policySetDto, String username) {
+		String xml = xmlMarshalService.marshal(policySetDto);
+		PolicySetDocument document= savePolicySet(xml, username);
+		return policySetDtoConverter(document);
+	}
+
+	@Override
+	public PolicySetDto updatePolicySet(PolicySetDto policySetDto, String username) {
+		String xml = xmlMarshalService.marshal(policySetDto);
+		PolicySetDocument document = new PolicySetDocument();
+		document.setContent(xml);
+		document.setCreator(username);
+		document.setId(policySetDto.getId());
+		return policySetDtoConverter(this.policySetDocumentRepository.save(document));
+	}
 }
