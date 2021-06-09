@@ -62,8 +62,6 @@ export class TreeGridComponent implements OnInit, OnChanges {
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.policySet != null) {
       this.tasks = this.taskDataService.transformDtoToTreeModel(this.policySet);
-      console.log("tasks")
-      console.log(this.tasks)
     }else {
       this.tasks = [];
     }
@@ -97,7 +95,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       //switch (selected.type) {
         // case TypesEnum.Policy:
-        //   this.openModal('custom-modal-2');
+        //   this.openModal('custom-policy');
         //   this.mode = ModeEnum.Add;
         //   break;
         // case TypesEnum.Rule:
@@ -114,8 +112,10 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
     } else {
       //open policy set
-      this.openModal('custom-policy-set');
-      this.mode = ModeEnum.Add;
+      if(this.tasks.length == 0){
+        this.openModal('custom-policy-set');
+        this.mode = ModeEnum.Add;
+      }
     }
   }
 
@@ -123,7 +123,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (event) {
       switch (event) {
         case TypesEnum.Policy:
-          this.openModal('custom-modal-2');
+          this.openModal('custom-policy');
           this.mode = ModeEnum.Add;
           break;
         case TypesEnum.Rule:
@@ -148,8 +148,9 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       switch (selected.type) {
         case TypesEnum.Policy:
-          this.openModal('custom-modal-2');
+          this.openModal('custom-policy');
           this.mode = ModeEnum.Edit;
+          this.selectedItemId = selected.id;
           break;
         case TypesEnum.Rule:
           this.openModal('custom-modal-3');
@@ -192,4 +193,5 @@ export class TreeGridComponent implements OnInit, OnChanges {
   savePolicySet(policySet: PolicySet){
     this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: policySet.id}));
   }
+
 }

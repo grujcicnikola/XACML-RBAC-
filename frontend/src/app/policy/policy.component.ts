@@ -6,6 +6,7 @@ import { TokenStorageService } from '../auth/token-storage.service';
 import { Policy } from '../model/Policy';
 import { ModeEnum } from '../model/Mode';
 import { PolicyService } from '../service/policyService/policy.service';
+import { PolicySetService } from '../service/policySet/policy-set.service';
 
 @Component({
   selector: 'app-policy',
@@ -15,12 +16,15 @@ import { PolicyService } from '../service/policyService/policy.service';
 export class PolicyComponent implements OnInit {
 
   @Input() mode : ModeEnum;
+  @Input() idPolicySet : string;
+  @Input() id : string;
+  @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
   private policy = new Policy();
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder,  private policyService : PolicyService) { 
+    private formBuilder: FormBuilder, private policySetService : PolicySetService,  private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
         xsi: ['', [Validators.minLength(3), Validators.required]],
         policyId: ['', [Validators.minLength(3), Validators.required]],
@@ -37,7 +41,7 @@ export class PolicyComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
-      this.policyService.getPolicy(1).subscribe(res =>
+      this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
         this.policy = res)
     }else{
       this.policy = new Policy();
@@ -48,11 +52,21 @@ export class PolicyComponent implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    // this.userService.register(this.user).subscribe(res => {
-    //   window.location.href = "http://localhost:4200";
-    // }, err => {
-
-    // });
+    if( this.mode === ModeEnum.Add){
+      this.policyService.addPolicy(this.policy, this.idPolicySet).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
+  
+      });
+    }else if ( this.mode === ModeEnum.Edit){
+      this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
+  
+      });
+    }
   }
 
 }

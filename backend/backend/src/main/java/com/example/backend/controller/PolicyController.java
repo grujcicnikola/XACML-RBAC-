@@ -37,6 +37,7 @@ import com.example.backend.model.PolicySetDocument;
 import com.example.backend.model.User;
 import com.example.backend.security.UserDetailsServiceImpl;
 import com.example.backend.security.UserPrinciple;
+import com.example.backend.service.PolicyService;
 import com.example.backend.service.PolicySetDocumentService;
 import com.example.backend.service.UserService;
 import com.example.backend.service.XMLMarshalService;
@@ -51,12 +52,25 @@ public class PolicyController {
 	
 	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
+	@Autowired
+	private PolicyService policyService;
 	
 	
-	@RequestMapping(value = "policy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicyDto> policy(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0), HttpStatus.OK);
+	@RequestMapping(value = "policy/{id}/{idPolicySet}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicyDto> policy(@PathVariable("id") String id, @PathVariable("idPolicySet") String idPolicySet) {
+		return new ResponseEntity<>(this.policyService.getPolicy(id, idPolicySet), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "policy/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> addPolicy(@PathVariable("id") String id, @RequestBody PolicyDto policyDto, Principal principal) {
+		return new ResponseEntity<>(this.policyService.addPolicy(id, policyDto, principal.getName()), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "policy/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> updatePolicy(@PathVariable("id") String id, @RequestBody PolicyDto policyDto, Principal principal) {
+		return new ResponseEntity<>(this.policyService.updatePolicy(id, policyDto, principal.getName()), HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value = "rule/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RuleDto> rule(@PathVariable("id") Long id) {

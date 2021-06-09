@@ -36,11 +36,20 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
       case TypesEnum.PolicySet:
         this.policySetService.deletePolicySet(this.selectedItemId).subscribe(res => {
           console.log("DELETED");
-          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: undefined}));
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: undefined }));
           this.closeEvent.emit();
         }, err => {
 
         });
+        break;
+      case TypesEnum.Policy:
+        // this.policySetService.deletePolicy(this.selectedItemId).subscribe(res => {
+        //   console.log("DELETED");
+        //   this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: undefined }));
+        //   this.closeEvent.emit();
+        // }, err => {
+
+        // });
         break;
     }
   }

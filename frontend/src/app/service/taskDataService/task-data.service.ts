@@ -13,6 +13,7 @@ export class TaskDataService {
   constructor() { }
 
   transformDtoToTreeModel(policySet: PolicySet): TaskModel[] {
+    this.tasks = []
     this.createPolicySet(policySet);
     console.log("tu sam");
     console.log((this.tasks));
@@ -24,18 +25,18 @@ export class TaskDataService {
   // }
 
   createPolicySet(policySet: PolicySet) {
-    this.tasks.push(this.createTreeElement(policySet, TypesEnum.PolicySet, false, null));
+    this.tasks.push(this.createTreeElement(policySet.id, policySet, TypesEnum.PolicySet, false, null));
     policySet.policies.forEach(policy => {
-      this.tasks.push(this.createTreeElement(policy, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
+      this.tasks.push(this.createTreeElement(policy.policyId, policy, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
       policy.rules.forEach(rule => {
-        this.tasks.push(this.createTreeElement(rule, TypesEnum.Rule, false, policy.id));
+        this.tasks.push(this.createTreeElement(rule.ruleId, rule, TypesEnum.Rule, false, policy.id));
       });
     });
   }
 
-  createTreeElement(element: any, type: TypesEnum, isParent: boolean, parentID: string): TaskModel {
+  createTreeElement(id: string, element: any, type: TypesEnum, isParent: boolean, parentID: string): TaskModel {
     const task: TaskModel = {
-      id: element.id,
+      id: id,
       type: type,
       creator: element.creator,
       created: element.created,

@@ -14,21 +14,20 @@ export class PolicyService {
 
   url = "http://localhost:8080/policy";
 
-  // getInitalPolicySet(): Observable<PolicySet> {
-  //   return this.http.get<PolicySet>(this.url + '/getPolicySet');
-  // }
+  getPolicy(id: string, idPolicySet: string): Observable<Policy> {
+    return this.http.get<Policy>(this.url + '/policy/' + id +'/' + idPolicySet);
+  }
 
+  updatePolicy(policy: Policy, id: string): Observable<PolicySet> {
+    return this.http.put<PolicySet>(this.url + '/policy/' + id, policy);
+  }
 
-  getPolicy(id: Number): Observable<Policy> {
-    return this.http.get<Policy>(this.url + '/policy/' + id);
+  addPolicy(policy: Policy, id: string): Observable<PolicySet> {
+    return this.http.post<PolicySet>(this.url + '/policy/'+id, policy);
   }
 
   getRule(id: Number): Observable<Rule> {
     return this.http.get<Rule>(this.url + '/rule/' + id);
   }
-
-  // downloadPolicySetUrl(id: string): string {
-  //   return this.url + '/downloadPolicySet/' + id;
-  // }
 
 }

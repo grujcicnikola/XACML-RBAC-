@@ -7,7 +7,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PolicySetService {
-
   constructor(private http: HttpClient) { }
 
   url = "http://localhost:8080/policySet";
