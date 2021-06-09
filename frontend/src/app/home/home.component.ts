@@ -6,6 +6,7 @@ import { TokenStorageService } from '../auth/token-storage.service';
 import { UserService } from '../service/userService/user.service';
 import { PolicyService } from '../service/policyService/policy.service';
 import { PolicySet } from '../model/PolicySet';
+import { PolicySetService } from '../service/policySet/policy-set.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
   loggedUser: User;
   policySets: PolicySet[];
 
-  constructor(private router: ActivatedRoute, private policyService: PolicyService,
+  constructor(private router: ActivatedRoute, private policySetService: PolicySetService,
     private tokenStorage: TokenStorageService, private userService: UserService) {
 
     if (this.tokenStorage.getToken()) {
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
         console.log(this.loggedUser);
       });
 
-      this.policyService.getPolicySets().subscribe(
+      this.policySetService.getPolicySets().subscribe(
         data => {
           this.policySets = data;
           console.log(this.policySets);
@@ -59,16 +60,11 @@ export class HomeComponent implements OnInit {
     console.log(policySet.id);
   }
 
-  // downloadPolicySet(id: string){
-  //   window.open(this.policyService.downloadPolicySetUrl(id), '_blank');
-  // }
-
   downloadPolicySet(id: string) {
-    this.policyService.downloadPolicySet(id).subscribe((data: Blob) => {
+    this.policySetService.downloadPolicySet(id).subscribe((data: Blob) => {
       var file = new Blob([data], { type: 'text/xml' })
       var fileURL = window.URL.createObjectURL(file);
-
-      //window.open(fileURL); 
+ 
       let a = document.createElement('a');
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');

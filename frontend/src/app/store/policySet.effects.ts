@@ -6,10 +6,11 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as PolicySetActions from './policySet.action';
 import { PolicyService } from '../service/policyService/policy.service';
 import { PolicySet } from '../model/PolicySet';
+import { PolicySetService } from '../service/policySet/policy-set.service';
 
 @Injectable()
 export class PolicySetEffects {
-  constructor(private policySetService: PolicyService, private action$: Actions) {}
+  constructor(private policySetService: PolicySetService, private action$: Actions) {}
 
   getPolicySet$: Observable<Action> = createEffect(() =>
     this.action$.pipe(

@@ -9,6 +9,7 @@ import { mustMatch } from '../utils/must-match.validator';
 import { PolicySet } from '../model/PolicySet';
 import { PolicyService } from '../service/policyService/policy.service';
 import { ModeEnum } from '../model/Mode';
+import { PolicySetService } from '../service/policySet/policy-set.service';
 
 @Component({
   selector: 'app-policy-set',
@@ -26,7 +27,7 @@ export class PolicySetComponent implements OnInit, OnChanges {
   //private loginInfo: LoginInfo;
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder, private policyService : PolicyService) { 
+    private formBuilder: FormBuilder, private policySetService : PolicySetService) { 
       this.form = this.formBuilder.group({
         xsi: ['', [Validators.minLength(3), Validators.required]],
         policySetId: ['', [Validators.minLength(3), Validators.required]],
@@ -44,7 +45,7 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit && this.id){
-      this.policyService.getPolicySet(this.id).subscribe(res =>
+      this.policySetService.getPolicySet(this.id).subscribe(res =>
        this.policySet = res)
     }else{
       this.policySet = new PolicySet();
@@ -57,14 +58,14 @@ export class PolicySetComponent implements OnInit, OnChanges {
   onSubmit() {
 
     if( this.mode === ModeEnum.Add){
-      this.policyService.createPolicySet(this.policySet).subscribe(res => {
+      this.policySetService.createPolicySet(this.policySet).subscribe(res => {
         this.saveEvent.emit(res);
         this.closeEvent.emit();
       }, err => {
   
       });
     }else if ( this.mode === ModeEnum.Edit){
-      this.policyService.updatePolicySet(this.policySet).subscribe(res => {
+      this.policySetService.updatePolicySet(this.policySet).subscribe(res => {
         this.saveEvent.emit(res);
         this.closeEvent.emit();
       }, err => {

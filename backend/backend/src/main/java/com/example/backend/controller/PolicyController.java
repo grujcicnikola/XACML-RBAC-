@@ -52,26 +52,6 @@ public class PolicyController {
 	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
 	
-	@RequestMapping(value = "getPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> getPolicySet() {
-		return new ResponseEntity<>(createPolicySetForTesting(), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "getPolicySets", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<PolicySetDto>> getPolicySets(Principal principal) {
-		return new ResponseEntity<>(this.policySetDocumentService.getPolicySets(principal.getName()), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "policySet/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> policySet(@PathVariable("id") String id) {
-		return new ResponseEntity<>(this.policySetDocumentService.getPolicySetDto(id), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "downloadPolicySet/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_XML_VALUE)
-	public void downloadPolicySet(@PathVariable("id") String id, HttpServletResponse httpServletResponse) throws IOException {
-		this.policySetDocumentService.downloadPolicySetDto(id,httpServletResponse);
-		httpServletResponse.getOutputStream().flush();
-	}
 	
 	@RequestMapping(value = "policy/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicyDto> policy(@PathVariable("id") Long id) {
@@ -83,30 +63,20 @@ public class PolicyController {
 		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0).getRules().get(0), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "policySet", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> createPolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
-		return new ResponseEntity<>(this.policySetDocumentService.createPolicySet(policySetDto, principal.getName()), HttpStatus.OK);
-	}
 	
-	@RequestMapping(value = "policySet", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> updatePolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
-		return new ResponseEntity<>(this.policySetDocumentService.updatePolicySet(policySetDto, principal.getName()), HttpStatus.OK);
-	}
-
-	
-	@RequestMapping(value = "testMarshalingPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> testMarshalingPolicySet(Principal principal) {
-		PolicySetDto policySetDto = createPolicySetForTesting();
-		
-			String xml = xmlMarshalService.marshal(policySetDto);
-			PolicySetDto policySetDto2 = xmlMarshalService.unmarshal(xml);
-			String xml2 = xmlMarshalService.marshal(policySetDto2);
-			PolicySetDocument policySetDocument= policySetDocumentService.savePolicySet(xml2, principal.getName());
-			PolicySetDocument policySetDocument1= policySetDocumentService.getPolicySet(policySetDocument.getId());
-			//System.out.print(policySetDocument1.getId());
-		
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "testMarshalingPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<PolicySetDto> testMarshalingPolicySet(Principal principal) {
+//		PolicySetDto policySetDto = createPolicySetForTesting();
+//		
+//			String xml = xmlMarshalService.marshal(policySetDto);
+//			PolicySetDto policySetDto2 = xmlMarshalService.unmarshal(xml);
+//			String xml2 = xmlMarshalService.marshal(policySetDto2);
+//			PolicySetDocument policySetDocument= policySetDocumentService.savePolicySet(xml2, principal.getName());
+//			PolicySetDocument policySetDocument1= policySetDocumentService.getPolicySet(policySetDocument.getId());
+//			//System.out.print(policySetDocument1.getId());
+//		
+//		return new ResponseEntity<>(null, HttpStatus.OK);
+//	}
 	
 	public PolicySetDto createPolicySetForTesting() {
 		RuleDto ruleDto = RuleDto.builder()
