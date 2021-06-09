@@ -24,4 +24,6 @@ public interface PolicySetDocumentService {
 
 	PolicySetDto updatePolicySet(PolicySetDto policySetDto, String name);
 
+	void deletePolicySet(String id);
+
 }

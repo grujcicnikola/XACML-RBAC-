@@ -62,4 +62,10 @@ public class PolicySetController {
 	public ResponseEntity<PolicySetDto> updatePolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
 		return new ResponseEntity<>(this.policySetDocumentService.updatePolicySet(policySetDto, principal.getName()), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "policySet/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deletePolicySet(@PathVariable("id") String id) {
+		this.policySetDocumentService.deletePolicySet(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

@@ -106,4 +106,9 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		document.setId(policySetDto.getId());
 		return policySetDtoConverter(this.policySetDocumentRepository.save(document));
 	}
+
+	@Override
+	public void deletePolicySet(String id) {
+		this.policySetDocumentRepository.deleteById(id);
+	}
 }

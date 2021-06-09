@@ -32,7 +32,7 @@ public class XMLMarshalServiceImpl implements XMLMarshalService {
 			mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			StringWriter sw = new StringWriter();
 		    mar.marshal(policySetDto, sw);
-		    System.out.println(sw.toString());
+		    //System.out.println(sw.toString());
 		    return sw.toString();
 		} catch (PropertyException e) {
 			// TODO Auto-generated catch block

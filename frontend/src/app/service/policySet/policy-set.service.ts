@@ -28,6 +28,10 @@ export class PolicySetService {
     return this.http.put<PolicySet>(this.url + '/policySet', policySet);
   }
 
+  deletePolicySet(id: string) {
+    return this.http.delete<void>(this.url + '/policySet/'+ id);
+  }
+
   downloadPolicySet(id: String): Observable<Blob> {
     const headers = new HttpHeaders({ responseType : 'blob'});
     return this.http.get<Blob>(this.url + '/downloadPolicySet/' + id, {headers: headers, responseType: 'blob' as 'json'});

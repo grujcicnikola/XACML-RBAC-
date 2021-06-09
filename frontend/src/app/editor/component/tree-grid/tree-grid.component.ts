@@ -15,6 +15,7 @@ import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalService } from '../modal/modal.service';
+import { PolicySetService } from 'src/app/service/policySet/policy-set.service';
 
 
 
@@ -31,13 +32,13 @@ export class TreeGridComponent implements OnInit, OnChanges {
   TypesEnum = TypesEnum;
   tasks: TaskModel[] = [];
   bodyText = 'This text can be updated in modal 1'
-  selectedItemId: number;
+  selectedItemId: string;
   currentType: TypesEnum;
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
 
-  constructor(private taskDataService: TaskDataService, private policyService: PolicyService,
+  constructor(private taskDataService: TaskDataService,
     private store: Store<PolicySetState>, private modalService: ModalService) {
 
   }
@@ -63,6 +64,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
       this.tasks = this.taskDataService.transformDtoToTreeModel(this.policySet);
       console.log("tasks")
       console.log(this.tasks)
+    }else {
+      this.tasks = [];
     }
   }
 
@@ -164,7 +167,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
     var selected: any = this.treegrid.getSelectedRecords()[0];
     if(selected){
       this.selectedItemId = selected.id;
-      this.openModal('custom-modal-4');
+      this.currentType = selected.type;
+      this.openModal('custom-confirmation-dialog');
     }
   }
 
