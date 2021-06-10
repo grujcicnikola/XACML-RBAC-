@@ -1,5 +1,5 @@
 <body>
-    <div class="container">
+    <div *ngIf="policy" class="container">
       <section id="content">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <h1>Policy Form</h1>

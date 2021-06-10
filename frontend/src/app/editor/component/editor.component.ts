@@ -13,6 +13,7 @@ import { select, Store } from '@ngrx/store';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.reducer';
 import { PolicySet } from 'src/app/model/PolicySet';
+import { PolicySetService } from 'src/app/service/policySet/policy-set.service';
 
 @Component({
   selector: 'app-editor',
@@ -33,7 +34,7 @@ export class EditorComponent implements OnInit {
 
   constructor(private router: ActivatedRoute, private service: EditorService,
     private tokenStorage: TokenStorageService, private userService: UserService,
-    private policyService: PolicyService, private taskDataService: TaskDataService, 
+    private policySetService: PolicySetService, private taskDataService: TaskDataService, 
     private store: Store<{ policySet: PolicySetState }>) {
       
 
@@ -81,5 +82,23 @@ export class EditorComponent implements OnInit {
     });
   }
 
+  downloadPolicySet() {
+    this.policySet$.subscribe(policy => {
+      this.policySetService.downloadPolicySet(policy.id).subscribe((data: Blob) => {
+        var file = new Blob([data], { type: 'text/xml' })
+        var fileURL = window.URL.createObjectURL(file);
+   
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = fileURL;
+        a.download = "policySet.xml";
+        a.target = '_blank';
+        a.click();
+        window.URL.revokeObjectURL(fileURL);
+        a.remove();
+      })
+    });
+  }
 
 }

@@ -41,7 +41,7 @@
                         </ul> -->
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a *ngIf="someoneLogged == true" href=""><span
+                        <li><a *ngIf="someoneLogged == true" (click)="downloadPolicySet()" ><span
                                     class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                         <li><a *ngIf="someoneLogged != true" href=""><span class="glyphicon glyphicon-log-in"></span>
                                 Login</a></li>

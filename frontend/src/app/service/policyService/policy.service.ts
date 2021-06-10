@@ -26,8 +26,8 @@ export class PolicyService {
     return this.http.post<PolicySet>(this.url + '/policy/' + id, policy);
   }
 
-  deletePolicy(id: string, policySetId: string) {
-    return this.http.delete<void>(this.url + '/policy/' + id + '/' + policySetId);
+  deletePolicy(id: string, idPolicySet: string) {
+    return this.http.delete<void>(this.url + '/policy/' + id + '/' + idPolicySet);
   }
 
   getRule(id: Number): Observable<Rule> {
