@@ -35,6 +35,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
   bodyText = 'This text can be updated in modal 1'
   selectedItemId: string;
   currentType: TypesEnum;
+  selectedParentId: string;
+  selectedParentType: TypesEnum;
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
@@ -159,6 +161,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-modal-3');
           this.mode = ModeEnum.Edit;
           break;
+        case TypesEnum.Target:  
+            break;  
         default:
           this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
@@ -172,6 +176,9 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       this.selectedItemId = selected.id;
       this.currentType = selected.type;
+      console.log( selected.parentItem.id);
+      this.selectedParentId = selected.parentItem.id;
+      this.selectedParentType = selected.parentItem.type;
       this.openModal('custom-confirmation-dialog');
     }
   }

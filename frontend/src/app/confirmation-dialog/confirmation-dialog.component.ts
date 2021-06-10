@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import PolicySetState from '../store/policySet.state';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicyService } from '../service/policyService/policy.service';
+import { TargetService } from '../service/targetService/target.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -20,9 +21,12 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
   @Input() selectedItemId: string;
   @Input() selectedItemType: TypesEnum;
   @Input() policySetId: string;
+  @Input() parentId: string;
+  @Input() selectedParentType: TypesEnum
   @Output() closeEvent = new EventEmitter<void>();
 
-  constructor(private policySetService: PolicySetService, private policyService: PolicyService,
+  constructor(private policySetService: PolicySetService,
+    private targetService: TargetService, private policyService: PolicyService,
     private store: Store<PolicySetState>) { }
 
   ngOnInit() {
@@ -47,6 +51,15 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
         break;
       case TypesEnum.Policy:
         this.policyService.deletePolicy(this.selectedItemId, this.policySetId).subscribe(res => {
+          console.log("DELETED");
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+        break;
+      case TypesEnum.Target:
+        this.targetService.deleteTarget(this.parentId, this.selectedParentType, this.policySetId).subscribe(res => {
           console.log("DELETED");
           this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
           this.closeEvent.emit();

@@ -31,4 +31,13 @@ public class TargetController {
 		this.targetService.addTarget(policySetId, itemId, type);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "target/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteTarget(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId) {
+		this.targetService.deleteTarget(parentId, selectedParentType, policySetId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }
+
+

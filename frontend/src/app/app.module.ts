@@ -30,6 +30,7 @@ import { PolicyComponent } from './policy/policy.component';
 import { RuleComponent } from './rule/rule.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HomeComponent } from './home/home.component';
+import { AnyOfComponent } from './any-of/any-of.component';
 
 const appRoutes: Routes = [
   {path: 'editor/:id', component : EditorComponent},
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     PolicyComponent,
     RuleComponent,
     ConfirmationDialogComponent,
-    HomeComponent
+    HomeComponent,
+    AnyOfComponent
   ],
   imports: [
     CommonModule,

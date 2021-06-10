@@ -52,7 +52,7 @@
   </jw-modal>
 
   <jw-modal id="custom-confirmation-dialog">
-    <app-confirmation-dialog [selectedItemId]="selectedItemId" [policySetId]='policySet?.id' [selectedItemType]="currentType" (closeEvent)="closeModal('custom-confirmation-dialog')">
+    <app-confirmation-dialog [selectedItemId]="selectedItemId" [policySetId]='policySet?.id' [selectedItemType]="currentType" [selectedParentType]="selectedParentType" [parentId]="selectedParentId" (closeEvent)="closeModal('custom-confirmation-dialog')">
     </app-confirmation-dialog>
   </jw-modal>
 

@@ -38,4 +38,16 @@ public class TargetServiceImpl implements TargetService {
 		}
 	}
 
+	@Override
+	public void deleteTarget(String parentId, String selectedParentType, String policySetId) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if(document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			if(selectedParentType.equals("PolicySet")) {
+				policySetDto.setTarget(null);
+			}
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+	}
+
 }
