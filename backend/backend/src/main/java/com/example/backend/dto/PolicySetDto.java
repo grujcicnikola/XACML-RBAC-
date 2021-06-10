@@ -11,8 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@XmlRootElement(name="PolicySet")
+@XmlRootElement(name = "PolicySet")
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType: define the order in which the fields are written in the XML file
 @Getter
@@ -38,14 +37,16 @@ public class PolicySetDto {
 	private String policySetIdReference;
 	@XmlAttribute
 	private String policyIdReference;
-	
-	//@XmlElementWrapper(name="Policies")
-    @XmlElement(name="Policy")
+
+	// @XmlElementWrapper(name="Policies")
+	@XmlElement(name = "Policy")
 	private List<PolicyDto> policies = new ArrayList<PolicyDto>();
-	//@XmlTransient: annotate fields that we don't want to be included in XML
+	// @XmlTransient: annotate fields that we don't want to be included in XML
 	@XmlTransient
 	private String creator;
 	@XmlTransient
 	private String created;
-}
 
+	@XmlElement(name = "Target")
+	private TargetDto target;
+}

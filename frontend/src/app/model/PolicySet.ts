@@ -1,4 +1,5 @@
 import { Policy } from "./Policy";
+import { Target } from './Target';
 
 export class PolicySet {
     id : string;
@@ -13,4 +14,5 @@ export class PolicySet {
     policies: Policy[];
     creator: string;
     created: string;
+    target: Target;
 }

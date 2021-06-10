@@ -34,7 +34,7 @@ public class PolicyDto {
 	private String description;
 	@XmlAttribute
 	private String schemaLocator;
-	@XmlElementWrapper(name="rules")
+	//@XmlElementWrapper(name="rules")
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();
 	@XmlTransient

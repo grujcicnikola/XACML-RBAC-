@@ -1,5 +1,28 @@
 package com.example.backend.dto;
 
-public class AttributeValue {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@XmlRootElement(name="AttributeValue")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AttributeValue {
+	
+	@XmlAttribute
+	private String dataType;
+	
+	private String value;//TODO
+	
 }

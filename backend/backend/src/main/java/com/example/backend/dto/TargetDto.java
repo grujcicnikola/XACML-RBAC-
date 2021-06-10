@@ -23,7 +23,6 @@ import lombok.Setter;
 @XmlRootElement(name="Target")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetDto {
-	@XmlElementWrapper(name="anyOf")
     @XmlElement(name="AnyOf")
 	private List<AnyOfDto> anyOfs = new ArrayList<AnyOfDto>();
 }
