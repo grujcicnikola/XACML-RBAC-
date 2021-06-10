@@ -47,6 +47,10 @@
     <app-policy [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy')"></app-policy>
   </jw-modal>
 
+  <jw-modal id="custom-any-of">
+    <app-any-of [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-any-of')"></app-any-of>
+  </jw-modal>
+
   <jw-modal id="custom-modal-3">
     <app-rule [mode]="mode" (closeEvent)="closeModal('custom-modal-3')"></app-rule>
   </jw-modal>

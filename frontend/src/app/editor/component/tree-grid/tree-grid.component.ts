@@ -97,24 +97,17 @@ export class TreeGridComponent implements OnInit, OnChanges {
     var selected: any = this.treegrid.getSelectedRecords()[0];
     //console.log(selected.type);
     if (selected) {
-      //switch (selected.type) {
-      // case TypesEnum.Policy:
-      //   this.openModal('custom-policy');
-      //   this.mode = ModeEnum.Add;
-      //   break;
-      // case TypesEnum.Rule:
-      //   this.openModal('custom-modal-3');
-      //   this.mode = ModeEnum.Add;
-      //   break;
-      // default:
-      //   this.openModal('custom-policy-set');
-      //   this.mode = ModeEnum.Add;
-      //   break;
-      //}
       this.currentType = selected.type;
-      this.selectedItemId= selected.id;
-      this.openModal('custom-choose-what-to-create');
-
+      this.selectedItemId = selected.id;
+      switch (selected.type) {
+        case TypesEnum.Target:
+          this.openModal('custom-any-of');
+          this.mode = ModeEnum.Add;
+          break;
+        default:
+          this.openModal('custom-choose-what-to-create');
+          break;
+      }
     } else {
       //open policy set
       if (this.tasks.length == 0) {
@@ -161,8 +154,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-modal-3');
           this.mode = ModeEnum.Edit;
           break;
-        case TypesEnum.Target:  
-            break;  
+        case TypesEnum.Target:
+          break;
         default:
           this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
@@ -176,7 +169,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       this.selectedItemId = selected.id;
       this.currentType = selected.type;
-      console.log( selected.parentItem.id);
+      console.log(selected.parentItem.id);
       this.selectedParentId = selected.parentItem.id;
       this.selectedParentType = selected.parentItem.type;
       this.openModal('custom-confirmation-dialog');
@@ -206,7 +199,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
   addTargetElement() {
     console.log(this.policySet);
-    this.targetService.addTarget(this.policySet.id, this.selectedItemId, this.currentType).subscribe(res=>{
+    this.targetService.addTarget(this.policySet.id, this.selectedItemId, this.currentType).subscribe(res => {
       this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySet.id }));
     })
   }

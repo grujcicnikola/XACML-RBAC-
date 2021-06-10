@@ -26,9 +26,9 @@ export class TaskDataService {
   createPolicySet(policySet: PolicySet) {
     this.tasks.push(this.createTreeElement(policySet.id, policySet, TypesEnum.PolicySet, false, null));
     policySet.policies.forEach(policy => {
-      this.tasks.push(this.createTreeElement(policy.policyId, policy, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
+      this.tasks.push(this.createTreeElement(policy.policyId, policySet, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
       policy.rules.forEach(rule => {
-        this.tasks.push(this.createTreeElement(rule.ruleId, rule, TypesEnum.Rule, false, policy.id));
+        this.tasks.push(this.createTreeElement(rule.ruleId, policySet, TypesEnum.Rule, false, policy.id));
       });
     });
     if(policySet.target!=null){
