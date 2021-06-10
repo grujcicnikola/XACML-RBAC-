@@ -16,6 +16,7 @@ import { PolicySetReducer, policySet_selector } from 'src/app/store/policySet.re
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalService } from '../modal/modal.service';
 import { PolicySetService } from 'src/app/service/policySet/policy-set.service';
+import { TargetService } from 'src/app/service/targetService/target.service';
 
 
 
@@ -39,6 +40,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
   public treegrid: TreeGrid;
 
   constructor(private taskDataService: TaskDataService,
+    private targetService: TargetService,
     private store: Store<PolicySetState>, private modalService: ModalService) {
 
   }
@@ -62,7 +64,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.policySet != null) {
       this.tasks = this.taskDataService.transformDtoToTreeModel(this.policySet);
-    }else {
+    } else {
       this.tasks = [];
     }
   }
@@ -94,47 +96,48 @@ export class TreeGridComponent implements OnInit, OnChanges {
     //console.log(selected.type);
     if (selected) {
       //switch (selected.type) {
-        // case TypesEnum.Policy:
-        //   this.openModal('custom-policy');
-        //   this.mode = ModeEnum.Add;
-        //   break;
-        // case TypesEnum.Rule:
-        //   this.openModal('custom-modal-3');
-        //   this.mode = ModeEnum.Add;
-        //   break;
-        // default:
-        //   this.openModal('custom-policy-set');
-        //   this.mode = ModeEnum.Add;
-        //   break;
+      // case TypesEnum.Policy:
+      //   this.openModal('custom-policy');
+      //   this.mode = ModeEnum.Add;
+      //   break;
+      // case TypesEnum.Rule:
+      //   this.openModal('custom-modal-3');
+      //   this.mode = ModeEnum.Add;
+      //   break;
+      // default:
+      //   this.openModal('custom-policy-set');
+      //   this.mode = ModeEnum.Add;
+      //   break;
       //}
       this.currentType = selected.type;
-      this.openModal('custom-modal-5');
+      this.selectedItemId= selected.id;
+      this.openModal('custom-choose-what-to-create');
 
     } else {
       //open policy set
-      if(this.tasks.length == 0){
+      if (this.tasks.length == 0) {
         this.openModal('custom-policy-set');
         this.mode = ModeEnum.Add;
       }
     }
   }
 
-  selectedEvent(event: TypesEnum){
+  selectedEvent(event: TypesEnum) {
     if (event) {
       switch (event) {
         case TypesEnum.Policy:
-            this.mode = ModeEnum.Add;
+          this.mode = ModeEnum.Add;
           this.openModal('custom-policy');
           break;
         case TypesEnum.Rule:
-            this.mode = ModeEnum.Add;
+          this.mode = ModeEnum.Add;
           this.openModal('custom-modal-3');
           break;
         case TypesEnum.Target:
-          
+          this.addTargetElement();
           break;
         default:
-            this.mode = ModeEnum.Add;
+          this.mode = ModeEnum.Add;
           this.openModal('custom-policy-set');
           break;
       }
@@ -166,7 +169,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
   delete() {
     var selected: any = this.treegrid.getSelectedRecords()[0];
-    if(selected){
+    if (selected) {
       this.selectedItemId = selected.id;
       this.currentType = selected.type;
       this.openModal('custom-confirmation-dialog');
@@ -190,8 +193,15 @@ export class TreeGridComponent implements OnInit, OnChanges {
     this.modalService.close(id);
   }
 
-  savePolicySet(policySet: PolicySet){
-    this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: policySet.id}));
+  savePolicySet(policySet: PolicySet) {
+    this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: policySet.id }));
+  }
+
+  addTargetElement() {
+    console.log(this.policySet);
+    this.targetService.addTarget(this.policySet.id, this.selectedItemId, this.currentType).subscribe(res=>{
+      this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySet.id }));
+    })
   }
 
 }

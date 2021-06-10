@@ -15,7 +15,6 @@ export class TaskDataService {
   transformDtoToTreeModel(policySet: PolicySet): TaskModel[] {
     this.tasks = []
     this.createPolicySet(policySet);
-    console.log("tu sam");
     console.log((this.tasks));
     return this.tasks;
   }
@@ -32,6 +31,9 @@ export class TaskDataService {
         this.tasks.push(this.createTreeElement(rule.ruleId, rule, TypesEnum.Rule, false, policy.id));
       });
     });
+    if(policySet.target!=null){
+      this.tasks.push(this.createTreeElement("1", policySet, TypesEnum.Target, true, policySet.id));
+    }
   }
 
   createTreeElement(id: string, element: any, type: TypesEnum, isParent: boolean, parentID: string): TaskModel {
