@@ -29,14 +29,15 @@ export class EditorComponent implements OnInit {
   tabIndex: any;
   id: string;
   policySet$: Observable<PolicySet>;
+  policySetId: string;
   //policySet$: Observable<PolicySet>;
   //ToDoSubscription: Subscription;
 
   constructor(private router: ActivatedRoute, private service: EditorService,
     private tokenStorage: TokenStorageService, private userService: UserService,
-    private policySetService: PolicySetService, private taskDataService: TaskDataService, 
+    private policySetService: PolicySetService, private taskDataService: TaskDataService,
     private store: Store<{ policySet: PolicySetState }>) {
-      
+
 
     this.service.test().subscribe(data => {
       console.log(data);
@@ -63,10 +64,15 @@ export class EditorComponent implements OnInit {
       });
       this.id = this.router.snapshot.params.id;
       this.policySet$ = this.store.pipe(select(policySet_selector));
-      if(this.id){
-        this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({id: this.id}));
+      if (this.id) {
+        this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.id }));
         //this.policySet$ = this.store.pipe(select(policySet_selector));
       }
+      this.policySet$.subscribe(policy => {
+        if (policy != null) {
+          this.policySetId = policy.id
+        }
+      });
     }
   }
 
@@ -83,11 +89,11 @@ export class EditorComponent implements OnInit {
   }
 
   downloadPolicySet() {
-    this.policySet$.subscribe(policy => {
-      this.policySetService.downloadPolicySet(policy.id).subscribe((data: Blob) => {
+    if (this.policySetId != null) {
+      this.policySetService.downloadPolicySet(this.policySetId).subscribe((data: Blob) => {
         var file = new Blob([data], { type: 'text/xml' })
         var fileURL = window.URL.createObjectURL(file);
-   
+
         let a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
@@ -97,8 +103,8 @@ export class EditorComponent implements OnInit {
         a.click();
         window.URL.revokeObjectURL(fileURL);
         a.remove();
-      })
-    });
+      });
+    }
   }
 
 }
