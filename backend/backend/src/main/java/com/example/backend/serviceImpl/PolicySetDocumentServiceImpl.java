@@ -16,6 +16,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.converter.PolicySetDtoConverter;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
 import com.example.backend.model.User;
@@ -32,6 +33,8 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	@Autowired
 	private XMLMarshalService xmlMarshalService;
 	@Autowired
+	private PolicySetDtoConverter policySetDtoConverter;
+	@Autowired
 	private UserService userService;
 
 	@Override
@@ -41,7 +44,7 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		if(user.isPresent()) {
 			List<PolicySetDocument> documents = this.policySetDocumentRepository.findByCreator(username);
 			documents.forEach(document -> {
-				PolicySetDto policySetDto = policySetDtoConverter(document);
+				PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document);
 				list.add(policySetDto);				
 			});
 			
@@ -67,17 +70,10 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	public PolicySetDto getPolicySetDto(String id) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(id);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			return policySetDto;
 		}
 		return null;
-	}
-
-	private PolicySetDto policySetDtoConverter(PolicySetDocument document) {
-		PolicySetDto policySetDto = xmlMarshalService.unmarshal(document.getContent());
-		policySetDto.setCreator(document.getCreator());
-		policySetDto.setId(document.getId());
-		return policySetDto;
 	}
 
 	@Override
@@ -94,7 +90,7 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	public PolicySetDto createPolicySet(PolicySetDto policySetDto, String username) {
 		String xml = xmlMarshalService.marshal(policySetDto);
 		PolicySetDocument document= savePolicySet(xml, username);
-		return policySetDtoConverter(document);
+		return policySetDtoConverter.policySetDtoConverter(document);
 	}
 
 	@Override
@@ -104,7 +100,7 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		document.setContent(xml);
 		document.setCreator(username);
 		document.setId(policySetDto.getId());
-		return policySetDtoConverter(this.policySetDocumentRepository.save(document));
+		return policySetDtoConverter.policySetDtoConverter(this.policySetDocumentRepository.save(document));
 	}
 
 	@Override

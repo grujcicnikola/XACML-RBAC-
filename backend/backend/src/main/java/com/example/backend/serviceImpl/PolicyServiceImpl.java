@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.converter.PolicySetDtoConverter;
 import com.example.backend.dto.PolicyDto;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
@@ -23,13 +24,15 @@ public class PolicyServiceImpl implements PolicyService {
 	private XMLMarshalService xmlMarshalService;
 	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
+	@Autowired
+	private PolicySetDtoConverter policySetDtoConverter;
 
 	@Override
 	public PolicyDto getPolicy(String id, String idPolicySet) {
 		// TODO Auto-generated method stub
 		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(idPolicySet);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			PolicyDto policyDto = policySetDto.getPolicies().stream()
 		            .filter(policy -> policy.getPolicyId().contentEquals(id))
 		            .findFirst()
@@ -45,25 +48,18 @@ public class PolicyServiceImpl implements PolicyService {
 		// TODO Auto-generated method stub
 		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(id);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			policySetDto.getPolicies().add(policyDto);
 			return this.policySetDocumentService.updatePolicySet(policySetDto, username);
 		}
 		return null;
-	}
-	
-	private PolicySetDto policySetDtoConverter(PolicySetDocument document) {
-		PolicySetDto policySetDto = xmlMarshalService.unmarshal(document.getContent());
-		policySetDto.setCreator(document.getCreator());
-		policySetDto.setId(document.getId());
-		return policySetDto;
 	}
 
 	@Override
 	public PolicySetDto updatePolicy(String id, PolicyDto policyDto, String username) {
 		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(id);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			for(int i=0; i< policySetDto.getPolicies().size(); i++) {
 				if(policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyDto.getPolicyId())) {
 					policySetDto.getPolicies().set(i, policyDto);
@@ -80,7 +76,7 @@ public class PolicyServiceImpl implements PolicyService {
 	public void deletePolicy(String id, String idPolicySet) {
 		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(idPolicySet);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			for(int i=0; i< policySetDto.getPolicies().size(); i++) {
 				if(policySetDto.getPolicies().get(i).getPolicyId().contentEquals(id)) {
 					policySetDto.getPolicies().remove(i);

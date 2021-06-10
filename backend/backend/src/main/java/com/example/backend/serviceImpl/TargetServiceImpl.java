@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.converter.PolicySetDtoConverter;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.dto.TargetDto;
 import com.example.backend.model.PolicySetDocument;
@@ -22,12 +23,14 @@ public class TargetServiceImpl implements TargetService {
 	private XMLMarshalService xmlMarshalService;
 	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
+	@Autowired
+	private PolicySetDtoConverter policySetDtoConverter;
 	
 	@Override
 	public void addTarget(String policySetId, String itemId, String type) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
 		if(document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter(document.get());
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			if(type.equals("PolicySet")) {
 				policySetDto.setTarget(new TargetDto());
 			}
@@ -35,10 +38,4 @@ public class TargetServiceImpl implements TargetService {
 		}
 	}
 
-	private PolicySetDto policySetDtoConverter(PolicySetDocument document) {
-		PolicySetDto policySetDto = xmlMarshalService.unmarshal(document.getContent());
-		policySetDto.setCreator(document.getCreator());
-		policySetDto.setId(document.getId());
-		return policySetDto;
-	}
 }
