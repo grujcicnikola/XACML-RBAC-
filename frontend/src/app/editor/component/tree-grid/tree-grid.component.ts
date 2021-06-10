@@ -123,19 +123,19 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (event) {
       switch (event) {
         case TypesEnum.Policy:
+            this.mode = ModeEnum.Add;
           this.openModal('custom-policy');
-          this.mode = ModeEnum.Add;
           break;
         case TypesEnum.Rule:
+            this.mode = ModeEnum.Add;
           this.openModal('custom-modal-3');
-          this.mode = ModeEnum.Add;
           break;
         case TypesEnum.Target:
           
           break;
         default:
+            this.mode = ModeEnum.Add;
           this.openModal('custom-policy-set');
-          this.mode = ModeEnum.Add;
           break;
       }
     }

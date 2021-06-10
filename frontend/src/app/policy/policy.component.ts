@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PolicySet } from '../model/PolicySet';
 import { UserService } from '../service/userService/user.service';
@@ -13,7 +13,7 @@ import { PolicySetService } from '../service/policySet/policy-set.service';
   templateUrl: './policy.component.html',
   styleUrls: ['./policy.component.css']
 })
-export class PolicyComponent implements OnInit {
+export class PolicyComponent implements OnInit, OnChanges {
 
   @Input() mode : ModeEnum;
   @Input() idPolicySet : string;
@@ -36,10 +36,10 @@ export class PolicyComponent implements OnInit {
     }
    
   ngOnInit() {
-    
+  
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes:  import("@angular/core").SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
       this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
         this.policy = res)
@@ -67,6 +67,7 @@ export class PolicyComponent implements OnInit {
   
       });
     }
+    this.policy = new Policy();
   }
 
 }

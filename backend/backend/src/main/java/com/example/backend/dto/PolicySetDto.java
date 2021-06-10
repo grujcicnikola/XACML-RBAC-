@@ -39,7 +39,7 @@ public class PolicySetDto {
 	@XmlAttribute
 	private String policyIdReference;
 	
-	@XmlElementWrapper(name="Policies")
+	//@XmlElementWrapper(name="Policies")
     @XmlElement(name="Policy")
 	private List<PolicyDto> policies = new ArrayList<PolicyDto>();
 	//@XmlTransient: annotate fields that we don't want to be included in XML
