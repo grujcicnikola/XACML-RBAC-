@@ -12,6 +12,7 @@ import { AllOf } from '../model/AllOf';
 import { Match } from '../model/Match';
 import { AttributeValue } from '../model/AttributeValue';
 import { AttributeDesignator } from '../model/AttributeDesignator';
+import { TargetService } from '../service/targetService/target.service';
 
 @Component({
   selector: 'app-any-of',
@@ -23,8 +24,11 @@ export class AnyOfComponent implements OnInit, OnChanges {
   @Input() mode : ModeEnum;
   @Input() idPolicySet : string;
   @Input() id : string;
+  @Input() selectedParentType : string;
+  @Input() parentId : string;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
+
   form: FormGroup;
   private anyOf = new AnyOf();
   private match = new Match();
@@ -32,7 +36,7 @@ export class AnyOfComponent implements OnInit, OnChanges {
   private attributeValue = new AttributeValue();
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder, private policySetService : PolicySetService,  private policyService : PolicyService) { 
+    private formBuilder: FormBuilder, private targetService: TargetService, private policySetService : PolicySetService,  private policyService : PolicyService) { 
       
       this.form = this.formBuilder.group({
         matchId: ['', [Validators.minLength(3), Validators.required]],
@@ -41,7 +45,6 @@ export class AnyOfComponent implements OnInit, OnChanges {
         value: ['', [Validators.minLength(3), Validators.required]],
         category: ['', [Validators.minLength(3), Validators.required]],
         attributeId: ['', [Validators.minLength(3), Validators.required]],
-        mustBePresent: ['', [Validators.minLength(3), Validators.required]]
       });
     }
    
@@ -61,13 +64,17 @@ export class AnyOfComponent implements OnInit, OnChanges {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    if( this.mode === ModeEnum.Add){
-      // this.policyService.addPolicy(this.policy, this.idPolicySet).subscribe(res => {
-      //   this.saveEvent.emit(res);
-      //   this.closeEvent.emit();
-      // }, err => {
+    this.anyOf.allOf = new AllOf();//TODO change when there are mulitple
+    this.match.attributeDesignator = this.attributeDesignator;
+    this.match.attributeValue = this.attributeValue;
+    this.anyOf.allOf.match= this.match;
+    if( this.mode === ModeEnum.Add) {
+      this.targetService.addTargetContent(this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
   
-      // });
+      });
     }else if ( this.mode === ModeEnum.Edit){
       // this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
       //   this.saveEvent.emit(res);
@@ -77,6 +84,9 @@ export class AnyOfComponent implements OnInit, OnChanges {
       // });
     }
     this.anyOf = new AnyOf();
+    this.match = new Match();
+    this.attributeDesignator = new AttributeDesignator();
+    this.attributeValue = new AttributeValue();
   }
 
 }

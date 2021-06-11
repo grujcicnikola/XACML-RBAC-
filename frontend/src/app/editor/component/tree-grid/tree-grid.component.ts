@@ -101,8 +101,10 @@ export class TreeGridComponent implements OnInit, OnChanges {
       this.selectedItemId = selected.id;
       switch (selected.type) {
         case TypesEnum.Target:
-          this.openModal('custom-any-of');
+          this.selectedParentId = selected.parentItem.id;
+          this.selectedParentType = selected.parentItem.type;
           this.mode = ModeEnum.Add;
+          this.openModal('custom-any-of');
           break;
         default:
           this.openModal('custom-choose-what-to-create');

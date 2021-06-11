@@ -271,4 +271,6 @@ form:after {
 
 label {
   font-weight: 100;
+  color: #777;
+  font: 13px Helvetica, Arial, sans-serif;
 }

@@ -22,8 +22,8 @@
                         [(ngModel)]="attributeValue.value" />
                 </div>
                 <div>
-                    <label>Must be present</label>
-                    <input type="checkbox" title="must be present" formControlName="mustBePresent" placeholder="mustBePresent" required=""
+                    <label>Must be present:</label>
+                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}" placeholder="mustBePresent" required=""
                         id="mustBePresent" name="mustBePresent"
                         [(ngModel)]="attributeDesignator.mustBePresent" />
                 </div>

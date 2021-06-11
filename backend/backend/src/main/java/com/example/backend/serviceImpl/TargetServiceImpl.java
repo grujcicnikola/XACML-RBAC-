@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.converter.PolicySetDtoConverter;
+import com.example.backend.dto.AnyOfDto;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.dto.TargetDto;
 import com.example.backend.model.PolicySetDocument;
@@ -50,4 +51,16 @@ public class TargetServiceImpl implements TargetService {
 		}
 	}
 
+	@Override
+	public PolicySetDto addTargetContent(String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if(document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			if(selectedParentType.equals("PolicySet")) {
+				policySetDto.getTarget().getAnyOfs().add(anyOfDto);
+			}
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+		return null;
+	}
 }

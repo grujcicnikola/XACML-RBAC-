@@ -48,7 +48,7 @@
   </jw-modal>
 
   <jw-modal id="custom-any-of">
-    <app-any-of [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-any-of')"></app-any-of>
+    <app-any-of [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [selectedParentType]="selectedParentType" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-any-of')"></app-any-of>
   </jw-modal>
 
   <jw-modal id="custom-modal-3">

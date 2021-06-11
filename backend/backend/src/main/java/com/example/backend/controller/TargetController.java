@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.dto.AnyOfDto;
 import com.example.backend.dto.PolicySetDto;
+import com.example.backend.dto.TargetDto;
 import com.example.backend.service.PolicySetDocumentService;
 import com.example.backend.service.TargetService;
 import com.example.backend.service.XMLMarshalService;
@@ -36,6 +38,11 @@ public class TargetController {
 	public ResponseEntity<?> deleteTarget(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId) {
 		this.targetService.deleteTarget(parentId, selectedParentType, policySetId);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "targetContent/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> addTargetContent(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId, @RequestBody AnyOfDto anyOfDto) {
+		return new ResponseEntity<>(this.targetService.addTargetContent(parentId, selectedParentType, policySetId, anyOfDto), HttpStatus.OK);
 	}
 	
 }

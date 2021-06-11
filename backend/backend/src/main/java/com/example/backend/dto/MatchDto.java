@@ -26,5 +26,5 @@ public class MatchDto {
 	@XmlElement(name = "AttributeValue")
 	private AttributeValue attributeValue;
 	@XmlElement(name = "AtributeDesignator")
-	private AttributeDesignator atributeDesignator;
+	private AttributeDesignator attributeDesignator;
 }
