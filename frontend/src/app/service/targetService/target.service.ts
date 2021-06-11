@@ -9,22 +9,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TargetService {
- 
+
   constructor(private http: HttpClient) { }
-  
+
   url = "http://localhost:8080/target";
 
   addTarget(policySetId: string, itemId: string, type: TypesEnum) {
-    return this.http.post<void>(this.url + '/target/' +policySetId + '/' + itemId + '/' +  type, null);
+    return this.http.post<void>(this.url + '/target/' + policySetId + '/' + itemId + '/' + type, null);
   }
 
   deleteTarget(parentId: string, selectedParentType: TypesEnum, policySetId: string) {
-    return this.http.delete<void>(this.url + '/target/' +parentId + '/' + selectedParentType + '/' +  policySetId);
+    return this.http.delete<void>(this.url + '/target/' + parentId + '/' + selectedParentType + '/' + policySetId);
   }
 
-  addTargetContent(parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf): Observable<PolicySet> {
-    return this.http.post<PolicySet>(this.url + '/targetContent/' +parentId + '/' + selectedParentType + '/' +  idPolicySet, anyOf);
+  addAnyOf(parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf): Observable<PolicySet> {
+    return this.http.post<PolicySet>(this.url + '/anyOf/' + parentId + '/' + selectedParentType + '/' + idPolicySet, anyOf);
+  }
 
+  getAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string): Observable<AnyOf> {
+    return this.http.get<AnyOf>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet);
+  }
+
+  updateAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf) : Observable<PolicySet>{
+    return this.http.put<PolicySet>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet, anyOf); 
+  }
+
+  deleteAnyOf(selectedItemId: string, parentId: string, selectedParentType: TypesEnum, policySetId: string) {
+    return this.http.delete<void>(this.url + '/anyOf/' + selectedItemId + '/' + parentId + '/' + selectedParentType + '/' + policySetId); 
   }
 
 }

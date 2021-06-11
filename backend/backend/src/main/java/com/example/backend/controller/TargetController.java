@@ -40,11 +40,26 @@ public class TargetController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "targetContent/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "anyOf/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> addTargetContent(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId, @RequestBody AnyOfDto anyOfDto) {
-		return new ResponseEntity<>(this.targetService.addTargetContent(parentId, selectedParentType, policySetId, anyOfDto), HttpStatus.OK);
+		return new ResponseEntity<>(this.targetService.addAnyOf(parentId, selectedParentType, policySetId, anyOfDto), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "anyOf/{id}/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AnyOfDto> getAnyOf(@PathVariable("id") String id, @PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId) {
+		return new ResponseEntity<>(this.targetService.getAnyOf(id, parentId, selectedParentType, policySetId), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "anyOf/{id}/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> updateAnyOf(@PathVariable("id") String id, @PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId, @RequestBody AnyOfDto anyOfDto) {
+		return new ResponseEntity<>(this.targetService.updateAnyOf(id, parentId, selectedParentType, policySetId, anyOfDto), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "anyOf/{id}/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> deleteAnyOf(@PathVariable("id") String id, @PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId) {
+		this.targetService.deleteAnyOf(id, parentId, selectedParentType, policySetId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
 
 

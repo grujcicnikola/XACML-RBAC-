@@ -26,13 +26,13 @@ public class TargetServiceImpl implements TargetService {
 	private PolicySetDocumentService policySetDocumentService;
 	@Autowired
 	private PolicySetDtoConverter policySetDtoConverter;
-	
+
 	@Override
 	public void addTarget(String policySetId, String itemId, String type) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
-		if(document.isPresent()) {
+		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			if(type.equals("PolicySet")) {
+			if (type.equals("PolicySet")) {
 				policySetDto.setTarget(new TargetDto());
 			}
 			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
@@ -42,9 +42,9 @@ public class TargetServiceImpl implements TargetService {
 	@Override
 	public void deleteTarget(String parentId, String selectedParentType, String policySetId) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
-		if(document.isPresent()) {
+		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			if(selectedParentType.equals("PolicySet")) {
+			if (selectedParentType.equals("PolicySet")) {
 				policySetDto.setTarget(null);
 			}
 			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
@@ -52,15 +52,70 @@ public class TargetServiceImpl implements TargetService {
 	}
 
 	@Override
-	public PolicySetDto addTargetContent(String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto) {
+	public PolicySetDto addAnyOf(String parentId, String selectedParentType, String policySetId,
+			AnyOfDto anyOfDto) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
-		if(document.isPresent()) {
+		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			if(selectedParentType.equals("PolicySet")) {
+			if (selectedParentType.equals("PolicySet")) {
 				policySetDto.getTarget().getAnyOfs().add(anyOfDto);
 			}
 			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
 		}
 		return null;
+	}
+
+	@Override
+	public AnyOfDto getAnyOf(String id, String parentId, String selectedParentType, String policySetId) {
+		// TODO Auto-generated method stub
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			if (selectedParentType.equals("Target")) {
+				return policySetDto.getTarget().getAnyOfs().stream()
+						.filter(anyOf -> anyOf.getAllOf().getMatch().getMatchId().equals(id))
+						.findFirst()
+						.orElse(null);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public PolicySetDto updateAnyOf(String id, String parentId, String selectedParentType, String policySetId,
+			AnyOfDto anyOfDto) {
+		// TODO Auto-generated method stub
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			if (selectedParentType.equals("Target")) {
+				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
+					if(policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId().contentEquals(id)) {
+						policySetDto.getTarget().getAnyOfs().set(i, anyOfDto);
+						break;
+					}
+				}
+				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void deleteAnyOf(String id, String parentId, String selectedParentType, String policySetId) {
+		// TODO Auto-generated method stub
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			if (selectedParentType.equals("Target")) {
+				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
+					if(policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId().contentEquals(id)) {
+						policySetDto.getTarget().getAnyOfs().remove(i);
+						this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+						break;
+					}	
+				}
+			}
+		}
 	}
 }

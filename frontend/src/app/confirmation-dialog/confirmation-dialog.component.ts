@@ -67,6 +67,15 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
 
         });
         break;
+      case TypesEnum.AnyOf:
+        this.targetService.deleteAnyOf(this.selectedItemId, this.parentId, this.selectedParentType, this.policySetId).subscribe(res => {
+          console.log("DELETED");
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+        break;
     }
   }
 

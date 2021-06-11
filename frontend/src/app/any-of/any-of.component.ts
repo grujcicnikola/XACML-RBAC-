@@ -21,11 +21,11 @@ import { TargetService } from '../service/targetService/target.service';
 })
 export class AnyOfComponent implements OnInit, OnChanges {
 
-  @Input() mode : ModeEnum;
-  @Input() idPolicySet : string;
-  @Input() id : string;
-  @Input() selectedParentType : string;
-  @Input() parentId : string;
+  @Input() mode: ModeEnum;
+  @Input() idPolicySet: string;
+  @Input() id: string;
+  @Input() selectedParentType: string;
+  @Input() parentId: string;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
 
@@ -36,26 +36,30 @@ export class AnyOfComponent implements OnInit, OnChanges {
   private attributeValue = new AttributeValue();
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder, private targetService: TargetService, private policySetService : PolicySetService,  private policyService : PolicyService) { 
-      
-      this.form = this.formBuilder.group({
-        matchId: ['', [Validators.minLength(3), Validators.required]],
-        dataType: ['', [Validators.minLength(3), Validators.required]],
-        dataTypeDesignator: ['', [Validators.minLength(3), Validators.required]],
-        value: ['', [Validators.minLength(3), Validators.required]],
-        category: ['', [Validators.minLength(3), Validators.required]],
-        attributeId: ['', [Validators.minLength(3), Validators.required]],
-      });
-    }
-   
+    private formBuilder: FormBuilder, private targetService: TargetService, private policySetService: PolicySetService, private policyService: PolicyService) {
+
+    this.form = this.formBuilder.group({
+      matchId: ['', [Validators.minLength(3), Validators.required]],
+      dataType: ['', [Validators.minLength(3), Validators.required]],
+      dataTypeDesignator: ['', [Validators.minLength(3), Validators.required]],
+      value: ['', [Validators.minLength(3), Validators.required]],
+      category: ['', [Validators.minLength(3), Validators.required]],
+      attributeId: ['', [Validators.minLength(3), Validators.required]],
+    });
+  }
+
   ngOnInit() {
   }
 
-  ngOnChanges(changes:  import("@angular/core").SimpleChanges): void {
-    if( this.mode === ModeEnum.Edit){
-      // this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
-      //   this.policy = res)
-    }else{
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    if (this.mode === ModeEnum.Edit) {
+      this.targetService.getAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet).subscribe(res =>{
+        this.anyOf = res;
+        this.match = this.anyOf.allOf.match;
+        this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
+        this.attributeValue = this.anyOf.allOf.match.attributeValue;
+      })
+    } else {
       this.anyOf = new AnyOf();
     }
   }
@@ -67,21 +71,21 @@ export class AnyOfComponent implements OnInit, OnChanges {
     this.anyOf.allOf = new AllOf();//TODO change when there are mulitple
     this.match.attributeDesignator = this.attributeDesignator;
     this.match.attributeValue = this.attributeValue;
-    this.anyOf.allOf.match= this.match;
-    if( this.mode === ModeEnum.Add) {
-      this.targetService.addTargetContent(this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
+    this.anyOf.allOf.match = this.match;
+    if (this.mode === ModeEnum.Add) {
+      this.targetService.addAnyOf(this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
         this.saveEvent.emit(res);
         this.closeEvent.emit();
       }, err => {
-  
+
       });
-    }else if ( this.mode === ModeEnum.Edit){
-      // this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
-      //   this.saveEvent.emit(res);
-      //   this.closeEvent.emit();
-      // }, err => {
-  
-      // });
+    } else if (this.mode === ModeEnum.Edit) {
+      this.targetService.updateAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
+
+      });
     }
     this.anyOf = new AnyOf();
     this.match = new Match();

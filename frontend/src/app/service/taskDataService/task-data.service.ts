@@ -33,6 +33,9 @@ export class TaskDataService {
     });
     if(policySet.target!=null){
       this.tasks.push(this.createTreeElement(policySet.id+":target", policySet, TypesEnum.Target, true, policySet.id));
+      policySet.target.anyOfs.forEach(anyOf => {
+        this.tasks.push(this.createTreeElement(anyOf.allOf.match.matchId, policySet, TypesEnum.AnyOf, false, policySet.id+":target"));
+      });
     }
   }
 

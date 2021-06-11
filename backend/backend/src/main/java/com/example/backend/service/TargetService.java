@@ -10,6 +10,12 @@ public interface TargetService {
 
 	void deleteTarget(String parentId, String selectedParentType, String policySetId);
 
-	PolicySetDto addTargetContent(String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto);
+	PolicySetDto addAnyOf(String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto);
+
+	AnyOfDto getAnyOf(String id, String parentId, String selectedParentType, String policySetId);
+
+	PolicySetDto updateAnyOf(String id, String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto);
+
+	void deleteAnyOf(String id, String parentId, String selectedParentType, String policySetId);
 
 }
