@@ -268,3 +268,7 @@ form:after {
   color: #f44336; /* Red */
   font-size: 90%;
 }
+
+label {
+  font-weight: 100;
+}

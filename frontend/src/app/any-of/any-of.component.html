@@ -7,36 +7,37 @@
                     <div class="alert-message" *ngIf="f.matchId.invalid && f.matchId.dirty || f.matchId.touched">
                         <div *ngIf="f.matchId.errors?.minlength">MatchId must have at least 3 characters!</div>
                     </div>
-                    <input type="text" formControlName="matchId" placeholder="matchId" required="" id="matchId"
+                    <input type="text" title="match id" formControlName="matchId" placeholder="matchId" required="" id="matchId"
                         name="matchId" [(ngModel)]="match.matchId" />
                 </div>
                 <div>
                     <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
                         <div *ngIf="f.dataType.errors?.minlength">DataType must have at least 3 characters!</div>
                     </div>
-                    <input type="text" formControlName="dataType" placeholder="dataType" required="" id="dataType"
+                    <input type="text" title="data type" formControlName="dataType" placeholder="dataType" required="" id="dataType"
                         name="dataType" [(ngModel)]="attributeValue.dataType" />
                 </div>
                 <div>
-                    <input type="text" formControlName="value" placeholder="value" required="" id="value" name="value"
+                    <input type="text" title="value"  formControlName="value" placeholder="value" required="" id="value" name="value"
                         [(ngModel)]="attributeValue.value" />
                 </div>
                 <div>
-                    <input type="boolean" formControlName="mustBePresent" placeholder="mustBePresent" required=""
+                    <label>Must be present</label>
+                    <input type="checkbox" title="must be present" formControlName="mustBePresent" placeholder="mustBePresent" required=""
                         id="mustBePresent" name="mustBePresent"
                         [(ngModel)]="attributeDesignator.mustBePresent" />
                 </div>
                 <div>
-                    <input type="text" formControlName="category" placeholder="category" required="" id="category"
+                    <input type="text"  title="category" formControlName="category" placeholder="category" required="" id="category"
                         name="category" [(ngModel)]="attributeDesignator.category" />
                 </div>
                 <div>
-                    <input type="text" formControlName="attributeId" placeholder="attributeId" required=""
+                    <input type="text" title="attribute id"  formControlName="attributeId" placeholder="attributeId" required=""
                         id="attributeId" name="attributeId"
                         [(ngModel)]="attributeDesignator.attributeId" />
                 </div>
                 <div>
-                    <input type="text" formControlName="dataTypeDesignator" placeholder="dataType" required=""
+                    <input type="text" title="data type" formControlName="dataTypeDesignator" placeholder="dataType" required=""
                         id="dataTypeDesignator" name="dataTypeDesignator"
                         [(ngModel)]="attributeDesignator.dataType" />
                 </div>

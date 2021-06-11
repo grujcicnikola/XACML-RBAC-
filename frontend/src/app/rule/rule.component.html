@@ -7,14 +7,14 @@
             <div class="alert-message" *ngIf="f.ruleId.invalid && f.ruleId.dirty || f.ruleId.touched">
               <div *ngIf="f.ruleId.errors?.minlength">ruleId must have at least 3 characters!</div>
             </div>
-            <input type="text" formControlName="ruleId" placeholder="ruleId" required="" id="ruleId" name="ruleId"
+            <input type="text" title="rule id" formControlName="ruleId" placeholder="ruleId" required="" id="ruleId" name="ruleId"
               [(ngModel)]="rule.ruleId" />
           </div>
           <div>
             <div class="alert-message" *ngIf="f.effect.invalid && f.effect.dirty || f.effect.touched">
               <div *ngIf="f.effect.errors?.minlength">effect must have at least 3 characters!</div>
             </div>
-            <input type="text" formControlName="effect" placeholder="effect" required="" id="effect" name="effect"
+            <input type="text" title="effect" formControlName="effect" placeholder="effect" required="" id="effect" name="effect"
               [(ngModel)]="rule.effect" />
           </div>
           <!-- <div>
@@ -25,7 +25,7 @@
               [(ngModel)]="rule.version" />
           </div> -->
           <div>
-            <input type="text" formControlName="description" placeholder="description" required="" id="description"
+            <input type="text" title="description" formControlName="description" placeholder="description" required="" id="description"
               name="description" [(ngModel)]="rule.description" />
           </div>
           <div>

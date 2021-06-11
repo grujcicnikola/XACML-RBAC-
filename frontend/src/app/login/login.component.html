@@ -4,10 +4,10 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h1>Login Form</h1>
       <div>
-        <input type="text" formControlName="username" placeholder="Username" required id="username" name="username" [(ngModel)]="username"/>
+        <input type="text" title="username" formControlName="username" placeholder="Username" required id="username" name="username" [(ngModel)]="username"/>
       </div>
       <div>
-        <input type="password" formControlName="password" placeholder="Password" required id="password" name="password" [(ngModel)]="password"/>
+        <input type="password" title="password" formControlName="password" placeholder="Password" required id="password" name="password" [(ngModel)]="password"/>
       </div>
       <!-- <div *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)" class="alert">
         <div *ngIf="loginForm.controls['username'].errors.required">

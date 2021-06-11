@@ -7,28 +7,28 @@
           <div class="alert-message" *ngIf="f.username.invalid && f.username.dirty || f.username.touched">
             <div *ngIf="f.username.errors?.minlength">Username must have at least 3 characters!</div>
           </div>
-          <input type="text" formControlName="username" placeholder="Username" required="" id="username" name="username"
+          <input type="text" title="username" formControlName="username" placeholder="Username" required="" id="username" name="username"
             [(ngModel)]="user.username" />
         </div>
         <div>
           <div class="alert-message" *ngIf="f.name.invalid && f.name.dirty || f.name.touched">
             <div *ngIf="f.name.errors?.minlength">Name must have at least 3 characters!</div>
           </div>
-          <input type="text" formControlName="name" placeholder="Name" required="" id="name" name="name"
+          <input type="text" title="name" formControlName="name" placeholder="Name" required="" id="name" name="name"
             [(ngModel)]="user.name" />
         </div>
         <div>
           <div class="alert-message" *ngIf="f.surname.invalid && f.surname.dirty || f.surname.touched">
             <div *ngIf="f.surname.errors?.minlength">Surname must have at least 3 characters!</div>
           </div>
-          <input type="text" formControlName="surname" placeholder="Surname" required="" id="surname" name="surname"
+          <input type="text" title="surname" formControlName="surname" placeholder="Surname" required="" id="surname" name="surname"
             [(ngModel)]="user.surname" />
         </div>
         <div>
           <div class="alert-message" *ngIf="f.email.invalid && f.email.dirty || f.email.touched">
             <div *ngIf="f.email.errors?.email">Email must be a valid email address!</div>
           </div>
-          <input type="text" formControlName="email" placeholder="Email" required="" id="email" name="email"
+          <input type="text" title="email" formControlName="email" placeholder="Email" required="" id="email" name="email"
             [(ngModel)]="user.email" />
         </div>
         <div>
@@ -40,7 +40,7 @@
             <div *ngIf="f.password.errors?.noUppercase">Password must contain at least one uppercase letter (A-Z)!</div>
             <div *ngIf="f.password.errors?.noSymbol">Password must contain at least one special character!</div>
           </div>
-          <input type="password" formControlName="password" placeholder="Password" required="" id="password"
+          <input type="password" title="password" formControlName="password" placeholder="Password" required="" id="password"
             name="password" [(ngModel)]="user.password" />
         </div>
         <div>
@@ -48,7 +48,7 @@
             *ngIf="f.repeated_passoword.invalid && f.repeated_passoword.dirty || f.repeated_passoword.touched">
             <div *ngIf="f.repeated_passoword.errors?.mustMatch">Passwords must match!</div>
           </div>
-          <input type="password" formControlName="repeated_passoword" placeholder="Repeat password" required=""
+          <input type="password" title="repeated passoword" formControlName="repeated_passoword" placeholder="Repeat password" required=""
             id="repeated_passoword" name="repeated_passoword" [(ngModel)]="user.repeated_passoword" />
         </div>
         <div>

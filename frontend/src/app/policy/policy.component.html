@@ -7,33 +7,33 @@
             <div class="alert-message" *ngIf="f.xsi.invalid && f.xsi.dirty || f.xsi.touched">
               <div *ngIf="f.xsi.errors?.minlength">Xsi must have at least 3 characters!</div>
             </div>
-            <input type="text" formControlName="xsi" placeholder="xsi" required="" id="xsi" name="xsi"
+            <input type="text" title="xsi" formControlName="xsi" placeholder="xsi" required="" id="xsi" name="xsi"
               [(ngModel)]="policy.xsi" />
           </div>
           <div>
             <div class="alert-message" *ngIf="f.policyId.invalid && f.policyId.dirty || f.policyId.touched">
               <div *ngIf="f.policyId.errors?.minlength">policyId must have at least 3 characters!</div>
             </div>
-            <input type="text" formControlName="policyId" placeholder="policyId" required="" id="policyId" name="policyId"
+            <input type="text" title="policy id" formControlName="policyId" placeholder="policyId" required="" id="policyId" name="policyId"
               [(ngModel)]="policy.policyId" />
           </div>
           <div>
             <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
               <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
             </div>
-            <input type="text" formControlName="version" placeholder="version" required="" id="version" name="version"
+            <input type="text" title="version" formControlName="version" placeholder="version" required="" id="version" name="version"
               [(ngModel)]="policy.version" />
           </div>
           <div>
-            <input type="text" formControlName="ruleCombiningAlgId" placeholder="ruleCombiningAlgId" required="" id="ruleCombiningAlgId" name="ruleCombiningAlgId"
+            <input type="text" title="rule combining algorithm id" formControlName="ruleCombiningAlgId" placeholder="ruleCombiningAlgId" required="" id="ruleCombiningAlgId" name="ruleCombiningAlgId"
               [(ngModel)]="policy.ruleCombiningAlgId" />
           </div>
           <div>
-            <input type="text" formControlName="description" placeholder="description" required="" id="description"
+            <input type="text" title="description" formControlName="description" placeholder="description" required="" id="description"
               name="description" [(ngModel)]="policy.description" />
           </div>
           <div>
-            <input type="text" formControlName="schemaLocator" placeholder="schemaLocator" required="" id="schemaLocator"
+            <input type="text" title="schema locator" formControlName="schemaLocator" placeholder="schemaLocator" required="" id="schemaLocator"
               name="schemaLocator" [(ngModel)]="policy.schemaLocator" />
           </div>
           <div>
