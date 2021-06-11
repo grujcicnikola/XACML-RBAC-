@@ -32,7 +32,7 @@ export class TaskDataService {
       });
     });
     if(policySet.target!=null){
-      this.tasks.push(this.createTreeElement("1", policySet, TypesEnum.Target, true, policySet.id));
+      this.tasks.push(this.createTreeElement(policySet.id+":target", policySet, TypesEnum.Target, true, policySet.id));
     }
   }
 

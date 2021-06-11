@@ -20,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class PolicySetDto {
+	@XmlTransient
 	private String id;
 	@XmlAttribute
 	private String xmlns;
