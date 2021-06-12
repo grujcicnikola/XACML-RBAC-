@@ -53,11 +53,13 @@ export class AnyOfComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
-      this.targetService.getAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet).subscribe(res =>{
-        this.anyOf = res;
-        this.match = this.anyOf.allOf.match;
-        this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
-        this.attributeValue = this.anyOf.allOf.match.attributeValue;
+      this.targetService.getAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet).subscribe(res => {
+        if (res != null) {
+          this.anyOf = res;
+          this.match = this.anyOf.allOf.match;
+          this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
+          this.attributeValue = this.anyOf.allOf.match.attributeValue;
+        }
       })
     } else {
       this.anyOf = new AnyOf();

@@ -10,6 +10,7 @@ import PolicySetState from '../store/policySet.state';
 import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicyService } from '../service/policyService/policy.service';
 import { TargetService } from '../service/targetService/target.service';
+import { RuleService } from '../service/ruleService/rule.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -27,6 +28,7 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
 
   constructor(private policySetService: PolicySetService,
     private targetService: TargetService, private policyService: PolicyService,
+    private ruleService: RuleService,
     private store: Store<PolicySetState>) { }
 
   ngOnInit() {
@@ -69,6 +71,15 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
         break;
       case TypesEnum.AnyOf:
         this.targetService.deleteAnyOf(this.selectedItemId, this.parentId, this.selectedParentType, this.policySetId).subscribe(res => {
+          console.log("DELETED");
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+        break;
+      case TypesEnum.Rule:
+        this.ruleService.deleteRule(this.selectedItemId, this.parentId, this.policySetId).subscribe(res => {
           console.log("DELETED");
           this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
           this.closeEvent.emit();

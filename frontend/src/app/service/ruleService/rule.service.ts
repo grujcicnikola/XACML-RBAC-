@@ -17,4 +17,16 @@ export class RuleService {
     return this.http.post<PolicySet>(this.url + '/rule/' + parentId + '/' + idPolicySet, rule);
   }
 
+  getRule(id: string, parentId: string, idPolicySet: string): Observable<Rule> {
+    return this.http.get<Rule>(this.url + '/rule/' + id + '/' + parentId + '/' + idPolicySet);
+  }
+
+  updateRule(id: string, parentId: string, idPolicySet: string, rule: Rule): Observable<PolicySet> {
+    return this.http.put<PolicySet>(this.url + '/rule/' + id + '/' + parentId + '/' + idPolicySet, rule);
+  }
+
+  deleteRule(id: string, parentId: string, idPolicySet: string): Observable<void> {
+    return this.http.delete<void>(this.url + '/rule/' + id + '/' + parentId + '/' + idPolicySet);
+  }
+
 }

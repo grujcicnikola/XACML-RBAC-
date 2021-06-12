@@ -37,8 +37,8 @@ export class RuleComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
-      // this.policyService.getRule(1).subscribe(res =>
-      //   this.rule = res)
+      this.ruleService.getRule(this.id, this.parentId, this.idPolicySet).subscribe(res =>
+        this.rule = res)
     }else{
       this.rule = new Rule();
     }
@@ -56,65 +56,15 @@ export class RuleComponent implements OnInit {
   
       });
     }
+    else if( this.mode === ModeEnum.Edit){
+      this.ruleService.updateRule(this.id, this.parentId, this.idPolicySet, this.rule).subscribe(res => {
+        this.saveEvent.emit(res);
+        this.closeEvent.emit();
+      }, err => {
+  
+      });
+    }
     this.rule = new Rule();
   }
 
 }
-/**
- * @Input() mode : ModeEnum;
-  @Input() idPolicySet : string;
-  @Input() id : string;
-  @Output() saveEvent = new EventEmitter<PolicySet>();
-  @Output() closeEvent = new EventEmitter<void>();
-  form: FormGroup;
-  private policy = new Policy();
-
-  constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder, private policySetService : PolicySetService,  private policyService : PolicyService) { 
-      this.form = this.formBuilder.group({
-        xsi: ['', [Validators.minLength(3), Validators.required]],
-        policyId: ['', [Validators.minLength(3), Validators.required]],
-        version: ['', [Validators.minLength(3), Validators.required]],
-        ruleCombiningAlgId: ['', [Validators.minLength(3), Validators.required]],
-        description: ['', [Validators.minLength(3), Validators.required]],
-        schemaLocator: ['', [Validators.minLength(3), Validators.required]]
-      });
-    }
-   
-  ngOnInit() {
-  
-  }
-
-  ngOnChanges(changes:  import("@angular/core").SimpleChanges): void {
-    if( this.mode === ModeEnum.Edit){
-      this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
-        this.policy = res)
-    }else{
-      this.policy = new Policy();
-    }
-  }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
-
-  onSubmit() {
-    if( this.mode === ModeEnum.Add){
-      this.policyService.addPolicy(this.policy, this.idPolicySet).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
-      }, err => {
-  
-      });
-    }else if ( this.mode === ModeEnum.Edit){
-      this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
-      }, err => {
-  
-      });
-    }
-    this.policy = new Policy();
-  }
-
-}
- */

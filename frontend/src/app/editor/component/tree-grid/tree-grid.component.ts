@@ -99,7 +99,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       this.currentType = selected.type;
       this.selectedItemId = selected.id;
-      if(selected.parentItem){
+      if (selected.parentItem) {
         this.selectedParentId = selected.parentItem.id;
         this.selectedParentType = selected.parentItem.type;
       }
@@ -157,6 +157,9 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           break;
         case TypesEnum.Rule:
+          this.selectedParentId = selected.parentItem.id;
+          this.selectedParentType = selected.parentItem.type;
+          this.selectedItemId = selected.id;
           this.openModal('custom-rule');
           this.mode = ModeEnum.Edit;
           break;
@@ -165,10 +168,11 @@ export class TreeGridComponent implements OnInit, OnChanges {
         case TypesEnum.AnyOf:
           this.selectedParentId = selected.parentItem.id;
           this.selectedParentType = selected.parentItem.type;
-          this.mode = ModeEnum.Edit;
           this.selectedItemId = selected.id;
           this.openModal('custom-any-of');
+          this.mode = ModeEnum.Edit;
           break;
+
         default:
           this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
