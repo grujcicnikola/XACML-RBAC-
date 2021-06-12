@@ -16,15 +16,13 @@ import lombok.Setter;
 @XmlRootElement(name="Rule")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RuleDto {
-	private String id;
 	@XmlAttribute
 	private String ruleId;
 	@XmlAttribute
 	private String effect;
-	@XmlAttribute
-	private String description;
-	@XmlTransient
-	private String creator;
-	@XmlTransient
-	private String created;
+	@XmlElement(name = "Condition")
+	private ConditionDto condition;
+	@XmlElement(name = "Target")
+	private TargetDto target;
 }
+

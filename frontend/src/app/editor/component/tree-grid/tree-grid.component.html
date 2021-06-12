@@ -51,8 +51,8 @@
     <app-any-of [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [selectedParentType]="selectedParentType" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-any-of')"></app-any-of>
   </jw-modal>
 
-  <jw-modal id="custom-modal-3">
-    <app-rule [mode]="mode" (closeEvent)="closeModal('custom-modal-3')"></app-rule>
+  <jw-modal id="custom-rule">
+    <app-rule [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)"  (closeEvent)="closeModal('custom-rule')"></app-rule>
   </jw-modal>
 
   <jw-modal id="custom-confirmation-dialog">

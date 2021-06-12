@@ -1,5 +1,5 @@
 <body>
-    <div class="container">
+    <div *ngIf="rule" class="container">
       <section id="content">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <h1>Rule Form</h1>
@@ -16,17 +16,6 @@
             </div>
             <input type="text" title="effect" formControlName="effect" placeholder="effect" required="" id="effect" name="effect"
               [(ngModel)]="rule.effect" />
-          </div>
-          <!-- <div>
-            <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
-              <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
-            </div>
-            <input type="text" formControlName="version" placeholder="version" required="" id="version" name="version"
-              [(ngModel)]="rule.version" />
-          </div> -->
-          <div>
-            <input type="text" title="description" formControlName="description" placeholder="description" required="" id="description"
-              name="description" [(ngModel)]="rule.description" />
           </div>
           <div>
             <input type="submit" [disabled]="!form.valid" value="Save" />

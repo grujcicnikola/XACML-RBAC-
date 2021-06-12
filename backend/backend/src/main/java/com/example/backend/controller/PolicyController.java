@@ -49,7 +49,6 @@ public class PolicyController {
 	
 	@Autowired
 	private XMLMarshalService xmlMarshalService;
-	
 	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
 	@Autowired
@@ -77,10 +76,10 @@ public class PolicyController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "rule/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RuleDto> rule(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0).getRules().get(0), HttpStatus.OK);
-	}
+//	@RequestMapping(value = "rule/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<RuleDto> rule(@PathVariable("id") Long id) {
+//		return new ResponseEntity<>(createPolicySetForTesting().getPolicies().get(0).getRules().get(0), HttpStatus.OK);
+//	}
 	
 	
 //	@RequestMapping(value = "testMarshalingPolicySet", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,59 +96,59 @@ public class PolicyController {
 //		return new ResponseEntity<>(null, HttpStatus.OK);
 //	}
 	
-	public PolicySetDto createPolicySetForTesting() {
-		RuleDto ruleDto = RuleDto.builder()
-				.id("1")
-				.effect("efekat")
-				.ruleId("pravo id")
-				.description("opis")
-				.created("02/23/2017")
-				.creator("ngrujcic")
-				.build();
-		PolicyDto policyDto = PolicyDto.builder()
-				.id("2")
-				.xmlns("xmlns")
-				.xsi("xsi")
-				.policyId("policyId")
-				.version("version")
-				.ruleCombiningAlgId("ruleCombiningAlgId")
-				.description("opis")
-				.schemaLocator("schemaLocator")
-				.description("opis")
-				.rules(Arrays.asList(ruleDto))
-				.created("02/23/2017")
-				.creator("ngrujcic")
-				.build();
-		PolicyDto policyDto2 = PolicyDto.builder()
-				.id("3")
-				.xmlns("xmlns")
-				.xsi("xsi")
-				.policyId("policyId")
-				.version("version")
-				.ruleCombiningAlgId("ruleCombiningAlgId")
-				.description("opis")
-				.schemaLocator("schemaLocator")
-				.description("opis")
-				.rules(new ArrayList<>())
-				.created("02/23/2017")
-				.creator("ngrujcic")
-				.build();
-		PolicySetDto policySetDto = PolicySetDto.builder()
-				.xmlns("xmlns")
-				.xsi("xsi")
-				.policySetId("policySetId")
-				.version("version")
-				.policyCombiningAlgId("policyCombiningAlgId")
-				.description("opis")
-				.policySetIdReference("policySetIdReference")
-				.policyIdReference("policyIdReference")
-				.description("opis")
-				.policies(Arrays.asList(policyDto, policyDto2))
-				.created("02/23/2017")
-				.creator("ngrujcic")
-				.build();
-		return policySetDto;
-		
-	}
+//	public PolicySetDto createPolicySetForTesting() {
+//		RuleDto ruleDto = RuleDto.builder()
+//				.id("1")
+//				.effect("efekat")
+//				.ruleId("pravo id")
+//				.description("opis")
+//				.created("02/23/2017")
+//				.creator("ngrujcic")
+//				.build();
+//		PolicyDto policyDto = PolicyDto.builder()
+//				.id("2")
+//				.xmlns("xmlns")
+//				.xsi("xsi")
+//				.policyId("policyId")
+//				.version("version")
+//				.ruleCombiningAlgId("ruleCombiningAlgId")
+//				.description("opis")
+//				.schemaLocator("schemaLocator")
+//				.description("opis")
+//				.rules(Arrays.asList(ruleDto))
+//				.created("02/23/2017")
+//				.creator("ngrujcic")
+//				.build();
+//		PolicyDto policyDto2 = PolicyDto.builder()
+//				.id("3")
+//				.xmlns("xmlns")
+//				.xsi("xsi")
+//				.policyId("policyId")
+//				.version("version")
+//				.ruleCombiningAlgId("ruleCombiningAlgId")
+//				.description("opis")
+//				.schemaLocator("schemaLocator")
+//				.description("opis")
+//				.rules(new ArrayList<>())
+//				.created("02/23/2017")
+//				.creator("ngrujcic")
+//				.build();
+//		PolicySetDto policySetDto = PolicySetDto.builder()
+//				.xmlns("xmlns")
+//				.xsi("xsi")
+//				.policySetId("policySetId")
+//				.version("version")
+//				.policyCombiningAlgId("policyCombiningAlgId")
+//				.description("opis")
+//				.policySetIdReference("policySetIdReference")
+//				.policyIdReference("policyIdReference")
+//				.description("opis")
+//				.policies(Arrays.asList(policyDto, policyDto2))
+//				.created("02/23/2017")
+//				.creator("ngrujcic")
+//				.build();
+//		return policySetDto;
+//		
+//	}
 
 }
