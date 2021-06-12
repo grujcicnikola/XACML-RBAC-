@@ -1,5 +1,6 @@
 import { Apply } from './Apply';
+import { ApplyWrapper } from './ApplyWrapper';
 
 export class Condition {
-    applies: Apply[];
+    applyWrapper: ApplyWrapper;
 }

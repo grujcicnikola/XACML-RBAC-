@@ -19,16 +19,15 @@ export class TaskDataService {
     return this.tasks;
   }
 
-  // createChildren(task: any): TaskModel[] {
-
-  // }
-
   createPolicySet(policySet: PolicySet) {
     this.tasks.push(this.createTreeElement(policySet.id, policySet, TypesEnum.PolicySet, false, null));
     policySet.policies.forEach(policy => {
       this.tasks.push(this.createTreeElement(policy.policyId, policySet, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
       policy.rules.forEach(rule => {
         this.tasks.push(this.createTreeElement(rule.ruleId, policySet, TypesEnum.Rule, false, policy.policyId));
+        if(rule.condition!= null){
+          this.tasks.push(this.createTreeElement(rule.condition.applyWrapper.functionId, policySet, TypesEnum.Condition, false, rule.ruleId));
+        }
       });
     });
     if(policySet.target!=null){

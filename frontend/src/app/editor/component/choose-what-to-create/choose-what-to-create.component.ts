@@ -31,7 +31,7 @@ export class ChooseWhatToCreateComponent implements OnInit, OnChanges, OnDestroy
         this.choosenType= this.types[0];
         break;
       case TypesEnum.Rule:
-        this.types = [];
+        this.types = [TypesEnum.Condition, TypesEnum.Target];
         this.choosenType= this.types[0];
         break;
     }

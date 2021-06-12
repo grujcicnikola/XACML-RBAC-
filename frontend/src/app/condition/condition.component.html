@@ -1,0 +1,21 @@
+<body>
+    <div *ngIf="applyWrapper" class="container">
+        <section id="content">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <h1>Condition Form</h1>
+                <div>
+                    <div class="alert-message"
+                        *ngIf="f.functionId.invalid && f.functionId.dirty || f.functionId.touched">
+                        <div *ngIf="f.functionId.errors?.minlength">Xsi must have at least 3 characters!</div>
+                    </div>
+                    <input type="text" title="functionId" formControlName="functionId" placeholder="functionId"
+                        required="" id="functionId" name="functionId" [(ngModel)]="applyWrapper.functionId" />
+                </div>
+                <div>
+                    <input type="submit" [disabled]="!form.valid" value="Save" />
+                    <a (click)="closeEvent.emit($event)">Close</a>
+                </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+</body>

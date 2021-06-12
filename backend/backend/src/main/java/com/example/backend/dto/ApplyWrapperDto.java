@@ -1,5 +1,8 @@
 package com.example.backend.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -19,11 +22,9 @@ import lombok.Setter;
 @Builder
 @XmlRootElement(name = "Apply")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ApplyDto {
+public class ApplyWrapperDto {
 	@XmlAttribute
 	private String functionId;
-	@XmlElement(name = "AttributeValue")
-	private AttributeValue attributeValue;
-	@XmlElement(name = "AtributeDesignator")
-	private AttributeDesignator attributeDesignator;
+	@XmlElement(name="Apply")
+	private List<ApplyDto> applies = new ArrayList<ApplyDto>();
 }

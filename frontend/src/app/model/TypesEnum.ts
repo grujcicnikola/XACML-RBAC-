@@ -3,6 +3,7 @@ export enum TypesEnum {
   Policy = "Policy",
   Rule = "Rule",
   Target = "Target",
-  AnyOf = "AnyOf"
-
+  AnyOf = "AnyOf",
+  Condition ="Condition",
+  Apply ="Apply"
 }

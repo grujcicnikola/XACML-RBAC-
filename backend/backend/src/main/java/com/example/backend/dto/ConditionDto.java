@@ -23,5 +23,5 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ConditionDto {
     @XmlElement(name="Apply")
-	private List<ApplyDto> applies = new ArrayList<ApplyDto>();
+	private ApplyWrapperDto applyWrapper;
 }

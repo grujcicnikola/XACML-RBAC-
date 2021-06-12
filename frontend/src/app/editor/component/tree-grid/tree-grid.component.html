@@ -55,6 +55,10 @@
     <app-rule [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)"  (closeEvent)="closeModal('custom-rule')"></app-rule>
   </jw-modal>
 
+  <jw-modal id="custom-condition">
+    <app-condition [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-condition')"></app-condition>
+  </jw-modal>
+
   <jw-modal id="custom-confirmation-dialog">
     <app-confirmation-dialog [selectedItemId]="selectedItemId" [policySetId]='policySet?.id' [selectedItemType]="currentType" [selectedParentType]="selectedParentType" [parentId]="selectedParentId" (closeEvent)="closeModal('custom-confirmation-dialog')">
     </app-confirmation-dialog>

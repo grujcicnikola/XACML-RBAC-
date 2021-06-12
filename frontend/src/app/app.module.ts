@@ -31,6 +31,7 @@ import { RuleComponent } from './rule/rule.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { HomeComponent } from './home/home.component';
 import { AnyOfComponent } from './any-of/any-of.component';
+import { ConditionComponent } from './condition/condition.component';
 
 const appRoutes: Routes = [
   {path: 'editor/:id', component : EditorComponent},
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     RuleComponent,
     ConfirmationDialogComponent,
     HomeComponent,
-    AnyOfComponent
+    AnyOfComponent,
+    ConditionComponent
   ],
   imports: [
     CommonModule,

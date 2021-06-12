@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PolicySet } from '../model/PolicySet';
 import { UserService } from '../service/userService/user.service';
@@ -13,7 +13,7 @@ import { RuleService } from '../service/ruleService/rule.service';
   templateUrl: './rule.component.html',
   styleUrls: ['./rule.component.css']
 })
-export class RuleComponent implements OnInit {
+export class RuleComponent implements OnInit, OnChanges {
 
   @Input() mode : ModeEnum;
   @Input() id: string;
