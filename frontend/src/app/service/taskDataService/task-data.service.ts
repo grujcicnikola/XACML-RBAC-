@@ -8,7 +8,7 @@ import { PolicySet } from 'src/app/model/PolicySet';
 })
 export class TaskDataService {
 
-  tasks: TaskModel[] = [];
+  public tasks: TaskModel[] = [];
 
   constructor() { }
 

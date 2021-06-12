@@ -16,6 +16,18 @@ export class ConditionService {
   addCondition(ruleId: string, policyId: string, idPolicySet: string, condition: Condition): Observable<PolicySet> {
     return this.http.post<PolicySet>(this.url + '/condition/'+ ruleId + '/' + policyId + '/' + idPolicySet, condition);
   }
+ 
+  getCondition(ruleId: string, policyId: string, idPolicySet: string): Observable<Condition> {
+    return this.http.get<Condition>(this.url + '/condition/'+ ruleId + '/' + policyId + '/' + idPolicySet);
+  }
+
+  updateCondition(ruleId: string, policyId: string, idPolicySet: string, condition: Condition): Observable<PolicySet> {
+    return this.http.put<PolicySet>(this.url + '/condition/'+ ruleId + '/' + policyId + '/' + idPolicySet, condition);
+  }
+
+  deleteCondition(ruleId: string, policyId: string, idPolicySet: string): Observable<void> {
+    return this.http.delete<void>(this.url + '/condition/'+ ruleId + '/' + policyId + '/' + idPolicySet);
+  }
   
 }
 

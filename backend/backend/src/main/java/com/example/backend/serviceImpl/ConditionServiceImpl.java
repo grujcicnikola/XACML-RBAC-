@@ -46,4 +46,61 @@ public class ConditionServiceImpl implements ConditionService {
 		return null;
 	}
 	
+	@Override
+	public ConditionDto getCondition(String ruleId, String policyId, String policySetId) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
+						if(policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+							return policySetDto.getPolicies().get(i).getRules().get(j).getCondition();
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public PolicySetDto updateCondition(String ruleId, String policyId, String policySetId, ConditionDto conditionDto) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
+						if(policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+							policySetDto.getPolicies().get(i).getRules().get(j).setCondition(conditionDto);
+							break;
+						}
+					}
+				}
+			}
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+		return null;
+	}
+	
+	@Override
+	public void deleteCondition(String ruleId, String policyId, String policySetId) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
+						if(policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+							policySetDto.getPolicies().get(i).getRules().get(j).setCondition(null);
+							break;
+						}
+					}
+				}
+			}
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+	}
+	
 }

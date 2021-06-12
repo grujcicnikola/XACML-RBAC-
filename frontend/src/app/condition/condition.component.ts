@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ModeEnum } from '../model/Mode';
 import { PolicySet } from '../model/PolicySet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,13 +10,14 @@ import { PolicyService } from '../service/policyService/policy.service';
 import { Condition } from '../model/Condition';
 import { ApplyWrapper } from '../model/ApplyWrapper';
 import { ConditionService } from '../service/conditionService/condition.service';
+import { TaskDataService } from '../service/taskDataService/task-data.service';
 
 @Component({
   selector: 'app-condition',
   templateUrl: './condition.component.html',
   styleUrls: ['./condition.component.css']
 })
-export class ConditionComponent implements OnInit {
+export class ConditionComponent implements OnInit, OnChanges {
 
   @Input() mode: ModeEnum;
   @Input() idPolicySet: string;
@@ -25,10 +26,11 @@ export class ConditionComponent implements OnInit {
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
-  private condition =new Condition();
+  private condition = new Condition();
   private applyWrapper = new ApplyWrapper();
 
-  constructor(private conditionService: ConditionService, private tokenStorage: TokenStorageService,
+  constructor(private conditionService: ConditionService, private taskDataService: TaskDataService,
+    private tokenStorage: TokenStorageService,
     private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
       functionId: ['', [Validators.minLength(3), Validators.required]]
@@ -41,11 +43,15 @@ export class ConditionComponent implements OnInit {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
-      // this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
-      //   this.policy = res)
+      const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+      this.conditionService.getCondition(this.parentId, parent.ParentID, this.idPolicySet).subscribe(res => {
+        if (res != null) {
+          this.applyWrapper = res.applyWrapper
+        }
+      })
     } else {
       this.applyWrapper = new ApplyWrapper();
-      this.condition =new Condition();
+      this.condition = new Condition();
     }
   }
 
@@ -53,24 +59,24 @@ export class ConditionComponent implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.condition.applyWrapper =this.applyWrapper;
-    if (this.mode === ModeEnum.Add) {
-      this.conditionService.addCondition(this.id, this.parentId, this.idPolicySet, this.condition).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
-      }, err => {
+    this.condition.applyWrapper = this.applyWrapper;
+    //if (this.mode === ModeEnum.Add) {
+    this.conditionService.addCondition(this.id, this.parentId, this.idPolicySet, this.condition).subscribe(res => {
+      this.saveEvent.emit(res);
+      this.closeEvent.emit();
+    }, err => {
 
-      });
-    } else if (this.mode === ModeEnum.Edit) {
-      // this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
-      //   this.saveEvent.emit(res);
-      //   this.closeEvent.emit();
-      // }, err => {
+    });
+    // } else if (this.mode === ModeEnum.Edit) {
+    //   this.conditionService.updateCondition(this.id, this.parentId, this.idPolicySet, this.condition).subscribe(res => {
+    //     this.saveEvent.emit(res);
+    //     this.closeEvent.emit();
+    //   }, err => {
 
-      // });
-    }
+    //   });
+    // }
     this.applyWrapper = new ApplyWrapper();
-    this.condition =new Condition();
+    this.condition = new Condition();
   }
 
 }

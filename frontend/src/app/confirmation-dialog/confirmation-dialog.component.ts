@@ -11,6 +11,8 @@ import * as PolicySetActions from 'src/app/store/policySet.action';
 import { PolicyService } from '../service/policyService/policy.service';
 import { TargetService } from '../service/targetService/target.service';
 import { RuleService } from '../service/ruleService/rule.service';
+import { ConditionService } from '../service/conditionService/condition.service';
+import { TaskDataService } from '../service/taskDataService/task-data.service';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -28,7 +30,8 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
 
   constructor(private policySetService: PolicySetService,
     private targetService: TargetService, private policyService: PolicyService,
-    private ruleService: RuleService,
+    private ruleService: RuleService, private conditionService: ConditionService,
+    private taskDataService: TaskDataService,
     private store: Store<PolicySetState>) { }
 
   ngOnInit() {
@@ -87,6 +90,16 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
 
         });
         break;
+        case TypesEnum.Condition:
+            const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+            this.conditionService.deleteCondition(this.parentId, parent.ParentID, this.policySetId).subscribe(res => {
+              console.log("DELETED");
+              this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+              this.closeEvent.emit();
+            }, err => {
+    
+            });
+            break;
     }
   }
 

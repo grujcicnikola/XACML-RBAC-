@@ -6,5 +6,10 @@ import com.example.backend.dto.PolicySetDto;
 public interface ConditionService {
 
 	PolicySetDto addCondition(String ruleId, String policyId, String policySetId, ConditionDto conditionDto);
+	
+	ConditionDto getCondition(String ruleId, String policyId, String policySetId);
 
+	PolicySetDto updateCondition(String ruleId, String policyId, String policySetId, ConditionDto conditionDto);
+	
+	void deleteCondition(String ruleId, String policyId, String policySetId);
 }
