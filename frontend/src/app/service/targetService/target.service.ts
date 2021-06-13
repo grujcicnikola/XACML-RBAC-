@@ -21,24 +21,21 @@ export class TargetService {
   deleteTarget(parentId: string, selectedParentType: TypesEnum, policySetId: string) {
     return this.http.delete<void>(this.url + '/target/' + parentId + '/' + selectedParentType + '/' + policySetId);
   }
-  //selectedParentType, String policySetId, String policyId,
-  // String ruleId, AnyOfDto anyOfDto
+
   addAnyOf(selectedParentType: string, idPolicySet: string, policyId: string, ruleId: string, anyOf: AnyOf): Observable<PolicySet> {
     return this.http.post<PolicySet>(this.url + '/anyOf/' + selectedParentType + '/' + idPolicySet + '/' + policyId + '/' + ruleId, anyOf);
   }
-//	String id, String selectedParentOfParentType, String policySetId, String policyId,
-//	 String ruleId
+
   getAnyOf(id: string, selectedParentOfParentType: string, policySetId: string, policyId: string, ruleId: string): Observable<AnyOf> {
     return this.http.get<AnyOf>(this.url + '/anyOf/' + id + '/' + selectedParentOfParentType + '/' + policySetId + '/' + policyId + '/' + ruleId);
   }
-//String id, String selectedParentOfParentType, String policySetId, String policyId,
-//	String ruleId, AnyOfDto anyOfDto
+
   updateAnyOf(id: string, selectedParentOfParentType: string, policySetId: string, policyId: string, ruleId: string, anyOf: AnyOf): Observable<PolicySet> {
     return this.http.put<PolicySet>(this.url + '/anyOf/' + id + '/' + selectedParentOfParentType + '/' + policySetId + '/' + policyId + '/' + ruleId, anyOf);
   }
 
-  deleteAnyOf(selectedItemId: string, parentId: string, selectedParentType: TypesEnum, policySetId: string) {
-    return this.http.delete<void>(this.url + '/anyOf/' + selectedItemId + '/' + parentId + '/' + selectedParentType + '/' + policySetId);
+  deleteAnyOf(id: string, selectedParentOfParentType: string, policySetId: string, policyId: string, ruleId: string): Observable<void> {
+    return this.http.delete<void>(this.url + '/anyOf/' + id + '/' + selectedParentOfParentType + '/' + policySetId + '/' + policyId + '/' + ruleId);
   }
 
 }

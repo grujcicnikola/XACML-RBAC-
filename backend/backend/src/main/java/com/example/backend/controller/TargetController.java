@@ -73,11 +73,10 @@ public class TargetController {
 		return new ResponseEntity<>(this.targetService.updateAnyOf(id, selectedParentOfParentType, policySetId, policyId, ruleId, anyOfDto), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "anyOf/{id}/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> deleteAnyOf(@PathVariable("id") String id,
-			@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType,
-			@PathVariable("policySetId") String policySetId) {
-		this.targetService.deleteAnyOf(id, parentId, selectedParentType, policySetId);
+	@RequestMapping(value = "anyOf/{id}/{selectedParentOfParentType}/{policySetId}/{policyId}/{ruleId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> deleteAnyOf(@PathVariable("id") String id, @PathVariable("selectedParentOfParentType") String selectedParentOfParentType,
+			@PathVariable("policySetId") String policySetId, @PathVariable("policyId") String policyId, @PathVariable("ruleId") String ruleId) {
+		this.targetService.deleteAnyOf(id, selectedParentOfParentType, policySetId, policyId, ruleId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

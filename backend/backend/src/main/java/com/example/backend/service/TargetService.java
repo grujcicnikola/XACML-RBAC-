@@ -19,6 +19,7 @@ public interface TargetService {
 	PolicySetDto updateAnyOf(String id, String selectedParentOfParentType, String policySetId, String policyId,
 			String ruleId, AnyOfDto anyOfDto);
 
-	void deleteAnyOf(String id, String parentId, String selectedParentType, String policySetId);
+	void deleteAnyOf(String id, String selectedParentOfParentType, String policySetId, String policyId,
+			String ruleId);
 
 }

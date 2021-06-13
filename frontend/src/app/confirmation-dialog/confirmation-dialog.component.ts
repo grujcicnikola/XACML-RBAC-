@@ -73,13 +73,34 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
         });
         break;
       case TypesEnum.AnyOf:
-        this.targetService.deleteAnyOf(this.selectedItemId, this.parentId, this.selectedParentType, this.policySetId).subscribe(res => {
-          console.log("DELETED");
-          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
-          this.closeEvent.emit();
-        }, err => {
+        // deleteAnyOf(id: string, selectedParentOfParentType: string, policySetId: string, policyId: string, ruleId: string): Observable<void> {
+        //   return this.http.delete<void>(this.url + '/anyOf/' + id + '/' + selectedParentOfParentType + '/' + policySetId + '/' + policyId + '/' + ruleId);
+        // }
 
-        });
+        const target = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+        const parentOfTarget = this.taskDataService.tasks.find(({ id }) => id == target.ParentID);
+        if (parentOfTarget.type == TypesEnum.PolicySet) {
+          this.targetService.deleteAnyOf(this.selectedItemId, parentOfTarget.type, this.policySetId, 'undefined', 'undefined').subscribe(res => {
+            this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+            this.closeEvent.emit();
+          }, err => {
+
+          });
+        } else if (parentOfTarget.type == TypesEnum.Policy) {
+          this.targetService.deleteAnyOf(this.selectedItemId, parentOfTarget.type, this.policySetId, parentOfTarget.id, 'undefined').subscribe(res => {
+            this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+            this.closeEvent.emit();
+          }, err => {
+
+          });
+        } else if (parentOfTarget.type == TypesEnum.Rule) {
+          this.targetService.deleteAnyOf(this.selectedItemId, parentOfTarget.type, this.policySetId, parentOfTarget.ParentID, parentOfTarget.id).subscribe(res => {
+            this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+            this.closeEvent.emit();
+          }, err => {
+
+          });
+        }
         break;
       case TypesEnum.Rule:
         this.ruleService.deleteRule(this.selectedItemId, this.parentId, this.policySetId).subscribe(res => {
