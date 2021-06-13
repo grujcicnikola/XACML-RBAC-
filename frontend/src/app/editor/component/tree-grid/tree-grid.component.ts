@@ -137,7 +137,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-rule');
           break;
         case TypesEnum.Target:
-          this.addTargetElement();
+          //this.addTargetElement();
           break;
         case TypesEnum.AnyOf:
           break;
@@ -237,11 +237,11 @@ export class TreeGridComponent implements OnInit, OnChanges {
     this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: policySet.id }));
   }
 
-  addTargetElement() {
-    console.log(this.policySet);
-    this.targetService.addTarget(this.policySet.id, this.selectedItemId, this.currentType).subscribe(res => {
-      this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySet.id }));
-    })
-  }
+  // addTargetElement() {
+  //   console.log(this.policySet);
+  //   this.targetService.addTarget(this.policySet.id, this.selectedItemId, this.currentType).subscribe(res => {
+  //     this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySet.id }));
+  //   })
+  // }
 
 }

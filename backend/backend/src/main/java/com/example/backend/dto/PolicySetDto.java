@@ -49,5 +49,5 @@ public class PolicySetDto {
 	private String created;
 
 	@XmlElement(name = "Target")
-	private TargetDto target;
+	private TargetDto target = new TargetDto();
 }

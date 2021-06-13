@@ -1,4 +1,5 @@
 import { Rule } from "./Rule";
+import { Target } from './Target';
 
 export class Policy {
     id : string;
@@ -10,6 +11,7 @@ export class Policy {
     description: string;
     schemaLocator: string;	
     rules: Rule[];
+    target: Target;
     creator: string;
     created: string;
 }

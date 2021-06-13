@@ -37,6 +37,8 @@ public class PolicyDto {
 	//@XmlElementWrapper(name="rules")
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();
+    @XmlElement(name = "Target")
+	private TargetDto target = new TargetDto();
 	@XmlTransient
 	private String creator;
 	@XmlTransient

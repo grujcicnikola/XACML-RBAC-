@@ -23,15 +23,15 @@ export class ChooseWhatToCreateComponent implements OnInit, OnChanges, OnDestroy
     //this.choosenType = null;
     switch (this.currentType) {
       case TypesEnum.PolicySet:
-        this.types = [TypesEnum.Policy, TypesEnum.Target];
+        this.types = [TypesEnum.Policy];
         this.choosenType= this.types[0];
         break;
       case TypesEnum.Policy:
-        this.types = [TypesEnum.Rule, TypesEnum.Target];
+        this.types = [TypesEnum.Rule];
         this.choosenType= this.types[0];
         break;
       case TypesEnum.Rule:
-        this.types = [TypesEnum.Condition, TypesEnum.Target];
+        this.types = [TypesEnum.Condition];
         this.choosenType= this.types[0];
         break;
     }

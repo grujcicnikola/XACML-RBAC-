@@ -28,11 +28,11 @@ public class TargetController {
 	@Autowired
 	private TargetService targetService;
 	
-	@RequestMapping(value = "target/{policySetId}/{itemId}/{type}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addTarget(@PathVariable("policySetId") String policySetId, @PathVariable("itemId") String itemId, @PathVariable("type") String type) {
-		this.targetService.addTarget(policySetId, itemId, type);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+//	@RequestMapping(value = "target/{policySetId}/{itemId}/{type}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<?> addTarget(@PathVariable("policySetId") String policySetId, @PathVariable("itemId") String itemId, @PathVariable("type") String type) {
+//		this.targetService.addTarget(policySetId, itemId, type);
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
 	
 	@RequestMapping(value = "target/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteTarget(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId) {

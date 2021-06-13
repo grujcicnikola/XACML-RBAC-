@@ -23,6 +23,6 @@ public class RuleDto {
 	@XmlElement(name = "Condition")
 	private ConditionDto condition;
 	@XmlElement(name = "Target")
-	private TargetDto target;
+	private TargetDto target = new TargetDto();
 }
 

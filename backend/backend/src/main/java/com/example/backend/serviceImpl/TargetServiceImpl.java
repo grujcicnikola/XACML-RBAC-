@@ -27,17 +27,24 @@ public class TargetServiceImpl implements TargetService {
 	@Autowired
 	private PolicySetDtoConverter policySetDtoConverter;
 
-	@Override
-	public void addTarget(String policySetId, String itemId, String type) {
-		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
-		if (document.isPresent()) {
-			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			if (type.equals("PolicySet")) {
-				policySetDto.setTarget(new TargetDto());
-			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
-		}
-	}
+//	@Override
+//	public void addTarget(String policySetId, String itemId, String type) {
+//		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+//		if (document.isPresent()) {
+//			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+//			if (type.equals("PolicySet")) {
+//				policySetDto.setTarget(new TargetDto());
+//			}
+//			else if (type.equals("Policy")) {
+//				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
+//					if(policySetDto.getPolicies().get(i).getPolicyId().contentEquals(itemId)) {
+//						policySetDto.getPolicies().get(i).setTarget(new TargetDto());
+//					}
+//				}
+//			}
+//			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+//		}
+//	}
 
 	@Override
 	public void deleteTarget(String parentId, String selectedParentType, String policySetId) {
