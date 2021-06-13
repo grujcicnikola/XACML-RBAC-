@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { PolicySet } from 'src/app/model/PolicySet';
 import { Condition } from 'src/app/model/Condition';
 import { Observable } from 'rxjs';
+import { Apply } from 'src/app/model/Apply';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class ConditionService {
 
   deleteCondition(ruleId: string, policyId: string, idPolicySet: string): Observable<void> {
     return this.http.delete<void>(this.url + '/condition/'+ ruleId + '/' + policyId + '/' + idPolicySet);
+  }
+
+  addApply(ruleId: string, policyId: string, idPolicySet: string, apply: Apply) {
+    return this.http.post<PolicySet>(this.url + '/apply/'+ ruleId + '/' + policyId + '/' + idPolicySet, apply);
   }
   
 }

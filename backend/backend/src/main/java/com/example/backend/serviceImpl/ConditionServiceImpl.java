@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.converter.PolicySetDtoConverter;
+import com.example.backend.dto.ApplyDto;
 import com.example.backend.dto.ConditionDto;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
@@ -101,6 +102,26 @@ public class ConditionServiceImpl implements ConditionService {
 			}
 			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
 		}
+	}
+
+	@Override
+	public PolicySetDto addApply(String ruleId, String policyId, String policySetId, ApplyDto applyDto) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
+		if (document.isPresent()) {
+			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
+			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
+						if(policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+							policySetDto.getPolicies().get(i).getRules().get(j).getCondition().getApplyWrapper().getApplies().add(applyDto);
+							break;
+						}
+					}
+				}
+			}
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+		}
+		return null;
 	}
 	
 }

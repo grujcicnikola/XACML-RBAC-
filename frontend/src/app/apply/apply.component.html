@@ -1,0 +1,51 @@
+<body>
+    <div *ngIf="apply" class="container">
+        <section id="content">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <h1>Apply Form</h1>
+                <div>
+                    <div class="alert-message" *ngIf="f.functionId.invalid && f.functionId.dirty || f.functionId.touched">
+                        <div *ngIf="f.functionId.errors?.minlength">FunctionId must have at least 3 characters!</div>
+                    </div>
+                    <input type="text" title="function id" formControlName="functionId" placeholder="functionId" required="" id="functionIdApply"
+                        name="functionId" [(ngModel)]="apply.functionId" />
+                </div>
+                <div>
+                    <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
+                        <div *ngIf="f.dataType.errors?.minlength">DataType must have at least 3 characters!</div>
+                    </div>
+                    <input type="text" title="data type" formControlName="dataType" placeholder="dataType" required="" id="dataTypeApply"
+                        name="dataType" [(ngModel)]="attributeValue.dataType" />
+                </div>
+                <div>
+                    <input type="text" title="value"  formControlName="value" placeholder="value" required="" id="valueApply" name="value"
+                        [(ngModel)]="attributeValue.value" />
+                </div>
+                <div>
+                    <label>Must be present:</label>
+                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}" placeholder="mustBePresent" required=""
+                        id="mustBePresentApply" name="mustBePresent"
+                        [(ngModel)]="attributeDesignator.mustBePresent" />
+                </div>
+                <div>
+                    <input type="text"  title="category" formControlName="category" placeholder="category" required="" id="category"
+                        name="category" [(ngModel)]="attributeDesignator.category" />
+                </div>
+                <div>
+                    <input type="text" title="attribute id"  formControlName="attributeId" placeholder="attributeId" required=""
+                        id="attributeIdApply" name="attributeId"
+                        [(ngModel)]="attributeDesignator.attributeId" />
+                </div>
+                <div>
+                    <input type="text" title="data type" formControlName="dataTypeDesignator" placeholder="dataType" required=""
+                        id="dataTypeDesignatorApply" name="dataTypeDesignator"
+                        [(ngModel)]="attributeDesignator.dataType" />
+                </div>
+                <div>
+                    <input type="submit" [disabled]="!form.valid" value="Save" />
+                    <a (click)="closeEvent.emit($event)">Close</a>
+                </div>
+            </form><!-- form -->
+        </section><!-- content -->
+    </div><!-- container -->
+</body>
