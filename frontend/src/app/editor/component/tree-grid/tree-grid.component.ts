@@ -109,9 +109,9 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-any-of');
           break;
         case TypesEnum.Condition:
-            this.mode = ModeEnum.Add;
-            this.openModal('custom-apply');
-            break;
+          this.mode = ModeEnum.Add;
+          this.openModal('custom-apply');
+          break;
         default:
           this.openModal('custom-choose-what-to-create');
           break;
@@ -185,6 +185,13 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedParentType = selected.parentItem.type;
           this.selectedItemId = selected.id;
           this.openModal('custom-condition');
+          this.mode = ModeEnum.Edit;
+          break;
+        case TypesEnum.Apply:
+          this.selectedParentId = selected.parentItem.id;
+          this.selectedParentType = selected.parentItem.type;
+          this.selectedItemId = selected.id;
+          this.openModal('custom-apply');
           this.mode = ModeEnum.Edit;
           break;
         default:

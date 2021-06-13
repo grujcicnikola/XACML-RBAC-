@@ -56,13 +56,14 @@ export class ApplyComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
-      this.targetService.getAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet).subscribe(res => {
-        // if (res != null) {
-        //   this.anyOf = res;
-        //   this.match = this.anyOf.allOf.match;
-        //   this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
-        //   this.attributeValue = this.anyOf.allOf.match.attributeValue;
-        // }
+      const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+      const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
+      this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
+        if (res != null) {
+          this.apply = res;
+          this.attributeDesignator = this.apply.attributeDesignator;
+          this.attributeValue = this.apply.attributeValue;
+        }
       })
     } else {
       this.apply = new Apply();
@@ -86,12 +87,14 @@ export class ApplyComponent implements OnInit, OnChanges {
   
       });
     } else if (this.mode === ModeEnum.Edit) {
-      // this.targetService.updateAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
-      //   this.saveEvent.emit(res);
-      //   this.closeEvent.emit();
-      // }, err => {
-
-      // });
+      const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+      const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
+      this.conditionService.updateApply(parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet, this.apply).subscribe(res => {
+        if (res != null) {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        }
+      })
     }
     this.apply = new Apply();
     this.attributeDesignator = new AttributeDesignator();

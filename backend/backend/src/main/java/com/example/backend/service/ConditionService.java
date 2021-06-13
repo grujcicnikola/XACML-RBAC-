@@ -15,4 +15,10 @@ public interface ConditionService {
 	void deleteCondition(String ruleId, String policyId, String policySetId);
 
 	PolicySetDto addApply(String ruleId, String policyId, String policySetId, ApplyDto applyDto);
+	
+	PolicySetDto updateApply(String ruleId, String policyId, String policySetId, ApplyDto applyDto);
+	
+	void deleteApply(String applyId, String ruleId, String policyId, String policySetId);
+	
+	ApplyDto getApply(String applyId, String ruleId, String policyId, String policySetId);
 }

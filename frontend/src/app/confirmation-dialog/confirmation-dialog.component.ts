@@ -90,16 +90,28 @@ export class ConfirmationDialogComponent implements OnInit, OnChanges {
 
         });
         break;
-        case TypesEnum.Condition:
-            const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
-            this.conditionService.deleteCondition(this.parentId, parent.ParentID, this.policySetId).subscribe(res => {
-              console.log("DELETED");
-              this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
-              this.closeEvent.emit();
-            }, err => {
-    
-            });
-            break;
+      case TypesEnum.Condition:
+        const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+        this.conditionService.deleteCondition(this.parentId, parent.ParentID, this.policySetId).subscribe(res => {
+          console.log("DELETED");
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+        break;
+      case TypesEnum.Apply:
+        //applyId: string, ruleId: string, policyId: string, idPolicySet: string
+        const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+        const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
+        this.conditionService.deleteApply(this.selectedItemId, parentRule.ParentID, parentPolicy.ParentID, this.policySetId).subscribe(res => {
+          console.log("DELETED");
+          this.store.dispatch(PolicySetActions.BeginGetPolicySetAction({ id: this.policySetId }));
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+        break;
     }
   }
 

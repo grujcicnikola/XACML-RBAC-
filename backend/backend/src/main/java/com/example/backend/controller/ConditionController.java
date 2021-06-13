@@ -68,5 +68,25 @@ public class ConditionController {
 		return new ResponseEntity<>(this.conditionService.addApply(ruleId, policyId, policySetId, applyDto),
 				HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "apply/{applyId}/{ruleId}/{policyId}/{policySetId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ApplyDto> getApply(@PathVariable("applyId") String applyId, @PathVariable("ruleId") String ruleId,
+			@PathVariable("policyId") String policyId, @PathVariable("policySetId") String policySetId) {
+		return new ResponseEntity<>(this.conditionService.getApply(applyId, ruleId, policyId, policySetId),
+				HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "apply/{ruleId}/{policyId}/{policySetId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> updateApply(@PathVariable("ruleId") String ruleId,
+			@PathVariable("policyId") String policyId, @PathVariable("policySetId") String policySetId, @RequestBody ApplyDto applyDto) {
+		return new ResponseEntity<>(this.conditionService.updateApply(ruleId, policyId, policySetId, applyDto),
+				HttpStatus.OK);
+	}
 
+	@RequestMapping(value = "apply/{applyId}/{ruleId}/{policyId}/{policySetId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteApply(@PathVariable("applyId") String applyId, @PathVariable("ruleId") String ruleId,
+			@PathVariable("policyId") String policyId, @PathVariable("policySetId") String policySetId) {
+		this.conditionService.deleteApply(applyId, ruleId, policyId, policySetId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
