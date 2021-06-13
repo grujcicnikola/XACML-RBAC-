@@ -136,12 +136,13 @@ public class ConditionServiceImpl implements ConditionService {
 				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
 					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
 						if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
-							Optional<ApplyDto> applyActial = policySetDto.getPolicies().get(i).getRules().get(j)
-									.getCondition().getApplyWrapper().getApplies().stream()
-									.filter(apply -> apply.getFunctionId().contentEquals(applyId))
-									.findFirst();
-							if (applyActial.isPresent()) {
-								return applyActial.get();
+							if (policySetDto.getPolicies().get(i).getRules().get(j).getCondition() != null) {
+								Optional<ApplyDto> applyActial = policySetDto.getPolicies().get(i).getRules().get(j)
+										.getCondition().getApplyWrapper().getApplies().stream()
+										.filter(apply -> apply.getFunctionId().contentEquals(applyId)).findFirst();
+								if (applyActial.isPresent()) {
+									return applyActial.get();
+								}
 							}
 						}
 					}

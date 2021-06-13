@@ -56,14 +56,38 @@ export class AnyOfComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
-      this.targetService.getAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet).subscribe(res => {
-        if (res != null) {
-          this.anyOf = res;
-          this.match = this.anyOf.allOf.match;
-          this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
-          this.attributeValue = this.anyOf.allOf.match.attributeValue;
-        }
-      })
+      //	String id, String selectedParentOfParentType, String policySetId, String policyId,
+      //	 String ruleId
+      const target = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+      const parentOfTarget = this.taskDataService.tasks.find(({ id }) => id == target.ParentID);
+      if (parentOfTarget.type == TypesEnum.PolicySet) {
+        this.targetService.getAnyOf(this.id, parentOfTarget.type, this.idPolicySet, 'undefined', 'undefined').subscribe(res => {
+          if (res != null) {
+            this.anyOf = res;
+            this.match = this.anyOf.allOf.match;
+            this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
+            this.attributeValue = this.anyOf.allOf.match.attributeValue;
+          }
+        })
+      }else if (parentOfTarget.type == TypesEnum.Policy) {
+        this.targetService.getAnyOf(this.id, parentOfTarget.type, this.idPolicySet, parentOfTarget.id, 'undefined').subscribe(res => {
+          if (res != null) {
+            this.anyOf = res;
+            this.match = this.anyOf.allOf.match;
+            this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
+            this.attributeValue = this.anyOf.allOf.match.attributeValue;
+          }
+        })
+      }else if (parentOfTarget.type == TypesEnum.Rule) {
+        this.targetService.getAnyOf(this.id, parentOfTarget.type, this.idPolicySet, parentOfTarget.ParentID, parentOfTarget.id).subscribe(res => {
+          if (res != null) {
+            this.anyOf = res;
+            this.match = this.anyOf.allOf.match;
+            this.attributeDesignator = this.anyOf.allOf.match.attributeDesignator;
+            this.attributeValue = this.anyOf.allOf.match.attributeValue;
+          }
+        })
+      }
     } else {
       this.anyOf = new AnyOf();
     }
@@ -87,14 +111,14 @@ export class AnyOfComponent implements OnInit, OnChanges {
         }, err => {
 
         });
-      }else if (this.selectedParentType == TypesEnum.Policy) {
+      } else if (this.selectedParentType == TypesEnum.Policy) {
         this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, this.parentId, 'undefined', this.anyOf).subscribe(res => {
           this.saveEvent.emit(res);
           this.closeEvent.emit();
         }, err => {
 
         });
-      }else if (this.selectedParentType == TypesEnum.Rule) {
+      } else if (this.selectedParentType == TypesEnum.Rule) {
         const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
         this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, parentPolicy.ParentID, this.parentId, this.anyOf).subscribe(res => {
           this.saveEvent.emit(res);

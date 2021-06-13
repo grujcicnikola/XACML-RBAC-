@@ -26,9 +26,10 @@ export class TargetService {
   addAnyOf(selectedParentType: string, idPolicySet: string, policyId: string, ruleId: string, anyOf: AnyOf): Observable<PolicySet> {
     return this.http.post<PolicySet>(this.url + '/anyOf/' + selectedParentType + '/' + idPolicySet + '/' + policyId + '/' + ruleId, anyOf);
   }
-
-  getAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string): Observable<AnyOf> {
-    return this.http.get<AnyOf>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet);
+//	String id, String selectedParentOfParentType, String policySetId, String policyId,
+//	 String ruleId
+  getAnyOf(id: string, selectedParentOfParentType: string, policySetId: string, policyId: string, ruleId: string): Observable<AnyOf> {
+    return this.http.get<AnyOf>(this.url + '/anyOf/' + id + '/' + selectedParentOfParentType + '/' + policySetId + '/' + policyId + '/' + ruleId);
   }
 
   updateAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf): Observable<PolicySet> {

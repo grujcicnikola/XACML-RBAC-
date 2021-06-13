@@ -59,28 +59,27 @@ public class TargetServiceImpl implements TargetService {
 	}
 
 	@Override
-	public PolicySetDto addAnyOf(String selectedParentType, String policySetId, String policyId,
-			 String ruleId, AnyOfDto anyOfDto) {
+	public PolicySetDto addAnyOf(String selectedParentType, String policySetId, String policyId, String ruleId,
+			AnyOfDto anyOfDto) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			if (selectedParentType.equals("PolicySet")) {
 				policySetDto.getTarget().getAnyOfs().add(anyOfDto);
-			}
-			else if (selectedParentType.equals("Policy")) {
-				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
-					if(policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+			} else if (selectedParentType.equals("Policy")) {
+				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
 						policySetDto.getPolicies().get(i).getTarget().getAnyOfs().add(anyOfDto);
 						break;
 					}
 				}
-			}
-			else if (selectedParentType.equals("Rule")) {
+			} else if (selectedParentType.equals("Rule")) {
 				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
 					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
 						for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
-							if(policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
-								policySetDto.getPolicies().get(i).getRules().get(j).getTarget().getAnyOfs().add(anyOfDto);
+							if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+								policySetDto.getPolicies().get(i).getRules().get(j).getTarget().getAnyOfs()
+										.add(anyOfDto);
 								break;
 							}
 						}
@@ -93,16 +92,35 @@ public class TargetServiceImpl implements TargetService {
 	}
 
 	@Override
-	public AnyOfDto getAnyOf(String id, String parentId, String selectedParentType, String policySetId) {
+	public AnyOfDto getAnyOf(String id, String selectedParentOfParentType, String policySetId, String policyId,
+			String ruleId) {
 		// TODO Auto-generated method stub
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			if (selectedParentType.equals("Target")) {
+			if (selectedParentOfParentType.equals("PolicySet")) {
 				return policySetDto.getTarget().getAnyOfs().stream()
-						.filter(anyOf -> anyOf.getAllOf().getMatch().getMatchId().equals(id))
-						.findFirst()
-						.orElse(null);
+						.filter(anyOf -> anyOf.getAllOf().getMatch().getMatchId().equals(id)).findFirst().orElse(null);
+			} else if (selectedParentOfParentType.equals("Policy")) {
+				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+						return policySetDto.getPolicies().get(i).getTarget().getAnyOfs().stream()
+								.filter(anyOf -> anyOf.getAllOf().getMatch().getMatchId().equals(id)).findFirst()
+								.orElse(null);
+					}
+				}
+			} else if (selectedParentOfParentType.equals("Rule")) {
+				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
+						for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
+							if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
+								return policySetDto.getPolicies().get(i).getRules().get(j).getTarget().getAnyOfs()
+										.stream().filter(anyOf -> anyOf.getAllOf().getMatch().getMatchId().equals(id))
+										.findFirst().orElse(null);
+							}
+						}
+					}
+				}
 			}
 		}
 		return null;
@@ -116,8 +134,9 @@ public class TargetServiceImpl implements TargetService {
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			if (selectedParentType.equals("Target")) {
-				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
-					if(policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId().contentEquals(id)) {
+				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+					if (policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId()
+							.contentEquals(id)) {
 						policySetDto.getTarget().getAnyOfs().set(i, anyOfDto);
 						break;
 					}
@@ -135,12 +154,13 @@ public class TargetServiceImpl implements TargetService {
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			if (selectedParentType.equals("Target")) {
-				for(int i=0; i< policySetDto.getPolicies().size(); i++) {
-					if(policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId().contentEquals(id)) {
+				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
+					if (policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getMatchId()
+							.contentEquals(id)) {
 						policySetDto.getTarget().getAnyOfs().remove(i);
 						this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
 						break;
-					}	
+					}
 				}
 			}
 		}

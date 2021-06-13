@@ -13,7 +13,8 @@ public interface TargetService {
 	PolicySetDto addAnyOf(String selectedParentType, String policySetId, String policyId,
 			 String ruleId, AnyOfDto anyOfDto);
 
-	AnyOfDto getAnyOf(String id, String parentId, String selectedParentType, String policySetId);
+	AnyOfDto getAnyOf(String id, String selectedParentOfParentType, String policySetId, String policyId,
+			 String ruleId);
 
 	PolicySetDto updateAnyOf(String id, String parentId, String selectedParentType, String policySetId, AnyOfDto anyOfDto);
 
