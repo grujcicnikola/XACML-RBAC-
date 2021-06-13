@@ -24,5 +24,7 @@ public class RuleDto {
 	private ConditionDto condition;
 	@XmlElement(name = "Target")
 	private TargetDto target = new TargetDto();
+	
+	private String description;
 }
 

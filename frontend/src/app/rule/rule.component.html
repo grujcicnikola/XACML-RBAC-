@@ -18,6 +18,10 @@
               [(ngModel)]="rule.effect" />
           </div>
           <div>
+            <input type="text" title="description" formControlName="description" placeholder="descriptionRule" required="" id="description"
+              name="description" [(ngModel)]="rule.description" />
+          </div>
+          <div>
             <input type="submit" [disabled]="!form.valid" value="Save" />
             <a (click)="closeEvent.emit($event)">Close</a>
           </div>

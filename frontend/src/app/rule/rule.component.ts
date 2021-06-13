@@ -28,7 +28,8 @@ export class RuleComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,  private ruleService : RuleService) { 
       this.form = this.formBuilder.group({
         ruleId: ['', [Validators.minLength(3), Validators.required]],
-        effect: ['', [Validators.minLength(3), Validators.required]]
+        effect: ['', [Validators.minLength(3), Validators.required]],
+        description: ['', [Validators.minLength(3), Validators.required]],
       });
     }
   ngOnInit() {
