@@ -21,21 +21,22 @@ export class TargetService {
   deleteTarget(parentId: string, selectedParentType: TypesEnum, policySetId: string) {
     return this.http.delete<void>(this.url + '/target/' + parentId + '/' + selectedParentType + '/' + policySetId);
   }
-
-  addAnyOf(parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf): Observable<PolicySet> {
-    return this.http.post<PolicySet>(this.url + '/anyOf/' + parentId + '/' + selectedParentType + '/' + idPolicySet, anyOf);
+  //selectedParentType, String policySetId, String policyId,
+  // String ruleId, AnyOfDto anyOfDto
+  addAnyOf(selectedParentType: string, idPolicySet: string, policyId: string, ruleId: string, anyOf: AnyOf): Observable<PolicySet> {
+    return this.http.post<PolicySet>(this.url + '/anyOf/' + selectedParentType + '/' + idPolicySet + '/' + policyId + '/' + ruleId, anyOf);
   }
 
   getAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string): Observable<AnyOf> {
     return this.http.get<AnyOf>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet);
   }
 
-  updateAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf) : Observable<PolicySet>{
-    return this.http.put<PolicySet>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet, anyOf); 
+  updateAnyOf(id: string, parentId: string, selectedParentType: string, idPolicySet: string, anyOf: AnyOf): Observable<PolicySet> {
+    return this.http.put<PolicySet>(this.url + '/anyOf/' + id + '/' + parentId + '/' + selectedParentType + '/' + idPolicySet, anyOf);
   }
 
   deleteAnyOf(selectedItemId: string, parentId: string, selectedParentType: TypesEnum, policySetId: string) {
-    return this.http.delete<void>(this.url + '/anyOf/' + selectedItemId + '/' + parentId + '/' + selectedParentType + '/' + policySetId); 
+    return this.http.delete<void>(this.url + '/anyOf/' + selectedItemId + '/' + parentId + '/' + selectedParentType + '/' + policySetId);
   }
 
 }

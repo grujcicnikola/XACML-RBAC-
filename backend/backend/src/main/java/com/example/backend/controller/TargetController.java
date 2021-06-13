@@ -39,10 +39,11 @@ public class TargetController {
 		this.targetService.deleteTarget(parentId, selectedParentType, policySetId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "anyOf/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PolicySetDto> addTargetContent(@PathVariable("parentId") String parentId, @PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId, @RequestBody AnyOfDto anyOfDto) {
-		return new ResponseEntity<>(this.targetService.addAnyOf(parentId, selectedParentType, policySetId, anyOfDto), HttpStatus.OK);
+	//String selectedParentType, String policySetId, String policyId,
+	// String ruleId, AnyOfDto anyOfDto
+	@RequestMapping(value = "anyOf/{selectedParentType}/{policySetId}/{policyId}/{ruleId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PolicySetDto> addTargetContent(@PathVariable("selectedParentType") String selectedParentType, @PathVariable("policySetId") String policySetId, @PathVariable("policyId") String policyId, @PathVariable("ruleId") String ruleId, @RequestBody AnyOfDto anyOfDto) {
+		return new ResponseEntity<>(this.targetService.addAnyOf(selectedParentType, policySetId, policyId, ruleId, anyOfDto), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "anyOf/{id}/{parentId}/{selectedParentType}/{policySetId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

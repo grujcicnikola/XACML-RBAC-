@@ -13,6 +13,8 @@ import { Match } from '../model/Match';
 import { AttributeValue } from '../model/AttributeValue';
 import { AttributeDesignator } from '../model/AttributeDesignator';
 import { TargetService } from '../service/targetService/target.service';
+import { TypesEnum } from '../model/TypesEnum';
+import { TaskDataService } from '../service/taskDataService/task-data.service';
 
 @Component({
   selector: 'app-any-of',
@@ -36,6 +38,7 @@ export class AnyOfComponent implements OnInit, OnChanges {
   private attributeValue = new AttributeValue();
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
+    private taskDataService: TaskDataService,
     private formBuilder: FormBuilder, private targetService: TargetService, private policySetService: PolicySetService, private policyService: PolicyService) {
 
     this.form = this.formBuilder.group({
@@ -75,12 +78,31 @@ export class AnyOfComponent implements OnInit, OnChanges {
     this.match.attributeValue = this.attributeValue;
     this.anyOf.allOf.match = this.match;
     if (this.mode === ModeEnum.Add) {
-      this.targetService.addAnyOf(this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
-      }, err => {
+      // selectedParentType, String policySetId, String policyId,
+      // String ruleId, AnyOfDto anyOfDto
+      if (this.selectedParentType == TypesEnum.PolicySet) {
+        this.targetService.addAnyOf(this.selectedParentType, this.parentId, 'undefined', 'undefined', this.anyOf).subscribe(res => {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        }, err => {
 
-      });
+        });
+      }else if (this.selectedParentType == TypesEnum.Policy) {
+        this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, this.parentId, 'undefined', this.anyOf).subscribe(res => {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+      }else if (this.selectedParentType == TypesEnum.Rule) {
+        const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
+        this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, parentPolicy.ParentID, this.parentId, this.anyOf).subscribe(res => {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        }, err => {
+
+        });
+      }
     } else if (this.mode === ModeEnum.Edit) {
       this.targetService.updateAnyOf(this.id, this.parentId, this.selectedParentType, this.idPolicySet, this.anyOf).subscribe(res => {
         this.saveEvent.emit(res);
