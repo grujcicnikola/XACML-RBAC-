@@ -53,11 +53,13 @@ export class ConditionComponent implements OnInit, OnChanges {
     if (this.mode === ModeEnum.Edit) {
       this.form.get('functionId').disable();
       const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
-      this.conditionService.getCondition(this.parentId, parent.ParentID, this.idPolicySet).subscribe(res => {
-        if (res != null) {
-          this.applyWrapper = res.applyWrapper
-        }
-      })
+      if (parent) {
+        this.conditionService.getCondition(this.parentId, parent.ParentID, this.idPolicySet).subscribe(res => {
+          if (res != null) {
+            this.applyWrapper = res.applyWrapper
+          }
+        })
+      }
     } else {
       this.applyWrapper = new ApplyWrapper();
       this.condition = new Condition();

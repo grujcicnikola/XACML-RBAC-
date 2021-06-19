@@ -13,6 +13,7 @@ import com.example.backend.model.PolicySetDocument;
 import com.example.backend.repository.PolicySetDocumentRepository;
 import com.example.backend.service.PolicyService;
 import com.example.backend.service.PolicySetDocumentService;
+import com.example.backend.service.PolicyValidationService;
 import com.example.backend.service.XMLMarshalService;
 
 @Service
@@ -21,11 +22,11 @@ public class PolicyServiceImpl implements PolicyService {
 	@Autowired
 	private PolicySetDocumentRepository policySetDocumentRepository;
 	@Autowired
-	private XMLMarshalService xmlMarshalService;
-	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
 	@Autowired
 	private PolicySetDtoConverter policySetDtoConverter;
+	@Autowired
+	private PolicyValidationService policyValidationService;
 
 	@Override
 	public PolicyDto getPolicy(String id, String idPolicySet) {
@@ -49,7 +50,11 @@ public class PolicyServiceImpl implements PolicyService {
 		Optional<PolicySetDocument> document =this.policySetDocumentRepository.findById(id);
 		if(document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
-			policySetDto.getPolicies().add(policyDto);
+			if(this.policyValidationService.addPolicy(policySetDto.getPolicies(), policyDto)) {
+				policySetDto.getPolicies().add(policyDto);
+			}else {
+				return null;
+			}
 			return this.policySetDocumentService.updatePolicySet(policySetDto, username);
 		}
 		return null;

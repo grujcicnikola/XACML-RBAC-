@@ -285,6 +285,10 @@ select {
 
 }
 
+label {
+  font-weight: 100
+}
+
 .alert {
   color: #f44336;
 }

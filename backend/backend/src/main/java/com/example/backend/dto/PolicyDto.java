@@ -19,11 +19,12 @@ import lombok.Setter;
 @XmlRootElement(name="Policy")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PolicyDto {
+
 	private String id;
 	@XmlAttribute
-	private String xmlns;
+	private String xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17";
 	@XmlAttribute
-	private String xsi;
+	private String xsi="http://www.w3.org/2001/XMLSchema-instance";
 	@XmlAttribute
 	private String policyId;
 	@XmlAttribute
@@ -33,7 +34,7 @@ public class PolicyDto {
 	@XmlAttribute
 	private String description;
 	@XmlAttribute
-	private String schemaLocator;
+	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
 	//@XmlElementWrapper(name="rules")
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();

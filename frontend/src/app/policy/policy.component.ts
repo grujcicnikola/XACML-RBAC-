@@ -24,15 +24,18 @@ export class PolicyComponent implements OnInit, OnChanges {
   form: FormGroup;
   private policy = new Policy();
 
+  private ruleCombiningAlgIdValues: string[] = [
+    '&rule-combine:permit-overrides',
+    '&rule-combine:deny-overrides'];
+  incorrectData: boolean;
+
+
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
     private formBuilder: FormBuilder, private policySetService : PolicySetService,  private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
-        xsi: ['', [Validators.minLength(3), Validators.required]],
         policyId: ['', [Validators.minLength(3), Validators.required]],
         version: ['', [Validators.minLength(3), Validators.required]],
-        ruleCombiningAlgId: ['', [Validators.minLength(3), Validators.required]],
-        description: ['', [Validators.minLength(3), Validators.required]],
-        schemaLocator: ['', [Validators.minLength(3), Validators.required]]
+        ruleCombiningAlgId: ['', Validators.required],
       });
     }
    
@@ -42,11 +45,14 @@ export class PolicyComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes:  import("@angular/core").SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
+      this.form.get('policyId').disable();
       this.policyService.getPolicy(this.id, this.idPolicySet).subscribe(res =>
         this.policy = res)
     }else{
       this.policy = new Policy();
+      this.form.get('policyId').enable();
     }
+    this.incorrectData = false;
   }
 
   // convenience getter for easy access to form fields
@@ -55,15 +61,23 @@ export class PolicyComponent implements OnInit, OnChanges {
   onSubmit() {
     if( this.mode === ModeEnum.Add){
       this.policyService.addPolicy(this.policy, this.idPolicySet).subscribe(res => {
+        if (res != null) {
         this.saveEvent.emit(res);
         this.closeEvent.emit();
+        }else {
+          this.incorrectData = true;
+        }
       }, err => {
   
       });
     }else if ( this.mode === ModeEnum.Edit){
       this.policyService.updatePolicy(this.policy, this.idPolicySet).subscribe(res => {
+        if (res != null) {
         this.saveEvent.emit(res);
         this.closeEvent.emit();
+        }else{
+          this.incorrectData = true;
+        }
       }, err => {
   
       });

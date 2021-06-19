@@ -94,15 +94,17 @@ export class ApplyComponent implements OnInit, OnChanges {
     if (this.mode === ModeEnum.Edit) {
       this.form.get('attributeId').disable();
       const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
-      const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
-      if (parentPolicy) {
-        this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
-          if (res != null) {
-            this.apply = res;
-            this.attributeDesignator = this.apply.attributeDesignator;
-            this.attributeValue = this.apply.attributeValue;
-          }
-        })
+      if (parentRule) {
+        const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
+        if (parentPolicy) {
+          this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
+            if (res != null) {
+              this.apply = res;
+              this.attributeDesignator = this.apply.attributeDesignator;
+              this.attributeValue = this.apply.attributeValue;
+            }
+          })
+        }
       }
     } else {
       this.apply = new Apply();
