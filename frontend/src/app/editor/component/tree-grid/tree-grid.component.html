@@ -60,7 +60,7 @@
   </jw-modal>
 
   <jw-modal id="custom-apply">
-    <app-apply [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-apply')"></app-apply>
+    <app-apply [mode]="mode" [random]="random" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-apply')"></app-apply>
   </jw-modal>
 
   <jw-modal id="custom-confirmation-dialog">

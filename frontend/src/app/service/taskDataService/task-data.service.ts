@@ -28,7 +28,7 @@ export class TaskDataService {
         if (rule.condition != null) {
           this.tasks.push(this.createTreeElement(rule.condition.applyWrapper.functionId, policySet, TypesEnum.Condition, false, rule.ruleId));
           rule.condition.applyWrapper.applies.forEach(apply => {
-            this.tasks.push(this.createTreeElement(apply.functionId, policySet, TypesEnum.Apply, false, rule.condition.applyWrapper.functionId));
+            this.tasks.push(this.createTreeElement(apply.attributeDesignator.attributeId, policySet, TypesEnum.Apply, false, rule.condition.applyWrapper.functionId));
           })
         }
         if (rule.target != null) {

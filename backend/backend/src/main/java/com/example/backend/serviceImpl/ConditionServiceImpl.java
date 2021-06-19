@@ -12,7 +12,9 @@ import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
 import com.example.backend.repository.PolicySetDocumentRepository;
 import com.example.backend.service.ConditionService;
+import com.example.backend.service.ConditionValidationService;
 import com.example.backend.service.PolicySetDocumentService;
+import com.example.backend.service.TargetValidationService;
 import com.example.backend.service.XMLMarshalService;
 
 @Service
@@ -21,11 +23,11 @@ public class ConditionServiceImpl implements ConditionService {
 	@Autowired
 	private PolicySetDocumentRepository policySetDocumentRepository;
 	@Autowired
-	private XMLMarshalService xmlMarshalService;
-	@Autowired
 	private PolicySetDocumentService policySetDocumentService;
 	@Autowired
 	private PolicySetDtoConverter policySetDtoConverter;
+	@Autowired
+	private ConditionValidationService conditionValidationService;
 
 	@Override
 	public PolicySetDto addCondition(String ruleId, String policyId, String policySetId, ConditionDto conditionDto) {
@@ -111,12 +113,15 @@ public class ConditionServiceImpl implements ConditionService {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
 				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
-					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {// TODO check if one
-																									// with funcionId
-																									// already exists
+					for (int j = 0; j < policySetDto.getPolicies().get(i).getRules().size(); j++) {
 						if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
-							policySetDto.getPolicies().get(i).getRules().get(j).getCondition().getApplyWrapper()
-									.getApplies().add(applyDto);
+							if (this.conditionValidationService.addApply(policySetDto.getPolicies().get(i).getRules()
+									.get(j).getCondition().getApplyWrapper().getApplies(), applyDto)) {
+								policySetDto.getPolicies().get(i).getRules().get(j).getCondition().getApplyWrapper()
+										.getApplies().add(applyDto);
+							} else {
+								return null;
+							}
 							break;
 						}
 					}
@@ -128,7 +133,7 @@ public class ConditionServiceImpl implements ConditionService {
 	}
 
 	@Override
-	public ApplyDto getApply(String applyId, String ruleId, String policyId, String policySetId) {
+	public ApplyDto getApply(String attributeId, String ruleId, String policyId, String policySetId) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
@@ -139,7 +144,7 @@ public class ConditionServiceImpl implements ConditionService {
 							if (policySetDto.getPolicies().get(i).getRules().get(j).getCondition() != null) {
 								Optional<ApplyDto> applyActial = policySetDto.getPolicies().get(i).getRules().get(j)
 										.getCondition().getApplyWrapper().getApplies().stream()
-										.filter(apply -> apply.getFunctionId().contentEquals(applyId)).findFirst();
+										.filter(apply -> apply.getAttributeDesignator().getAttributeId().contentEquals(attributeId)).findFirst();
 								if (applyActial.isPresent()) {
 									return applyActial.get();
 								}
@@ -163,7 +168,7 @@ public class ConditionServiceImpl implements ConditionService {
 						if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
 							Optional<ApplyDto> applyActual = policySetDto.getPolicies().get(i).getRules().get(j)
 									.getCondition().getApplyWrapper().getApplies().stream()
-									.filter(apply -> apply.getFunctionId().contentEquals(applyDto.getFunctionId()))
+									.filter(apply -> apply.getAttributeDesignator().getAttributeId().contentEquals(applyDto.getAttributeDesignator().getAttributeId()))
 									.findFirst();
 							if (applyActual.isPresent()) {
 								applyActual.get().setAttributeDesignator(applyDto.getAttributeDesignator());
@@ -180,7 +185,7 @@ public class ConditionServiceImpl implements ConditionService {
 	}
 
 	@Override
-	public void deleteApply(String applyId, String ruleId, String policyId, String policySetId) {
+	public void deleteApply(String attributeId, String ruleId, String policyId, String policySetId) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetId);
 		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
@@ -190,7 +195,7 @@ public class ConditionServiceImpl implements ConditionService {
 						if (policySetDto.getPolicies().get(i).getRules().get(j).getRuleId().contentEquals(ruleId)) {
 							Optional<ApplyDto> applyActual = policySetDto.getPolicies().get(i).getRules().get(j)
 									.getCondition().getApplyWrapper().getApplies().stream()
-									.filter(apply -> apply.getFunctionId().contentEquals(applyId)).findFirst();
+									.filter(apply -> apply.getAttributeDesignator().getAttributeId().contentEquals(attributeId)).findFirst();
 							if (applyActual.isPresent()) {
 								policySetDto.getPolicies().get(i).getRules().get(j).getCondition().getApplyWrapper()
 										.getApplies().remove(applyActual.get());

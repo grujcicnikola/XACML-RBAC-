@@ -3,43 +3,63 @@
         <section id="content">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <h1>Apply Form</h1>
+                <label>Function id</label>
                 <div>
-                    <div class="alert-message" *ngIf="f.functionId.invalid && f.functionId.dirty || f.functionId.touched">
+                    <!-- <div class="alert-message" *ngIf="f.functionId.invalid && f.functionId.dirty || f.functionId.touched">
                         <div *ngIf="f.functionId.errors?.minlength">FunctionId must have at least 3 characters!</div>
-                    </div>
-                    <input type="text" title="function id" formControlName="functionId" placeholder="functionId" required="" id="functionIdApply"
-                        name="functionId" [(ngModel)]="apply.functionId" />
+                    </div> -->
+                    <select name="functionId" id="functionId" title="function id" formControlName="functionId"
+                        [(ngModel)]="apply.functionId">
+                        <option *ngFor='let type of functionIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute value data type</label>
                 <div>
-                    <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
+                    <!-- <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
                         <div *ngIf="f.dataType.errors?.minlength">DataType must have at least 3 characters!</div>
+                    </div> -->
+                    <select name="dataType" id="dataType" title="dataType" formControlName="dataType"
+                        [(ngModel)]="attributeValue.dataType">
+                        <option *ngFor='let type of dataTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
+                </div>
+                <label>Attribute value</label>
+                <div>
+                    <div class="alert-message" *ngIf="f.value.invalid && f.value.dirty || f.value.touched">
+                        <div *ngIf="f.value.errors?.minlength">Attribute value must have at least 3 characters!</div>
                     </div>
-                    <input type="text" title="data type" formControlName="dataType" placeholder="dataType" required="" id="dataTypeApply"
-                        name="dataType" [(ngModel)]="attributeValue.dataType" />
+                    <input type="text" title="value" formControlName="value" placeholder="value" required=""
+                        id="valueApply" name="value" [(ngModel)]="attributeValue.value" />
                 </div>
+                <label>Must be present</label>
                 <div>
-                    <input type="text" title="value"  formControlName="value" placeholder="value" required="" id="valueApply" name="value"
-                        [(ngModel)]="attributeValue.value" />
-                </div>
-                <div>
-                    <label>Must be present:</label>
-                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}" placeholder="mustBePresent" required=""
-                        id="mustBePresentApply" name="mustBePresent"
+                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}"
+                        placeholder="mustBePresent" required="" id="mustBePresentApply" name="mustBePresent"
                         [(ngModel)]="attributeDesignator.mustBePresent" />
                 </div>
+                <label>Category</label>
                 <div>
-                    <input type="text"  title="category" formControlName="category" placeholder="category" required="" id="category"
-                        name="category" [(ngModel)]="attributeDesignator.category" />
+                    <select name="category" id="category" title="category" formControlName="category"
+                        [(ngModel)]="attributeDesignator.category">
+                        <option *ngFor='let type of categoryTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute designator attibute id</label>
                 <div>
-                    <input type="text" title="attribute id"  formControlName="attributeId" placeholder="attributeId" required=""
-                        id="attributeIdApply" name="attributeId"
-                        [(ngModel)]="attributeDesignator.attributeId" />
+                    <select name="attributeId" id="attributeId" title="attributeId" formControlName="attributeId"
+                        [(ngModel)]="attributeDesignator.attributeId">
+                        <option *ngFor='let type of attributeIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute designator data type</label>
                 <div>
-                    <input type="text" title="data type" formControlName="dataTypeDesignator" placeholder="dataType" required=""
-                        id="dataTypeDesignatorApply" name="dataTypeDesignator"
-                        [(ngModel)]="attributeDesignator.dataType" />
+                    <select name="dataTypeDesignator" id="dataTypeDesignator" title="dataTypeDesignator"
+                        formControlName="dataTypeDesignator" [(ngModel)]="attributeDesignator.dataType">
+                        <option *ngFor='let type of dataTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
+                </div>
+                <div class="alert" *ngIf="incorrectData">
+                    Attribute id must be unique
                 </div>
                 <div>
                     <input type="submit" [disabled]="!form.valid" value="Save" />

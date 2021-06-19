@@ -29,6 +29,7 @@ export class ApplyComponent implements OnInit, OnChanges {
   @Input() id: string;
   @Input() selectedParentType: string;
   @Input() parentId: string;
+  @Input() random: number;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
 
@@ -37,17 +38,52 @@ export class ApplyComponent implements OnInit, OnChanges {
   private attributeDesignator = new AttributeDesignator();
   private attributeValue = new AttributeValue();
 
+  private functionIdValues: string[] = [
+    '&functinon:anyURI-is-in',
+    '&function:string-equal',
+    '&function:anyURI-equal',
+    '&function:string-regexp-match',
+    '&function:xpath-node-match',
+    '&function:time-greater-than',
+    '&function:time-less-than',
+    '&function:rfc822Name-match'];
+
+  private dataTypeValues: string[] = [
+    '&xml:string',
+    '&xml:anyURI',
+    '&xml:rfc822Name',
+    '&xml:xpathExpression',
+    '&xml:date',
+    '&xml:xpathExpression',
+    '&xml:yearMonthDuration'
+  ]
+
+  private categoryTypeValues: string[] = [
+    '&category:subject',
+    '&category:action',
+    '&category:resource'
+  ]
+
+  private attributeIdValues: string[] = [
+    '&resource:resource-id',
+    '&subject:subject-id',
+    '&action:action-id',
+    '&role'
+  ]
+  incorrectData: boolean;
+
+
   constructor(private conditionService: ConditionService,
     private formBuilder: FormBuilder, private targetService: TargetService,
     private taskDataService: TaskDataService) {
 
     this.form = this.formBuilder.group({
-      functionId: ['', [Validators.minLength(3), Validators.required]],
-      dataType: ['', [Validators.minLength(3), Validators.required]],
-      dataTypeDesignator: ['', [Validators.minLength(3), Validators.required]],
+      functionId: ['', Validators.required],
+      dataType: ['', Validators.required],
+      dataTypeDesignator: ['', Validators.required],
       value: ['', [Validators.minLength(3), Validators.required]],
-      category: ['', [Validators.minLength(3), Validators.required]],
-      attributeId: ['', [Validators.minLength(3), Validators.required]],
+      category: ['',  Validators.required],
+      attributeId: ['',  Validators.required],
     });
   }
 
@@ -56,6 +92,7 @@ export class ApplyComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
+      this.form.get('attributeId').disable();
       const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
       this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
@@ -69,7 +106,9 @@ export class ApplyComponent implements OnInit, OnChanges {
       this.apply = new Apply();
       this.attributeDesignator = new AttributeDesignator();
       this.attributeValue = new AttributeValue();
+      this.form.get('attributeId').enable();
     }
+    this.incorrectData = false;
   }
 
   // convenience getter for easy access to form fields
@@ -81,8 +120,12 @@ export class ApplyComponent implements OnInit, OnChanges {
     if (this.mode === ModeEnum.Add) {
       const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       this.conditionService.addApply(this.parentId, parent.ParentID, this.idPolicySet, this.apply).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
+        if (res != null) {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        } else {
+          this.incorrectData = true;
+        }
       }, err => {
   
       });
@@ -93,6 +136,8 @@ export class ApplyComponent implements OnInit, OnChanges {
         if (res != null) {
           this.saveEvent.emit(res);
           this.closeEvent.emit();
+        } else {
+          this.incorrectData = true;
         }
       })
     }
