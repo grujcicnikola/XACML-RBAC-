@@ -102,7 +102,7 @@ export class AnyOfComponent implements OnInit, OnChanges {
       this.form.get('attributeId').disable();
       const target = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       const parentOfTarget = this.taskDataService.tasks.find(({ id }) => id == target.ParentID);
-      if (parentOfTarget.type == TypesEnum.PolicySet) {
+      if (parentOfTarget && parentOfTarget.type == TypesEnum.PolicySet) {
         this.targetService.getAnyOf(this.id, parentOfTarget.type, this.idPolicySet, 'undefined', 'undefined').subscribe(res => {
           if (res != null) {
             this.anyOf = res;

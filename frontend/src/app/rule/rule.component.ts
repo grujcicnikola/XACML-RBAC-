@@ -17,19 +17,24 @@ export class RuleComponent implements OnInit, OnChanges {
 
   @Input() mode : ModeEnum;
   @Input() id: string;
+  @Input() random: number;
   @Input() parentId: string;
   @Input() idPolicySet : string;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
   private rule = new Rule();
+  private incorrectData = false;
+
+  private effectValues: string[] = [
+    'Permit',
+    'Deny'];
 
   constructor(
     private formBuilder: FormBuilder,  private ruleService : RuleService) { 
       this.form = this.formBuilder.group({
         ruleId: ['', [Validators.minLength(3), Validators.required]],
-        effect: ['', [Validators.minLength(3), Validators.required]],
-        description: ['', [Validators.minLength(3), Validators.required]],
+        effect: ['', Validators.required]
       });
     }
   ngOnInit() {
@@ -38,11 +43,14 @@ export class RuleComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit){
+      this.form.get('ruleId').disable();
       this.ruleService.getRule(this.id, this.parentId, this.idPolicySet).subscribe(res =>
         this.rule = res)
     }else{
       this.rule = new Rule();
+      this.form.get('ruleId').enable();
     }
+    this.incorrectData = false;
   }
 
   // convenience getter for easy access to form fields
@@ -51,16 +59,24 @@ export class RuleComponent implements OnInit, OnChanges {
   onSubmit() {
     if( this.mode === ModeEnum.Add){
       this.ruleService.addRule(this.id, this.idPolicySet, this.rule).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
+        if (res != null) {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        } else {
+          this.incorrectData = true;
+        }
       }, err => {
   
       });
     }
     else if( this.mode === ModeEnum.Edit){
       this.ruleService.updateRule(this.id, this.parentId, this.idPolicySet, this.rule).subscribe(res => {
-        this.saveEvent.emit(res);
-        this.closeEvent.emit();
+        if (res != null) {
+          this.saveEvent.emit(res);
+          this.closeEvent.emit();
+        } else {
+          this.incorrectData = true;
+        }
       }, err => {
   
       });

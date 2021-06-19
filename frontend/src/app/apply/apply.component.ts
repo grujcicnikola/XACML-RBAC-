@@ -82,8 +82,8 @@ export class ApplyComponent implements OnInit, OnChanges {
       dataType: ['', Validators.required],
       dataTypeDesignator: ['', Validators.required],
       value: ['', [Validators.minLength(3), Validators.required]],
-      category: ['',  Validators.required],
-      attributeId: ['',  Validators.required],
+      category: ['', Validators.required],
+      attributeId: ['', Validators.required],
     });
   }
 
@@ -95,13 +95,15 @@ export class ApplyComponent implements OnInit, OnChanges {
       this.form.get('attributeId').disable();
       const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == parentRule.ParentID);
-      this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
-        if (res != null) {
-          this.apply = res;
-          this.attributeDesignator = this.apply.attributeDesignator;
-          this.attributeValue = this.apply.attributeValue;
-        }
-      })
+      if (parentPolicy) {
+        this.conditionService.getApply(this.id, parentRule.ParentID, parentPolicy.ParentID, this.idPolicySet).subscribe(res => {
+          if (res != null) {
+            this.apply = res;
+            this.attributeDesignator = this.apply.attributeDesignator;
+            this.attributeValue = this.apply.attributeValue;
+          }
+        })
+      }
     } else {
       this.apply = new Apply();
       this.attributeDesignator = new AttributeDesignator();
@@ -127,7 +129,7 @@ export class ApplyComponent implements OnInit, OnChanges {
           this.incorrectData = true;
         }
       }, err => {
-  
+
       });
     } else if (this.mode === ModeEnum.Edit) {
       const parentRule = this.taskDataService.tasks.find(({ id }) => id == this.parentId);

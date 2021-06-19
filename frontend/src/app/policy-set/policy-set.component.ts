@@ -20,6 +20,7 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
   @Input() mode : ModeEnum;
   @Input() id : string;
+  @Input() random: number;
   @Output() closeEvent = new EventEmitter<void>();
   @Output() saveEvent = new EventEmitter<PolicySet>();
   form: FormGroup;

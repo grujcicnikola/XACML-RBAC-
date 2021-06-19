@@ -40,11 +40,11 @@
   </ejs-treegrid>
 
   <jw-modal id="custom-policy-set">
-    <app-policy-set [mode]="mode" [id]="policySet?.id"  (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy-set')"></app-policy-set>
+    <app-policy-set [mode]="mode" [random]="random" [id]="policySet?.id"  (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy-set')"></app-policy-set>
   </jw-modal>
 
   <jw-modal id="custom-policy">
-    <app-policy [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy')"></app-policy>
+    <app-policy [mode]="mode" [random]="random" [idPolicySet]="policySet?.id" [id]="selectedItemId" (saveEvent)="savePolicySet($event)" (closeEvent)="closeModal('custom-policy')"></app-policy>
   </jw-modal>
 
   <jw-modal id="custom-any-of">
@@ -52,7 +52,7 @@
   </jw-modal>
 
   <jw-modal id="custom-rule">
-    <app-rule [mode]="mode" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)"  (closeEvent)="closeModal('custom-rule')"></app-rule>
+    <app-rule [mode]="mode" [random]="random" [idPolicySet]="policySet?.id" [id]="selectedItemId" [parentId]="selectedParentId" (saveEvent)="savePolicySet($event)"  (closeEvent)="closeModal('custom-rule')"></app-rule>
   </jw-modal>
 
   <jw-modal id="custom-condition">

@@ -12,6 +12,7 @@ import com.example.backend.model.PolicySetDocument;
 import com.example.backend.repository.PolicySetDocumentRepository;
 import com.example.backend.service.PolicySetDocumentService;
 import com.example.backend.service.RuleService;
+import com.example.backend.service.RuleValidationService;
 import com.example.backend.service.XMLMarshalService;
 
 @Service
@@ -25,6 +26,8 @@ public class RuleServiceImpl implements RuleService {
 	private PolicySetDocumentService policySetDocumentService;
 	@Autowired
 	private PolicySetDtoConverter policySetDtoConverter;
+	@Autowired
+	private RuleValidationService ruleValidationService;
 
 	@Override
 	public PolicySetDto addRule(String parentId, String policySetId, RuleDto ruleDto) {
@@ -34,7 +37,11 @@ public class RuleServiceImpl implements RuleService {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
 				if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(parentId)) {
-					policySetDto.getPolicies().get(i).getRules().add(ruleDto);
+					if(this.ruleValidationService.addRule(policySetDto.getPolicies().get(i).getRules(), ruleDto)) {
+						policySetDto.getPolicies().get(i).getRules().add(ruleDto);
+					}else {
+						return null;
+					}
 					break;
 				}
 			}

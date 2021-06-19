@@ -1,31 +1,38 @@
 <body>
-    <div *ngIf="rule" class="container">
-      <section id="content">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <h1>Rule Form</h1>
-          <div>
-            <div class="alert-message" *ngIf="f.ruleId.invalid && f.ruleId.dirty || f.ruleId.touched">
-              <div *ngIf="f.ruleId.errors?.minlength">ruleId must have at least 3 characters!</div>
-            </div>
-            <input type="text" title="rule id" formControlName="ruleId" placeholder="ruleId" required="" id="ruleId" name="ruleId"
-              [(ngModel)]="rule.ruleId" />
+  <div *ngIf="rule" class="container">
+    <section id="content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h1>Rule Form</h1>
+        <label>Rule id</label>
+        <div>
+          <div class="alert-message" *ngIf="f.ruleId.invalid && f.ruleId.dirty || f.ruleId.touched">
+            <div *ngIf="f.ruleId.errors?.minlength">ruleId must have at least 3 characters!</div>
           </div>
-          <div>
-            <div class="alert-message" *ngIf="f.effect.invalid && f.effect.dirty || f.effect.touched">
+          <input type="text" title="rule id" formControlName="ruleId" placeholder="ruleId" required="" id="ruleId"
+            name="ruleId" [(ngModel)]="rule.ruleId" />
+        </div>
+        <label>Effect</label>
+        <div>
+          <!-- <div class="alert-message" *ngIf="f.effect.invalid && f.effect.dirty || f.effect.touched">
               <div *ngIf="f.effect.errors?.minlength">effect must have at least 3 characters!</div>
-            </div>
-            <input type="text" title="effect" formControlName="effect" placeholder="effect" required="" id="effect" name="effect"
-              [(ngModel)]="rule.effect" />
-          </div>
-          <div>
-            <input type="text" title="description" formControlName="description" placeholder="descriptionRule" required="" id="description"
-              name="description" [(ngModel)]="rule.description" />
-          </div>
-          <div>
-            <input type="submit" [disabled]="!form.valid" value="Save" />
-            <a (click)="closeEvent.emit($event)">Close</a>
-          </div>
-        </form><!-- form -->
-      </section><!-- content -->
-    </div><!-- container -->
-  </body>
+            </div> -->
+          <select name="effect" id="effect" title="effect" formControlName="effect" [(ngModel)]="rule.effect">
+            <option *ngFor='let type of effectValues' id="{{type}}" value="{{type}}">{{type}}</option>
+          </select>
+        </div>
+        <label>Description</label>
+        <div>
+          <input type="text" title="description" [ngModelOptions]="{standalone: true}" placeholder="descriptionRule" required=""
+            id="description" name="description" [(ngModel)]="rule.description" />
+        </div>
+        <div class="alert" *ngIf="incorrectData">
+          Rule id must be unique
+        </div>
+        <div>
+          <input type="submit" [disabled]="!form.valid" value="Save" />
+          <a (click)="closeEvent.emit($event)">Close</a>
+        </div>
+      </form><!-- form -->
+    </section><!-- content -->
+  </div><!-- container -->
+</body>

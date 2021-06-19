@@ -18,6 +18,7 @@ export class PolicyComponent implements OnInit, OnChanges {
   @Input() mode : ModeEnum;
   @Input() idPolicySet : string;
   @Input() id : string;
+  @Input() random: number;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
