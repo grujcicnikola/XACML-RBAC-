@@ -27,6 +27,9 @@
                 </div>
                 <label>Attribute value</label>
                 <div>
+                    <div class="alert-message" *ngIf="f.value.invalid && f.value.dirty || f.value.touched">
+                        <div *ngIf="f.value.errors?.minlength">Attribute value must have at least 3 characters!</div>
+                    </div>
                     <input type="text" title="value" formControlName="value" placeholder="value" required="" id="value"
                         name="value" [(ngModel)]="attributeValue.value" />
                 </div>

@@ -23,17 +23,25 @@ export class ConditionComponent implements OnInit, OnChanges {
   @Input() idPolicySet: string;
   @Input() id: string;
   @Input() parentId: string;
+  @Input() random: number;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
   form: FormGroup;
   private condition = new Condition();
   private applyWrapper = new ApplyWrapper();
 
+  private functionIdValues: string[] = [
+    '&function:and',
+    '&function:not',
+    '&function:or',
+    '&function:n-of'];
+
+
   constructor(private conditionService: ConditionService, private taskDataService: TaskDataService,
     private tokenStorage: TokenStorageService,
     private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
-      functionId: ['', [Validators.minLength(3), Validators.required]]
+      functionId: ['', Validators.required]
     });
   }
 
@@ -43,6 +51,7 @@ export class ConditionComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if (this.mode === ModeEnum.Edit) {
+      this.form.get('functionId').disable();
       const parent = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       this.conditionService.getCondition(this.parentId, parent.ParentID, this.idPolicySet).subscribe(res => {
         if (res != null) {
@@ -52,6 +61,7 @@ export class ConditionComponent implements OnInit, OnChanges {
     } else {
       this.applyWrapper = new ApplyWrapper();
       this.condition = new Condition();
+      this.form.get('functionId').enable();
     }
   }
 

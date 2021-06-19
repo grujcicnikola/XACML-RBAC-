@@ -38,7 +38,6 @@ export class AnyOfComponent implements OnInit, OnChanges {
   private attributeDesignator = new AttributeDesignator();
   private attributeValue = new AttributeValue();
   private incorrectData = false;
-  private editMode = false;
 
   private matchIdValues: string[] = [
     '&function:string-equal',

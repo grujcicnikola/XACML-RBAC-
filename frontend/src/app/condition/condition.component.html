@@ -3,13 +3,16 @@
         <section id="content">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <h1>Condition Form</h1>
+                <label>Function id</label>
                 <div>
-                    <div class="alert-message"
+                    <!-- <div class="alert-message"
                         *ngIf="f.functionId.invalid && f.functionId.dirty || f.functionId.touched">
                         <div *ngIf="f.functionId.errors?.minlength">Xsi must have at least 3 characters!</div>
-                    </div>
-                    <input type="text" title="functionId" formControlName="functionId" placeholder="functionId"
-                        required="" id="functionId" name="functionId" [(ngModel)]="applyWrapper.functionId" />
+                    </div> -->
+                    <select name="functionId" id="functionId" title="function id" formControlName="functionId"
+                        [(ngModel)]="applyWrapper.functionId">
+                        <option *ngFor='let type of functionIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
                 <div>
                     <input type="submit" [disabled]="!form.valid" value="Save" />
