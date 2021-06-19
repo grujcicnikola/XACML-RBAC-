@@ -28,6 +28,7 @@ export class AnyOfComponent implements OnInit, OnChanges {
   @Input() id: string;
   @Input() selectedParentType: string;
   @Input() parentId: string;
+  @Input() random: number;
   @Output() saveEvent = new EventEmitter<PolicySet>();
   @Output() closeEvent = new EventEmitter<void>();
 
@@ -36,28 +37,70 @@ export class AnyOfComponent implements OnInit, OnChanges {
   private match = new Match();
   private attributeDesignator = new AttributeDesignator();
   private attributeValue = new AttributeValue();
+  private incorrectData = false;
+  private editMode = false;
+
+  private matchIdValues: string[] = [
+    '&function:string-equal',
+    '&function:anyURI-equal',
+    '&function:string-regexp-match',
+    '&function:xpath-node-match',
+    '&function:time-greater-than',
+    '&function:time-less-than',
+    '&function:rfc822Name-match'];
+
+  private dataTypeValues: string[] = [
+    '&xml:string',
+    '&xml:anyURI',
+    '&xml:rfc822Name',
+    '&xml:xpathExpression',
+    '&xml:date',
+    '&xml:xpathExpression',
+    '&xml:yearMonthDuration'
+  ]
+
+  private categoryTypeValues: string[] = [
+    '&category:subject',
+    '&category:action',
+    '&category:resource'
+  ]
+
+  private attributeIdValues: string[] = [
+    '&resource:resource-id',
+    '&subject:subject-id',
+    '&action:action-id',
+    '&role'
+  ]
 
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,
     private taskDataService: TaskDataService,
     private formBuilder: FormBuilder, private targetService: TargetService, private policySetService: PolicySetService, private policyService: PolicyService) {
 
     this.form = this.formBuilder.group({
-      matchId: ['', [Validators.minLength(3), Validators.required]],
-      dataType: ['', [Validators.minLength(3), Validators.required]],
-      dataTypeDesignator: ['', [Validators.minLength(3), Validators.required]],
+      matchId: ['', Validators.required],
+      dataType: ['', Validators.required],
+      dataTypeDesignator: ['', Validators.required],
       value: ['', [Validators.minLength(3), Validators.required]],
-      category: ['', [Validators.minLength(3), Validators.required]],
-      attributeId: ['', [Validators.minLength(3), Validators.required]],
+      category: ['', Validators.required],
+      attributeId: ['', Validators.required]
     });
+
+    // this.form.get("matchId").valueChanges.subscribe(selectedValue  => {
+    //   console.log(selectedValue)
+    // })
+
+
   }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log(this.random)
     if (this.mode === ModeEnum.Edit) {
       //	String id, String selectedParentOfParentType, String policySetId, String policyId,
       //	 String ruleId
+      this.form.get('attributeId').disable();
       const target = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
       const parentOfTarget = this.taskDataService.tasks.find(({ id }) => id == target.ParentID);
       if (parentOfTarget.type == TypesEnum.PolicySet) {
@@ -89,8 +132,10 @@ export class AnyOfComponent implements OnInit, OnChanges {
         })
       }
     } else {
+      this.form.get('attributeId').enable();
       this.anyOf = new AnyOf();
     }
+    this.incorrectData = false;
   }
 
   // convenience getter for easy access to form fields
@@ -106,23 +151,35 @@ export class AnyOfComponent implements OnInit, OnChanges {
       // String ruleId, AnyOfDto anyOfDto
       if (this.selectedParentType == TypesEnum.PolicySet) {
         this.targetService.addAnyOf(this.selectedParentType, this.parentId, 'undefined', 'undefined', this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
       } else if (this.selectedParentType == TypesEnum.Policy) {
         this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, this.parentId, 'undefined', this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
       } else if (this.selectedParentType == TypesEnum.Rule) {
         const parentPolicy = this.taskDataService.tasks.find(({ id }) => id == this.parentId);
         this.targetService.addAnyOf(this.selectedParentType, this.idPolicySet, parentPolicy.ParentID, this.parentId, this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
@@ -134,22 +191,34 @@ export class AnyOfComponent implements OnInit, OnChanges {
       const parentOfTarget = this.taskDataService.tasks.find(({ id }) => id == target.ParentID);
       if (parentOfTarget.type == TypesEnum.PolicySet) {
         this.targetService.updateAnyOf(this.id, parentOfTarget.type, this.idPolicySet, 'undefined', 'undefined', this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
       } else if (parentOfTarget.type == TypesEnum.Policy) {
         this.targetService.updateAnyOf(this.id, parentOfTarget.type, this.idPolicySet, parentOfTarget.id, 'undefined', this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
       } else if (parentOfTarget.type == TypesEnum.Rule) {
         this.targetService.updateAnyOf(this.id, parentOfTarget.type, this.idPolicySet, parentOfTarget.ParentID, parentOfTarget.id, this.anyOf).subscribe(res => {
-          this.saveEvent.emit(res);
-          this.closeEvent.emit();
+          if (res != null) {
+            this.saveEvent.emit(res);
+            this.closeEvent.emit();
+          } else {
+            this.incorrectData = true;
+          }
         }, err => {
 
         });
@@ -159,6 +228,20 @@ export class AnyOfComponent implements OnInit, OnChanges {
     this.match = new Match();
     this.attributeDesignator = new AttributeDesignator();
     this.attributeValue = new AttributeValue();
+    
   }
 
+
+  // onChange(newValue) { (ngModelChange)="onChange($event)
+  //   console.log(newValue);
+  // }
+
+  onCancel() {
+    this.anyOf = new AnyOf();
+    this.match = new Match();
+    this.attributeDesignator = new AttributeDesignator();
+    this.attributeValue = new AttributeValue();
+    this.incorrectData = false;
+    this.closeEvent.emit();
+  }
 }

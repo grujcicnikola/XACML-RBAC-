@@ -34,21 +34,21 @@ export class TaskDataService {
         if (rule.target != null) {
           this.tasks.push(this.createTreeElement(rule.ruleId + ":target", policySet, TypesEnum.Target, true, rule.ruleId));
           rule.target.anyOfs.forEach(anyOf => {
-            this.tasks.push(this.createTreeElement(anyOf.allOf.match.matchId, policySet, TypesEnum.AnyOf, false, rule.ruleId + ":target"));
+            this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, rule.ruleId + ":target"));
           });
         }
       });
       if (policy.target != null) {
         this.tasks.push(this.createTreeElement(policy.policyId + ":target", policySet, TypesEnum.Target, true, policy.policyId));
         policy.target.anyOfs.forEach(anyOf => {
-          this.tasks.push(this.createTreeElement(anyOf.allOf.match.matchId, policySet, TypesEnum.AnyOf, false, policy.policyId + ":target"));
+          this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policy.policyId + ":target"));
         });
       }
     });
     if (policySet.target != null) {
       this.tasks.push(this.createTreeElement(policySet.id + ":target", policySet, TypesEnum.Target, true, policySet.id));
       policySet.target.anyOfs.forEach(anyOf => {
-        this.tasks.push(this.createTreeElement(anyOf.allOf.match.matchId, policySet, TypesEnum.AnyOf, false, policySet.id + ":target"));
+        this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policySet.id + ":target"));
       });
     }
   }

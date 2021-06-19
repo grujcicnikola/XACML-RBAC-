@@ -3,47 +3,70 @@
         <section id="content">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <h1>Any Of Form</h1>
+                <label>Match id</label>
                 <div>
-                    <div class="alert-message" *ngIf="f.matchId.invalid && f.matchId.dirty || f.matchId.touched">
+                    <!-- <div class="alert-message" *ngIf="f.matchId.invalid && f.matchId.dirty || f.matchId.touched">
                         <div *ngIf="f.matchId.errors?.minlength">MatchId must have at least 3 characters!</div>
-                    </div>
-                    <input type="text" title="match id" formControlName="matchId" placeholder="matchId" required="" id="matchId"
-                        name="matchId" [(ngModel)]="match.matchId" />
+                    </div> -->
+                    <select name="matchId" id="matchId" title="match id" formControlName="matchId"
+                        [(ngModel)]="match.matchId">
+                        <option *ngFor='let type of matchIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute value data type</label>
                 <div>
-                    <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
+                    <!-- <div class="alert-message" *ngIf="f.dataType.invalid && f.dataType.dirty || f.dataType.touched">
                         <div *ngIf="f.dataType.errors?.minlength">DataType must have at least 3 characters!</div>
-                    </div>
-                    <input type="text" title="data type" formControlName="dataType" placeholder="dataType" required="" id="dataType"
-                        name="dataType" [(ngModel)]="attributeValue.dataType" />
+                    </div> -->
+                    <select name="dataType" id="dataType" title="dataType" formControlName="dataType"
+                        [(ngModel)]="attributeValue.dataType">
+                        <option *ngFor='let type of dataTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
+                    <!-- <input type="text" title="data type" formControlName="dataType" placeholder="dataType" required=""
+                        id="dataType" name="dataType" [(ngModel)]="attributeValue.dataType" />-->
                 </div>
+                <label>Attribute value</label>
                 <div>
-                    <input type="text" title="value"  formControlName="value" placeholder="value" required="" id="value" name="value"
-                        [(ngModel)]="attributeValue.value" />
+                    <input type="text" title="value" formControlName="value" placeholder="value" required="" id="value"
+                        name="value" [(ngModel)]="attributeValue.value" />
                 </div>
+                <label>Must be present</label>
                 <div>
-                    <label>Must be present:</label>
-                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}" placeholder="mustBePresent" required=""
-                        id="mustBePresent" name="mustBePresent"
+                    <input type="checkbox" title="must be present" [ngModelOptions]="{standalone: true}"
+                        placeholder="mustBePresent" required="" id="mustBePresent" name="mustBePresent"
                         [(ngModel)]="attributeDesignator.mustBePresent" />
                 </div>
+                <label>Attribute designator category</label>
                 <div>
-                    <input type="text"  title="category" formControlName="category" placeholder="category" required="" id="category"
-                        name="category" [(ngModel)]="attributeDesignator.category" />
+                    <select name="category" id="category" title="category" formControlName="category"
+                        [(ngModel)]="attributeDesignator.category">
+                        <option *ngFor='let type of categoryTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute designator attribute id</label>
                 <div>
-                    <input type="text" title="attribute id"  formControlName="attributeId" placeholder="attributeId" required=""
-                        id="attributeId" name="attributeId"
-                        [(ngModel)]="attributeDesignator.attributeId" />
+                    <select name="attributeId" id="attributeId" title="attributeId" formControlName="attributeId"
+                        [(ngModel)]="attributeDesignator.attributeId"  >
+                        <option *ngFor='let type of attributeIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <label>Attribute designator data type</label>
                 <div>
-                    <input type="text" title="data type" formControlName="dataTypeDesignator" placeholder="dataType" required=""
-                        id="dataTypeDesignator" name="dataTypeDesignator"
-                        [(ngModel)]="attributeDesignator.dataType" />
+                    <!-- <input type="text" title="data type" formControlName="dataTypeDesignator" placeholder="dataType"
+                        required="" id="dataTypeDesignator" name="dataTypeDesignator"
+                        [(ngModel)]="attributeDesignator.dataType" /> -->
+
+                    <select name="dataTypeDesignator" id="dataTypeDesignator" title="dataTypeDesignator"
+                        formControlName="dataTypeDesignator" [(ngModel)]="attributeDesignator.dataType">
+                        <option *ngFor='let type of dataTypeValues' id="{{type}}" value="{{type}}">{{type}}</option>
+                    </select>
                 </div>
+                <div class="alert" *ngIf="incorrectData">
+                        Attribute id must be unique
+                      </div>
                 <div>
                     <input type="submit" [disabled]="!form.valid" value="Save" />
-                    <a (click)="closeEvent.emit($event)">Close</a>
+                    <a (click)="onCancel()">Close</a>
                 </div>
             </form><!-- form -->
         </section><!-- content -->

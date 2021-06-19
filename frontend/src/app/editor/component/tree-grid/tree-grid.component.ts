@@ -18,8 +18,6 @@ import { ModalService } from '../modal/modal.service';
 import { PolicySetService } from 'src/app/service/policySet/policy-set.service';
 import { TargetService } from 'src/app/service/targetService/target.service';
 
-
-
 @Component({
   selector: 'app-tree-grid',
   templateUrl: './tree-grid.component.html',
@@ -40,6 +38,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
 
   @ViewChild('treegrid', { static: false })
   public treegrid: TreeGrid;
+  random: number;
 
   constructor(private taskDataService: TaskDataService,
     private targetService: TargetService,
@@ -112,6 +111,8 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.mode = ModeEnum.Add;
           this.openModal('custom-apply');
           break;
+        case TypesEnum.AnyOf:
+          break;
         default:
           this.openModal('custom-choose-what-to-create');
           break;
@@ -163,12 +164,14 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-policy');
           this.mode = ModeEnum.Edit;
           this.selectedItemId = selected.id;
+          this.random =  Math.random();
           break;
         case TypesEnum.Rule:
           this.selectedParentId = selected.parentItem.id;
           this.selectedParentType = selected.parentItem.type;
           this.selectedItemId = selected.id;
           this.mode = ModeEnum.Edit;
+          this.random =  Math.random();
           this.openModal('custom-rule');
           break;
         case TypesEnum.Target:
@@ -179,6 +182,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-any-of');
           this.mode = ModeEnum.Edit;
+          this.random =  Math.random();
           break;
         case TypesEnum.Condition:
           this.selectedParentId = selected.parentItem.id;
@@ -186,6 +190,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-condition');
           this.mode = ModeEnum.Edit;
+          this.random =  Math.random();
           break;
         case TypesEnum.Apply:
           this.selectedParentId = selected.parentItem.id;
@@ -193,10 +198,12 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-apply');
           this.mode = ModeEnum.Edit;
+          this.random =  Math.random();
           break;
         default:
           this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
+          this.random =  Math.random();
           break;
       }
     }
