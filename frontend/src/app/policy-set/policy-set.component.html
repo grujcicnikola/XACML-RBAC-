@@ -1,50 +1,58 @@
 <body>
-    <div class="container">
-      <section id="content">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <h1>Policy Set Form</h1>
-          <label>Policy Set id</label>
-          <div>
-            <div class="alert-message" *ngIf="f.policySetId.invalid && f.policySetId.dirty || f.policySetId.touched">
-              <div *ngIf="f.policySetId.errors?.minlength">policySetId must have at least 3 characters!</div>
-            </div>
-            <input type="text" title="policy set id" formControlName="policySetId" placeholder="policySetId" required="" id="policySetId" name="policySetId"
-              [(ngModel)]="policySet.policySetId" />
+  <div class="container">
+    <section id="content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h1>Policy Set Form</h1>
+        <label>Policy Set id</label>
+        <div>
+          <div class="alert-message" *ngIf="f.policySetId.invalid && f.policySetId.dirty || f.policySetId.touched">
+            <div *ngIf="f.policySetId.errors?.minlength">policySetId must have at least 3 characters!</div>
           </div>
-          <label>Version</label>
-          <div>
-            <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
-              <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
-            </div>
-            <input type="text" title="version" formControlName="version" placeholder="version" required="" id="version" name="version"
-              [(ngModel)]="policySet.version" />
+          <input type="text" title="policy set id" formControlName="policySetId" placeholder="policySetId" required=""
+            id="policySetId" name="policySetId" [(ngModel)]="policySet.policySetId" />
+        </div>
+        <label>Version</label>
+        <div>
+          <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
+            <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
           </div>
-          <label>Policy combining Algorithm</label>
-          <div>
-              <select name="policyCombiningAlgId" id="policyCombiningAlgId" title="policyCombiningAlgId" formControlName="policyCombiningAlgId" [(ngModel)]="policySet.policyCombiningAlgId">
-                  <option *ngFor='let type of policyCombiningAlgIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
-                </select>
+          <input type="text" title="version" formControlName="version" placeholder="version" required="" id="version"
+            name="version" [(ngModel)]="policySet.version" />
+        </div>
+        <label>Policy combining Algorithm</label>
+        <div>
+          <select name="policyCombiningAlgId" id="policyCombiningAlgId" title="policyCombiningAlgId"
+            formControlName="policyCombiningAlgId" [(ngModel)]="policySet.policyCombiningAlgId">
+            <option *ngFor='let type of policyCombiningAlgIdValues' id="{{type}}" value="{{type}}">{{type}}</option>
+          </select>
+        </div>
+        <label>Description</label>
+        <div>
+          <input type="text" title="description" [ngModelOptions]="{standalone: true}" placeholder="description"
+            required="" id="description" name="description" [(ngModel)]="policySet.description" />
+        </div>
+        <label>Policy Set Id Reference</label>
+        <div>
+          <select name="policySetIdReference" [ngModelOptions]="{standalone: true}" id="policySetIdReference"
+            title="policySetIdReference" [(ngModel)]="policySet.policySetIdReference">
+            <option *ngFor='let type of policySetIdReferenceValues' id="{{type}}" value="{{type}}">{{type}}</option>
+          </select>
+        </div>
+        <label>Policy id reference</label>
+        <div>
+          <select name="policyIdReference" [ngModelOptions]="{standalone: true}" id="policyIdReference"
+            title="policyIdReference" [(ngModel)]="policySet.policyIdReference">
+            <option *ngFor='let type of policyIdReferenceValues' id="{{type}}" value="{{type}}">{{type}}</option>
+          </select>
+        </div>
+        <div class="alert" *ngIf="incorrectData">
+            Policy set id must be unique
           </div>
-          <label>Description</label>
-          <div>
-            <input type="text"  title="description" formControlName="description" placeholder="description" required="" id="description"
-              name="description" [(ngModel)]="policySet.description" />
-          </div>
-          <label>Policy Set Id Reference</label>
-          <div>
-            <input type="text" title="policy set id reference" formControlName="policySetIdReference" placeholder="policySetIdReference" required="" id="policySetIdReference"
-              name="policySetIdReference" [(ngModel)]="policySet.policySetIdReference" />
-          </div>
-          <label>Policy id reference</label>
-          <div>
-            <input type="text" title="policy id reference" formControlName="policyIdReference" placeholder="policyIdReference" required="" id="policyIdReference"
-              name="policyIdReference" [(ngModel)]="policySet.policyIdReference" />
-          </div>
-          <div>
-            <input type="submit" [disabled]="!form.valid" value="Save" />
-            <a (click)="closeEvent.emit($event)">Close</a>
-          </div>
-        </form><!-- form -->
-      </section><!-- content -->
-    </div><!-- container -->
-  </body>
+        <div>
+          <input type="submit" [disabled]="!form.valid" value="Save" />
+          <a (click)="closeEvent.emit($event)">Close</a>
+        </div>
+      </form><!-- form -->
+    </section><!-- content -->
+  </div><!-- container -->
+</body>

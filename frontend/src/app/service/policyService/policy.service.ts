@@ -18,6 +18,10 @@ export class PolicyService {
     return this.http.get<Policy>(this.url + '/policy/' + id + '/' + idPolicySet);
   }
 
+  policies():Observable<string[]> {
+    return this.http.get<string[]>(this.url + '/policies');
+  }
+
   updatePolicy(policy: Policy, id: string): Observable<PolicySet> {
     return this.http.put<PolicySet>(this.url + '/policy/' + id, policy);
   }

@@ -1,5 +1,7 @@
 package com.example.backend.service;
 
+import java.util.List;
+
 import com.example.backend.dto.PolicyDto;
 import com.example.backend.dto.PolicySetDto;
 
@@ -12,5 +14,7 @@ public interface PolicyService {
 	PolicySetDto updatePolicy(String id, PolicyDto policyDto, String username);
 
 	void deletePolicy(String id, String idPolicySet);
+
+	List<String> getPolicies(String name);
 
 }

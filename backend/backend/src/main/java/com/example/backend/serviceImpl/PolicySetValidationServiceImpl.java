@@ -10,10 +10,10 @@ import com.example.backend.dto.PolicyDto;
 import com.example.backend.dto.PolicySetDto;
 import com.example.backend.model.PolicySetDocument;
 import com.example.backend.repository.PolicySetDocumentRepository;
-import com.example.backend.service.PolicyValidationService;
+import com.example.backend.service.PolicySetValidationService;
 
 @Service
-public class PolicyValidationServiceImpl implements PolicyValidationService {
+public class PolicySetValidationServiceImpl implements PolicySetValidationService{
 
 	@Autowired
 	private PolicySetDocumentRepository policySetDocumentRepository;
@@ -22,16 +22,15 @@ public class PolicyValidationServiceImpl implements PolicyValidationService {
 	
 	
 	@Override
-	public boolean addPolicy(PolicyDto policyDto, String username) {
+	public boolean addPolicySet(PolicySetDto policySetDto, String username) {
 		List<PolicySetDocument> documents =this.policySetDocumentRepository.findByCreator(username);
 		for(int i = 0; i<documents.size(); i++) {
-			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(documents.get(i));
-			for (int j = 0; j < policySetDto.getPolicies().size(); j++) {
-				if (policySetDto.getPolicies().get(j).getPolicyId()
-						.contentEquals(policyDto.getPolicyId())) {
+			PolicySetDto policySetDtoExisting = policySetDtoConverter.policySetDtoConverter(documents.get(i));
+			if (policySetDtoExisting.getPolicySetId()
+						.contentEquals(policySetDto.getPolicySetId())) {
 					return false;
 				}
-			}
+			
 		}
 		return true;
 	}

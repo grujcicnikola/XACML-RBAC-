@@ -6,6 +6,6 @@ import com.example.backend.dto.PolicyDto;
 
 public interface PolicyValidationService {
 
-	boolean addPolicy(List<PolicyDto> policies, PolicyDto policyDto);
+	boolean addPolicy(PolicyDto policyDto, String username);
 
 }

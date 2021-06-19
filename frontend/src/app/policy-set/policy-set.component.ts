@@ -29,16 +29,28 @@ export class PolicySetComponent implements OnInit, OnChanges {
   private policyCombiningAlgIdValues: string[] = [
     '&policy-combine:permit-overrides',
     '&policy-combine:deny-overrides'];
+  private policySetIdReferenceValues: string[] =[];
+  private policyIdReferenceValues: string[] =[];
+  incorrectData: boolean;
 
-  constructor(private formBuilder: FormBuilder, private policySetService : PolicySetService) { 
+  constructor(private formBuilder: FormBuilder, private policySetService : PolicySetService,
+    private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
         policySetId: ['', [Validators.minLength(3), Validators.required]],
         version: ['', [Validators.minLength(3), Validators.required]],
-        policyCombiningAlgId: ['', [Validators.minLength(3), Validators.required]],
-        description: ['', [Validators.minLength(3), Validators.required]],
-        policySetIdReference: ['', [Validators.minLength(3), Validators.required]],
-        policyIdReference: ['', [Validators.minLength(3), Validators.required]]
+        policyCombiningAlgId: ['', [Validators.minLength(3), Validators.required]]
       });
+
+      this.policySetService.getPolicySets().subscribe(res =>{
+        if(res !=null){
+         res.forEach(value =>{this.policySetIdReferenceValues.push(value.policySetId);}) 
+        }
+      })
+      this.policyService.policies().subscribe(res =>{
+        if(res !=null){
+         res.forEach(value =>{this.policyIdReferenceValues.push(value);}) 
+        }
+      })
     }
    
   ngOnInit() {
@@ -47,11 +59,14 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if( this.mode === ModeEnum.Edit && this.id){
+      this.form.get('policySetId').disable();
       this.policySetService.getPolicySet(this.id).subscribe(res =>
        this.policySet = res)
     }else{
       this.policySet = new PolicySet();
+      this.form.get('policySetId').enable();
     }
+    this.incorrectData =false;
   }
 
   // convenience getter for easy access to form fields
@@ -61,15 +76,23 @@ export class PolicySetComponent implements OnInit, OnChanges {
 
     if( this.mode === ModeEnum.Add){
       this.policySetService.createPolicySet(this.policySet).subscribe(res => {
+        if(res!= null){
         this.saveEvent.emit(res);
         this.closeEvent.emit();
+        }else{
+          this.incorrectData = true;
+        }
       }, err => {
   
       });
     }else if ( this.mode === ModeEnum.Edit){
       this.policySetService.updatePolicySet(this.policySet).subscribe(res => {
+        if(res!= null){
         this.saveEvent.emit(res);
         this.closeEvent.emit();
+        }else {
+          this.incorrectData = true;
+        }
       }, err => {
   
       });

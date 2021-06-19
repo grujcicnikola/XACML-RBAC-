@@ -61,8 +61,7 @@
 <div class="row">
   <div class="column"  *ngFor="let policySet of policySets; let i = index">
     <div class="card">
-      <h3>{{policySet.policyIdReference}}</h3>
-      <p>{{policySet.description}}</p>
+      <h3>{{policySet.policySetId}}</h3>
       <a id="hrefButton" href="editor/{{policySet.id}}" class="btn" >Edit</a>
       <a id="hrefButton1" (click)="downloadPolicySet(policySet.id)" class="btn" >Download</a>
     </div>

@@ -22,6 +22,8 @@ import com.example.backend.model.PolicySetDocument;
 import com.example.backend.model.User;
 import com.example.backend.repository.PolicySetDocumentRepository;
 import com.example.backend.service.PolicySetDocumentService;
+import com.example.backend.service.PolicySetValidationService;
+import com.example.backend.service.PolicyValidationService;
 import com.example.backend.service.UserService;
 import com.example.backend.service.XMLMarshalService;
 
@@ -36,29 +38,31 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	private PolicySetDtoConverter policySetDtoConverter;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PolicySetValidationService PolicySetValidationService;
 
 	@Override
 	public List<PolicySetDto> getPolicySets(String username) {
 		Optional<User> user = userService.findUserByUsername(username);
 		List<PolicySetDto> list = new ArrayList<>();
-		if(user.isPresent()) {
+		if (user.isPresent()) {
 			List<PolicySetDocument> documents = this.policySetDocumentRepository.findByCreator(username);
 			documents.forEach(document -> {
 				PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document);
-				list.add(policySetDto);				
+				list.add(policySetDto);
 			});
-			
+
 		}
 		return list;
 	}
-	
+
 	@Override
 	public PolicySetDocument savePolicySet(String xml, String username) {
 		PolicySetDocument doc = new PolicySetDocument();
 		doc.setContent(xml);
 		doc.setCreator(username);
 		return policySetDocumentRepository.save(doc);
-		
+
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	@Override
 	public PolicySetDto getPolicySetDto(String id) {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(id);
-		if(document.isPresent()) {
+		if (document.isPresent()) {
 			PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 			return policySetDto;
 		}
@@ -79,18 +83,23 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	@Override
 	public void downloadPolicySetDto(String id, HttpServletResponse httpServletResponse) throws IOException {
 		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(id);
-		if(document.isPresent()) {
-			httpServletResponse.addHeader("Content-Disposition", "attachment; filename=" + document.get().getId()+".xml");
+		if (document.isPresent()) {
+			httpServletResponse.addHeader("Content-Disposition",
+					"attachment; filename=" + document.get().getId() + ".xml");
 			httpServletResponse.setContentType("text/xml");
 			httpServletResponse.getOutputStream().println(document.get().getContent());
-        }
+		}
 	}
 
 	@Override
 	public PolicySetDto createPolicySet(PolicySetDto policySetDto, String username) {
-		String xml = xmlMarshalService.marshal(policySetDto);
-		PolicySetDocument document= savePolicySet(xml, username);
-		return policySetDtoConverter.policySetDtoConverter(document);
+		if (this.PolicySetValidationService.addPolicySet(policySetDto, username)) {
+			String xml = xmlMarshalService.marshal(policySetDto);
+			PolicySetDocument document = savePolicySet(xml, username);
+			return policySetDtoConverter.policySetDtoConverter(document);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

@@ -60,6 +60,11 @@ public class PolicyController {
 		return new ResponseEntity<>(this.policyService.getPolicy(id, idPolicySet), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "policies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<String>> getAllPoliciesIds(Principal principal) {
+		return new ResponseEntity<>(this.policyService.getPolicies(principal.getName()), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "policy/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> addPolicy(@PathVariable("id") String id, @RequestBody PolicyDto policyDto, Principal principal) {
 		return new ResponseEntity<>(this.policyService.addPolicy(id, policyDto, principal.getName()), HttpStatus.OK);
