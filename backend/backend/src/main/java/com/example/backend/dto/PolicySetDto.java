@@ -23,9 +23,12 @@ public class PolicySetDto {
 	@XmlTransient
 	private String id;
 	@XmlAttribute
-	private String xmlns;
-	@XmlAttribute
-	private String xsi;
+	private String xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17";
+	@XmlAttribute(name="xmlns:xsi")
+	private String xsi="http://www.w3.org/2001/XMLSchema-instance";
+	@XmlAttribute(name="xsi:schemaLocator")
+	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
+	
 	@XmlAttribute
 	private String policySetId;
 	@XmlAttribute
@@ -34,11 +37,10 @@ public class PolicySetDto {
 	private String policyCombiningAlgId;
 	@XmlAttribute
 	private String description;
-	@XmlElement
+	@XmlElement(name="PolicySetIdReference")
 	private String policySetIdReference;
-	@XmlAttribute
+	@XmlElement(name="PolicyIdReference")
 	private String policyIdReference;
-
 	// @XmlElementWrapper(name="Policies")
 	@XmlElement(name = "Policy")
 	private List<PolicyDto> policies = new ArrayList<PolicyDto>();

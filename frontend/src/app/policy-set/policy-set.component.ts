@@ -25,12 +25,13 @@ export class PolicySetComponent implements OnInit, OnChanges {
   @Output() saveEvent = new EventEmitter<PolicySet>();
   form: FormGroup;
   private policySet = new PolicySet();
-  //private loginInfo: LoginInfo;
 
-  constructor(private userService: UserService, private tokenStorage: TokenStorageService,
-    private formBuilder: FormBuilder, private policySetService : PolicySetService) { 
+  private policyCombiningAlgIdValues: string[] = [
+    '&policy-combine:permit-overrides',
+    '&policy-combine:deny-overrides'];
+
+  constructor(private formBuilder: FormBuilder, private policySetService : PolicySetService) { 
       this.form = this.formBuilder.group({
-        xsi: ['', [Validators.minLength(3), Validators.required]],
         policySetId: ['', [Validators.minLength(3), Validators.required]],
         version: ['', [Validators.minLength(3), Validators.required]],
         policyCombiningAlgId: ['', [Validators.minLength(3), Validators.required]],

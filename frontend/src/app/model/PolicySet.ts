@@ -5,6 +5,7 @@ export class PolicySet {
     id : string;
     xmlns : string;
     xsi : string;
+    schemaLocator: string;
     policySetId: string;
     version: string;
     policyCombiningAlgId: string;

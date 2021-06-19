@@ -57,7 +57,7 @@ form:after {
   text-align: center;
   text-shadow: 0 1px 0 #fff;
   width: 400px;
-  height: 675px;
+  height: 730px;
 }
 #content h1 {
   color: #7E7E7E;
@@ -287,4 +287,8 @@ select {
 
 .alert {
   color: #f44336;
+}
+
+label {
+  font-weight: 100
 }

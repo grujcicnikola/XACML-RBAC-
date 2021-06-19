@@ -23,8 +23,10 @@ public class PolicyDto {
 	private String id;
 	@XmlAttribute
 	private String xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17";
-	@XmlAttribute
+	@XmlAttribute(name="xmlns:xsi")
 	private String xsi="http://www.w3.org/2001/XMLSchema-instance";
+	@XmlAttribute(name="xsi:schemaLocator")
+	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
 	@XmlAttribute
 	private String policyId;
 	@XmlAttribute
@@ -33,8 +35,6 @@ public class PolicyDto {
 	private String ruleCombiningAlgId;
 	@XmlAttribute
 	private String description;
-	@XmlAttribute
-	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
 	//@XmlElementWrapper(name="rules")
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();

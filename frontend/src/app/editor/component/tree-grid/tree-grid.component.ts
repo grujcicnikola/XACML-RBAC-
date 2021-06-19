@@ -164,14 +164,14 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.openModal('custom-policy');
           this.mode = ModeEnum.Edit;
           this.selectedItemId = selected.id;
-          this.random =  Math.random();
+          this.random = Math.random();
           break;
         case TypesEnum.Rule:
           this.selectedParentId = selected.parentItem.id;
           this.selectedParentType = selected.parentItem.type;
           this.selectedItemId = selected.id;
           this.mode = ModeEnum.Edit;
-          this.random =  Math.random();
+          this.random = Math.random();
           this.openModal('custom-rule');
           break;
         case TypesEnum.Target:
@@ -182,7 +182,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-any-of');
           this.mode = ModeEnum.Edit;
-          this.random =  Math.random();
+          this.random = Math.random();
           break;
         case TypesEnum.Condition:
           this.selectedParentId = selected.parentItem.id;
@@ -190,7 +190,7 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-condition');
           this.mode = ModeEnum.Edit;
-          this.random =  Math.random();
+          this.random = Math.random();
           break;
         case TypesEnum.Apply:
           this.selectedParentId = selected.parentItem.id;
@@ -198,12 +198,12 @@ export class TreeGridComponent implements OnInit, OnChanges {
           this.selectedItemId = selected.id;
           this.openModal('custom-apply');
           this.mode = ModeEnum.Edit;
-          this.random =  Math.random();
+          this.random = Math.random();
           break;
         default:
           this.openModal('custom-policy-set');
           this.mode = ModeEnum.Edit;
-          this.random =  Math.random();
+          this.random = Math.random();
           break;
       }
     }
@@ -216,9 +216,10 @@ export class TreeGridComponent implements OnInit, OnChanges {
     if (selected) {
       this.selectedItemId = selected.id;
       this.currentType = selected.type;
-      console.log(selected.parentItem.id);
-      this.selectedParentId = selected.parentItem.id;
-      this.selectedParentType = selected.parentItem.type;
+      if (selected.parentItem) {
+        this.selectedParentId = selected.parentItem.id;
+        this.selectedParentType = selected.parentItem.type;
+      }
       this.openModal('custom-confirmation-dialog');
     }
   }
