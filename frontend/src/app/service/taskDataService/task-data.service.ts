@@ -20,45 +20,45 @@ export class TaskDataService {
   }
 
   createPolicySet(policySet: PolicySet) {
-    this.tasks.push(this.createTreeElement(policySet.id, policySet, TypesEnum.PolicySet, false, null));
+    this.tasks.push(this.createTreeElement(policySet.id, policySet, TypesEnum.PolicySet, false, null, TypesEnum.PolicySet));
     policySet.policies.forEach(policy => {
-      this.tasks.push(this.createTreeElement(policy.policyId, policySet, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id));
+      this.tasks.push(this.createTreeElement(policy.policyId, policySet, TypesEnum.Policy, policy.rules.length ? true : false, policySet.id, TypesEnum.PolicySet));
       policy.rules.forEach(rule => {
-        this.tasks.push(this.createTreeElement(rule.ruleId, policySet, TypesEnum.Rule, false, policy.policyId));
+        this.tasks.push(this.createTreeElement(rule.ruleId, policySet, TypesEnum.Rule, false, policy.policyId, TypesEnum.Policy));
         if (rule.condition != null) {
-          this.tasks.push(this.createTreeElement(rule.condition.applyWrapper.functionId, policySet, TypesEnum.Condition, false, rule.ruleId));
+          this.tasks.push(this.createTreeElement(rule.condition.applyWrapper.functionId, policySet, TypesEnum.Condition, false, rule.ruleId, TypesEnum.Rule));
           rule.condition.applyWrapper.applies.forEach(apply => {
-            this.tasks.push(this.createTreeElement(apply.attributeDesignator.attributeId, policySet, TypesEnum.Apply, false, rule.condition.applyWrapper.functionId));
+            this.tasks.push(this.createTreeElement(apply.attributeDesignator.attributeId, policySet, TypesEnum.Apply, false, rule.condition.applyWrapper.functionId, TypesEnum.Condition));
           })
         }
         if (rule.target != null) {
-          this.tasks.push(this.createTreeElement(rule.ruleId + ":target", policySet, TypesEnum.Target, true, rule.ruleId));
+          this.tasks.push(this.createTreeElement(rule.ruleId + ":target", policySet, TypesEnum.Target, true, rule.ruleId, TypesEnum.Rule));
           rule.target.anyOfs.forEach(anyOf => {
-            this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, rule.ruleId + ":target"));
+            this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, rule.ruleId + ":target", TypesEnum.AnyOf));
           });
         }
       });
       if (policy.target != null) {
-        this.tasks.push(this.createTreeElement(policy.policyId + ":target", policySet, TypesEnum.Target, true, policy.policyId));
+        this.tasks.push(this.createTreeElement(policy.policyId + ":target", policySet, TypesEnum.Target, true, policy.policyId, TypesEnum.Policy));
         policy.target.anyOfs.forEach(anyOf => {
-          this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policy.policyId + ":target"));
+          this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policy.policyId + ":target",TypesEnum.AnyOf));
         });
       }
     });
     if (policySet.target != null) {
-      this.tasks.push(this.createTreeElement(policySet.id + ":target", policySet, TypesEnum.Target, true, policySet.id));
+      this.tasks.push(this.createTreeElement(policySet.id + ":target", policySet, TypesEnum.Target, true, policySet.id, TypesEnum.PolicySet));
       policySet.target.anyOfs.forEach(anyOf => {
-        this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policySet.id + ":target"));
+        this.tasks.push(this.createTreeElement(anyOf.allOf.match.attributeDesignator.attributeId, policySet, TypesEnum.AnyOf, false, policySet.id + ":target", TypesEnum.PolicySet));
       });
     }
   }
 
-  createTreeElement(id: string, element: any, type: TypesEnum, isParent: boolean, parentID: string): TaskModel {
+  createTreeElement(id: string, element: any, type: TypesEnum, isParent: boolean, parentID: string, directParent: TypesEnum): TaskModel {
     const task: TaskModel = {
       id: id,
       type: type,
       creator: element.creator,
-      created: element.created,
+      directParent: directParent,
       isParent: isParent,
       ParentID: parentID,
     }

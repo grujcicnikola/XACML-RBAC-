@@ -4,7 +4,7 @@ export interface TaskModel {
     id?: string;
     type: TypesEnum;
     creator?: string;
-    created?: string;
+    directParent?: TypesEnum;
     isParent: Boolean;
     ParentID: string;
   }
