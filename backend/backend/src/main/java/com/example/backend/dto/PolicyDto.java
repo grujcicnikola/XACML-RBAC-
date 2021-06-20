@@ -33,7 +33,7 @@ public class PolicyDto {
 	private double version;
 	@XmlAttribute(name="RuleCombiningAlgId")
 	private String ruleCombiningAlgId;
-	@XmlAttribute(name="Description")
+	@XmlElement(name = "Description")
 	private String description;
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();

@@ -36,7 +36,7 @@ public class PolicySetDto {
 	private double version;
 	@XmlAttribute(name="PolicyCombiningAlgId")
 	private String policyCombiningAlgId;
-	@XmlAttribute(name="Description")
+	@XmlElement(name = "Description")
 	private String description;
 	@XmlElement(name="PolicySetIdReference")
 	private String policySetIdReference;
