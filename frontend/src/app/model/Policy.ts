@@ -6,7 +6,7 @@ export class Policy {
     xmlns : string;
     xsi : string;
     policyId: string;
-    version: string;
+    version: number;
     ruleCombiningAlgId: string;
     description: string;
     schemaLocator: string;	

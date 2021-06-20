@@ -7,7 +7,7 @@ export class PolicySet {
     xsi : string;
     schemaLocator: string;
     policySetId: string;
-    version: string;
+    version: number;
     policyCombiningAlgId: string;
     description: string;
     policySetIdReference: string;

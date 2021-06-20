@@ -34,7 +34,7 @@ export class PolicyComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder, private policySetService : PolicySetService,  private policyService : PolicyService) { 
       this.form = this.formBuilder.group({
         policyId: ['', [Validators.minLength(3), Validators.required]],
-        version: ['', [Validators.minLength(3), Validators.required]],
+        version: ['', Validators.required],
         ruleCombiningAlgId: ['', Validators.required],
       });
     }

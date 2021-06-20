@@ -16,7 +16,7 @@
           <div class="alert-message" *ngIf="f.version.invalid && f.version.dirty || f.version.touched">
             <div *ngIf="f.version.errors?.minlength">version must have at least 3 characters!</div>
           </div>
-          <input type="text" title="version" formControlName="version" placeholder="version" required="" id="version"
+          <input type="number" step="0.1" min=0 title="version" formControlName="version" placeholder="version" required="" id="version"
             name="version" [(ngModel)]="policySet.version" />
         </div>
         <label>Policy combining Algorithm</label>

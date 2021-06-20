@@ -27,10 +27,10 @@ public class PolicyDto {
 	private String xsi="http://www.w3.org/2001/XMLSchema-instance";
 	@XmlAttribute(name="xsi:schemaLocator")
 	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
-	@XmlAttribute(name="policyId")
+	@XmlAttribute(name="PolicyId")
 	private String policyId;
 	@XmlAttribute(name="Version")
-	private String version;
+	private double version;
 	@XmlAttribute(name="RuleCombiningAlgId")
 	private String ruleCombiningAlgId;
 	@XmlAttribute(name="Description")
