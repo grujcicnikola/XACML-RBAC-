@@ -14,6 +14,7 @@ import lombok.Setter;
 @XmlRootElement(name = "PolicySet")
 @XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType: define the order in which the fields are written in the XML file
+@XmlType(namespace="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -42,7 +43,8 @@ public class PolicySetDto {
 	@XmlElement(name="PolicyIdReference")
 	private String policyIdReference;
 	// @XmlElementWrapper(name="Policies")
-	@XmlElement(name = "Policy")
+	//@XmlType(namespace="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17")
+	@XmlElement(name="Policy")
 	private List<PolicyDto> policies = new ArrayList<PolicyDto>();
 	// @XmlTransient: annotate fields that we don't want to be included in XML
 	@XmlTransient
