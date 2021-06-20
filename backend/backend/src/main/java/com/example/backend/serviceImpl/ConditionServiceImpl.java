@@ -44,7 +44,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -82,7 +82,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -102,7 +102,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 	}
 
@@ -127,7 +127,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -179,7 +179,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -205,7 +205,7 @@ public class ConditionServiceImpl implements ConditionService {
 					}
 				}
 			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 	}
 }

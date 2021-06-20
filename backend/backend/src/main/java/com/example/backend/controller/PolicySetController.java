@@ -60,7 +60,7 @@ public class PolicySetController {
 	
 	@RequestMapping(value = "policySet", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PolicySetDto> updatePolicySet(@RequestBody PolicySetDto policySetDto, Principal principal) {
-		return new ResponseEntity<>(this.policySetDocumentService.updatePolicySet(policySetDto, principal.getName()), HttpStatus.OK);
+		return new ResponseEntity<>(this.policySetDocumentService.updatePolicySet(policySetDto, principal.getName(), -1L), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "policySet/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)

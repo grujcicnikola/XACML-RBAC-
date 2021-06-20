@@ -45,7 +45,7 @@ public class RuleServiceImpl implements RuleService {
 					break;
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -82,7 +82,7 @@ public class RuleServiceImpl implements RuleService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 		return null;
 	}
@@ -102,7 +102,7 @@ public class RuleServiceImpl implements RuleService {
 					}
 				}
 			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(),document.get().getVersion());
 		}	
 	}
 

@@ -1,6 +1,8 @@
 package com.example.backend.model;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,5 +24,8 @@ public class PolicySetDocument {
     private String content;
     
     private String creator;
+    
+    @Column(name="version")
+    private Long version;
 
 }

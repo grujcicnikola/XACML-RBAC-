@@ -52,7 +52,7 @@ public class PolicyServiceImpl implements PolicyService {
 			if (document.isPresent()) {
 				PolicySetDto policySetDto = policySetDtoConverter.policySetDtoConverter(document.get());
 				policySetDto.getPolicies().add(policyDto);
-				return this.policySetDocumentService.updatePolicySet(policySetDto, username);
+				return this.policySetDocumentService.updatePolicySet(policySetDto, username, document.get().getVersion());
 			}
 		}
 		return null;
@@ -69,7 +69,7 @@ public class PolicyServiceImpl implements PolicyService {
 					break;
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, username);
+			return this.policySetDocumentService.updatePolicySet(policySetDto, username,document.get().getVersion() );
 		}
 		return null;
 	}
@@ -85,7 +85,7 @@ public class PolicyServiceImpl implements PolicyService {
 					break;
 				}
 			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 
 	}

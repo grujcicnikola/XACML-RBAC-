@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -28,6 +29,7 @@ import com.example.backend.service.UserService;
 import com.example.backend.service.XMLMarshalService;
 
 @Service
+@Transactional(rollbackOn = Throwable.class)
 public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 
 	@Autowired
@@ -61,6 +63,7 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 		PolicySetDocument doc = new PolicySetDocument();
 		doc.setContent(xml);
 		doc.setCreator(username);
+		doc.setVersion(0L);
 		return policySetDocumentRepository.save(doc);
 
 	}
@@ -103,13 +106,43 @@ public class PolicySetDocumentServiceImpl implements PolicySetDocumentService {
 	}
 
 	@Override
-	public PolicySetDto updatePolicySet(PolicySetDto policySetDto, String username) {
-		String xml = xmlMarshalService.marshal(policySetDto);
-		PolicySetDocument document = new PolicySetDocument();
-		document.setContent(xml);
-		document.setCreator(username);
-		document.setId(policySetDto.getId());
-		return policySetDtoConverter.policySetDtoConverter(this.policySetDocumentRepository.save(document));
+	public PolicySetDto updatePolicySet(PolicySetDto policySetDto, String username, Long version) {
+		if(version==-1L) {
+			version =setRealVersion(policySetDto);
+		}
+		if (checkIfYouCanUpdate(policySetDto, username, version)) {
+
+			String xml = xmlMarshalService.marshal(policySetDto);
+			PolicySetDocument document = new PolicySetDocument();
+			document.setContent(xml);
+			document.setCreator(username);
+			document.setId(policySetDto.getId());
+			document.setVersion(++version);
+			return policySetDtoConverter.policySetDtoConverter(this.policySetDocumentRepository.save(document));
+		}
+		return null;
+	}
+
+	private Long setRealVersion(PolicySetDto policySetDto) {
+		// TODO Auto-generated method stub
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetDto.getId());
+		if(document.isPresent()) {
+			return document.get().getVersion();
+		}
+		return -1L;
+		
+	}
+
+	private boolean checkIfYouCanUpdate(PolicySetDto policySetDto, String username, Long version) {
+		Optional<PolicySetDocument> document = this.policySetDocumentRepository.findById(policySetDto.getId());
+		if(document.isPresent()) {
+			if(document.get().getVersion() == version) {
+				return true;
+			}
+
+		}
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class TargetServiceImpl implements TargetService {
 			if (selectedParentType.equals("PolicySet")) {
 				policySetDto.setTarget(null);
 			}
-			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 		}
 	}
 
@@ -104,7 +104,7 @@ public class TargetServiceImpl implements TargetService {
 					}
 				}
 			}
-			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+			return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(),document.get().getVersion());
 		}
 		return null;
 	}
@@ -163,7 +163,7 @@ public class TargetServiceImpl implements TargetService {
 						break;
 					}
 				}
-				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 			} else if (selectedParentOfParentType.equals("Policy")) {
 				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
 					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
@@ -176,7 +176,7 @@ public class TargetServiceImpl implements TargetService {
 						}
 					}
 				}
-				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 			} else if (selectedParentOfParentType.equals("Rule")) {
 				for (int i = 0; i < policySetDto.getPolicies().size(); i++) {
 					if (policySetDto.getPolicies().get(i).getPolicyId().contentEquals(policyId)) {
@@ -196,7 +196,7 @@ public class TargetServiceImpl implements TargetService {
 						}
 					}
 				}
-				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+				return this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(), document.get().getVersion());
 			}
 		}
 		return null;
@@ -214,7 +214,7 @@ public class TargetServiceImpl implements TargetService {
 					if (policySetDto.getTarget().getAnyOfs().get(i).getAllOf().getMatch().getAttributeDesignator()
 							.getAttributeId().equals(attributeId)) {
 						policySetDto.getTarget().getAnyOfs().remove(i);
-						this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator());
+						this.policySetDocumentService.updatePolicySet(policySetDto, document.get().getCreator(),document.get().getVersion());
 						break;
 					}
 				}
@@ -226,7 +226,7 @@ public class TargetServiceImpl implements TargetService {
 									.getAttributeDesignator().getAttributeId().equals(attributeId)) {
 								policySetDto.getPolicies().get(i).getTarget().getAnyOfs().remove(j);
 								this.policySetDocumentService.updatePolicySet(policySetDto,
-										document.get().getCreator());
+										document.get().getCreator(), document.get().getVersion());
 								break;
 							}
 						}
@@ -245,7 +245,7 @@ public class TargetServiceImpl implements TargetService {
 										policySetDto.getPolicies().get(i).getRules().get(j).getTarget().getAnyOfs()
 												.remove(k);
 										this.policySetDocumentService.updatePolicySet(policySetDto,
-												document.get().getCreator());
+												document.get().getCreator(), document.get().getVersion());
 										break;
 									}
 								}

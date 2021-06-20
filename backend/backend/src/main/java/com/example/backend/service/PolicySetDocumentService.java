@@ -22,7 +22,7 @@ public interface PolicySetDocumentService {
 
 	PolicySetDto createPolicySet(PolicySetDto policySetDto, String username);
 
-	PolicySetDto updatePolicySet(PolicySetDto policySetDto, String name);
+	PolicySetDto updatePolicySet(PolicySetDto policySetDto, String name, Long version);
 
 	void deletePolicySet(String id);
 
