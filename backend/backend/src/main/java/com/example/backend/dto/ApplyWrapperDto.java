@@ -23,7 +23,7 @@ import lombok.Setter;
 @XmlRootElement(name = "Apply")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ApplyWrapperDto {
-	@XmlAttribute
+	@XmlAttribute(name="FunctionId")
 	private String functionId;
 	@XmlElement(name="Apply")
 	private List<ApplyDto> applies = new ArrayList<ApplyDto>();

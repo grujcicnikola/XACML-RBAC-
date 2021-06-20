@@ -21,7 +21,7 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MatchDto {
 	
-	@XmlAttribute
+	@XmlAttribute(name="MatchId")
 	private String matchId;
 	@XmlElement(name = "AttributeValue")
 	private AttributeValue attributeValue;

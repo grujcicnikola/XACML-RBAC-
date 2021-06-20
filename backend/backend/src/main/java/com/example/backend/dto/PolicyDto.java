@@ -27,15 +27,14 @@ public class PolicyDto {
 	private String xsi="http://www.w3.org/2001/XMLSchema-instance";
 	@XmlAttribute(name="xsi:schemaLocator")
 	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
-	@XmlAttribute
+	@XmlAttribute(name="policyId")
 	private String policyId;
-	@XmlAttribute
+	@XmlAttribute(name="Version")
 	private String version;
-	@XmlAttribute
+	@XmlAttribute(name="RuleCombiningAlgId")
 	private String ruleCombiningAlgId;
-	@XmlAttribute
+	@XmlAttribute(name="Description")
 	private String description;
-	//@XmlElementWrapper(name="rules")
     @XmlElement(name="Rule")
 	private List<RuleDto> rules = new ArrayList<RuleDto>();
     @XmlElement(name = "Target")

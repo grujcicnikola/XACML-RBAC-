@@ -20,7 +20,7 @@ import lombok.Setter;
 @XmlRootElement(name = "Apply")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ApplyDto {
-	@XmlAttribute
+	@XmlAttribute(name="FunctionId")
 	private String functionId;
 	@XmlElement(name = "AttributeValue")
 	private AttributeValue attributeValue;

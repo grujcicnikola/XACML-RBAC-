@@ -16,9 +16,9 @@ import lombok.Setter;
 @XmlRootElement(name="Rule")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RuleDto {
-	@XmlAttribute
+	@XmlAttribute(name="RuleId")
 	private String ruleId;
-	@XmlAttribute
+	@XmlAttribute(name="Effect")
 	private String effect;
 	@XmlElement(name = "Condition")
 	private ConditionDto condition;

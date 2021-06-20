@@ -20,12 +20,12 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AttributeDesignator {
 	
-	@XmlAttribute
+	@XmlAttribute(name="MustBePresent")
 	private boolean mustBePresent;
-	@XmlAttribute
+	@XmlAttribute(name="Category")
 	private String category;
-	@XmlAttribute
+	@XmlAttribute(name="AttributeId")
 	private String attributeId;
-	@XmlAttribute
+	@XmlAttribute(name="DataType")
 	private String dataType;
 }

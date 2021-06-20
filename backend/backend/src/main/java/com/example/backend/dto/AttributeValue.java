@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +21,9 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AttributeValue {
 	
-	@XmlAttribute
+	@XmlAttribute(name="DataType")
 	private String dataType;
-	
-	private String value;//TODO
+	@XmlValue
+	private String value;
 	
 }

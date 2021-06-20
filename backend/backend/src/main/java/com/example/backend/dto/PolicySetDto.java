@@ -30,13 +30,13 @@ public class PolicySetDto {
 	@XmlAttribute(name="xsi:schemaLocator")
 	private String schemaLocator ="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd";
 	
-	@XmlAttribute
+	@XmlAttribute(name="PolicySetId")
 	private String policySetId;
-	@XmlAttribute
+	@XmlAttribute(name="Version")
 	private String version;
-	@XmlAttribute
+	@XmlAttribute(name="PolicyCombiningAlgId")
 	private String policyCombiningAlgId;
-	@XmlAttribute
+	@XmlAttribute(name="Description")
 	private String description;
 	@XmlElement(name="PolicySetIdReference")
 	private String policySetIdReference;
