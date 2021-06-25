@@ -29,11 +29,11 @@
   <ejs-treegrid #treegrid [dataSource]="tasks" hasChildMapping="isParent" parentIdMapping="ParentID" idMapping="id"
      height="470"><!-- (actionBegin)="actionBegin($event)"> -->
     <e-columns>
-      <e-column field="id" headerText="Task ID" width="120" textAlign="Right" isPrimaryKey="true" type="number">
+      <e-column field="id" headerText="Task ID" width="220" textAlign="Right" isPrimaryKey="true" type="number">
       </e-column>
-      <e-column field="type" headerText="Type" width="225"></e-column>
+      <e-column field="type" headerText="Type" width="100"></e-column>
       <e-column field="creator" headerText="Creator" width="150" format="yMd" type="string"></e-column>
-      <e-column field="directParent" headerText="Direct parent" width="150" format="yMd" type="string">
+      <e-column field="description" headerText="Description" width="150" format="yMd" type="string">
       </e-column>
 
     </e-columns>
